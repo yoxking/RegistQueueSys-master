@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:ns2="http://cxf.apache.org/bindings/xformat" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://impl.webservice.mat.aadata.cn/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://webservice.mat.aadata.cn/" name="MessagePackImplService" targetNamespace="http://impl.webservice.mat.aadata.cn/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:import namespace="http://webservice.mat.aadata.cn/" location="http://10.177.124.35:8011/mat1/webservice/messagePack?wsdl=MessagePack.wsdl" />
+  <wsdl:types />
+  <wsdl:binding name="MessagePackImplServiceSoapBinding" type="ns1:MessagePack">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getMessage">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getMessage">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getMessageResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getJsonMessage">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getJsonMessage">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getJsonMessageResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendMessage">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="sendMessage">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="sendMessageResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MessagePackImplService">
+    <wsdl:port name="MessagePackImplPort" binding="tns:MessagePackImplServiceSoapBinding">
+      <soap:address location="http://10.177.124.35:8011/mat1/webservice/messagePack" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

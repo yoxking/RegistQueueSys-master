@@ -1,0 +1,217 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Business.Model.Collections;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    ContentInfo info = (ContentInfo)ViewBag.StackHolder;
+    ContentClassCollections cntClassList = (ContentClassCollections)ViewBag.CntClassList;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <link rel="stylesheet" href="~/Content/layui/css/layui.css">
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <!--layui引入-->
+    <script src="~/Content/layui/layui.js"></script> 
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            layui.use('laydate', function () {
+                var laydate = layui.laydate;
+
+                //常规用法
+                laydate.render({
+                    elem: '#PublicDate'
+                });
+            });
+
+            layui.use('layedit', function () {
+                var layedit = layui.layedit;
+                layedit.set({
+                    uploadImage: {
+                        url: '/Handle/UploadPhoto' //接口url
+                        , type: 'post' //默认post
+                    }
+                });
+                layedit.build('NContent'); //建立编辑器
+            });
+
+            layui.use('upload', function () {
+                var upload = layui.upload;
+
+                //执行实例
+                var uploadInst = upload.render({
+                    elem: '#ppicture' //绑定元素
+                    , url: '/Handle/UploadPhoto' //上传接口
+                    , type: 'post' //默认post
+                    , done: function (res) {
+                        //上传完毕回调
+                        if (res.code == 0) {
+
+                            $("#PostPicture").val(res.data.src);
+                            $("#postPictureFile").html(res.data.src);
+                        }
+                        else {
+                            dig.alertError('提示', res.msg);
+                        }
+                    }
+                    , error: function (res) {
+                        //请求异常回调
+                        dig.alertError('提示', res.message);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+}
+
+@using (Ajax.BeginForm("Save", null, new AjaxOptions()
+{
+    HttpMethod = "Post",
+    OnBegin = "SubAjax.Loading",
+    OnComplete = "SubAjax.Complate",
+    OnFailure = "SubAjax.Failure",
+    OnSuccess = "SubAjax.Success"
+},
+                                    new { @class = "form-horizontal dig-from", @role = "form" }))
+
+{
+        <div class="wrapper-content">
+            <div class="panel-body" style="padding-top:0px;">
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">  
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">编号：</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" name="ContNo" id="ContNo" value="@info.sContNo" placeholder="编号" />
+                                    </div>
+                                </div>  
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">标题：</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" name="Title" id="Title" value="@info.sTitle" placeholder="标题" />
+                                    </div>
+                                </div>
+
+                                <div class="clearfix f-hafl">
+                                    <div class="col-hafl">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label" >栏目：</label>
+                                            <div class="col-lg-8">
+                                                <select id="ClassNo" class="form-control" name="ClassNo">
+                                                    @if (cntClassList != null && cntClassList.Count > 0)
+                                                    {
+                                                        foreach (ContentClass m in cntClassList)
+                                                        {
+                                                            <option value="@m.sClassNo" @if(m.sClassNo == info.sClassNo) { <text> selected </text>       }>@m.sClassName</option> }
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">作者：</label>
+                                            <div class="col-lg-8">
+                                                <input type="text" class="form-control" name="Author" id="Author" value="@info.sAuthor" placeholder="作者" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">是否热门：</label>
+                                            <div class="col-lg-8" style="text-align:left;">
+                                                <select name="IsHot" id="IsHot" class="form-control" datatype="*" nullmsg="是否热门">
+                                                    <option value="1" @(info.iIsHot.ToString() == "1" ? "selected" : "")>是</option>
+                                                    <option value="0" @(info.iIsHot.ToString() == "0" ? "selected" : "")>否</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-hafl">
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label" >发布时间：</label>
+                                            <div class="col-lg-8">
+                                                <input type="text" class="form-control" name="PublicDate" id="PublicDate" value="@info.dPublicDate.ToString("yyyy-MM-dd")" placeholder="发布时间" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label" >是否置顶：</label>
+                                            <div class="col-lg-8" style="text-align:left;">
+                                                <select name="IsTop" id="IsTop" class="form-control" datatype="*" nullmsg="是否置顶">
+                                                    <option value="1" @(info.iIsTop.ToString() == "1" ? "selected" : "")>是</option>
+                                                    <option value="0" @(info.iIsTop.ToString() == "0" ? "selected" : "")>否</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg-3 control-label">是否推荐：</label>
+                                            <div class="col-lg-8" style="text-align:left;">
+                                                <select name="IsPop" id="IsPop" class="form-control" datatype="*" nullmsg="是否推荐">
+                                                    <option value="1" @(info.iIsPop.ToString() == "1" ? "selected" : "")>是</option>
+                                                    <option value="0" @(info.iIsPop.ToString() == "0" ? "selected" : "")>否</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">图片：</label>
+                                    <div class="col-lg-8">
+                                        <input type="hidden" name="PostPicture" id="PostPicture" value="@info.sPostPicture" />
+                                        <button type="button" class="layui-btn" id="ppicture">
+                                            <i class="layui-icon">&#xe67c;</i>上传图片
+                                        </button>
+                                        <span id="postPictureFile">@info.sPostPicture</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">正文内容：</label>
+                                    <div class="col-lg-8">
+                                        <textarea type="text" class="form-control" name="NContent" rows="5" id="NContent" placeholder="正文内容">@info.sNContent</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">备注：</label>
+                                    <div class="col-lg-8">
+                                        <textarea type="text" class="form-control" name="Comments" rows="3" id="Comments">@info.sComments</textarea>
+                                    </div>
+                                </div>
+
+
+                                <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                                    <div class="form-group m20">
+                                        <button class="btn btn-primary btn-save" type="submit"><i class="fa fa-check"></i> <span>保存</span></button>
+                                        <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+}
+

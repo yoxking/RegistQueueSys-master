@@ -1,0 +1,120 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    BranchInfo info = (BranchInfo)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <link rel="stylesheet" href="~/Content/layui/css/layui.css">
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script src="~/Content/layui/layui.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+
+        layui.use('layedit', function () {
+            var layedit = layui.layedit;
+            layedit.set({
+                uploadImage: {
+                    url: '/Handle/UploadPhoto' //接口url
+                    , type: 'post' //默认post
+                }
+            });
+            layedit.build('sSummary'); //建立编辑器
+        });
+    </script>
+}
+
+@using (Ajax.BeginForm("Save", null, new AjaxOptions()
+{
+    HttpMethod = "Post",
+    OnBegin = "SubAjax.Loading",
+    OnComplete = "SubAjax.Complate",
+    OnFailure = "SubAjax.Failure",
+    OnSuccess = "SubAjax.Success"
+},
+new { @class = "form-horizontal dig-from", @role = "form" }))
+{
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">科室类型：</label>
+                        <div class="col-lg-8">
+                            <select id="iBranchType" name="iBranchType" class="form-control select2" datatype="*" nullmsg="请选择分类">
+                                <option value="1" )>门诊</option>
+                                <option value="2" )>检验</option>
+                                <option value="3" )>检查</option>
+                                <option value="4" )>药房</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">科室名称：</label>
+                        <div class="col-lg-8">
+                            <input type="hidden" name="sBranchNo" id="sBranchNo" value="@info.sBranchNo" />
+                            <input type="text" class="form-control" name="sBranchName" id="sBranchName" value="@info.sBranchName" placeholder="科室名称" />
+                        </div>
+                    </div>
+
+                    <div class="clearfix f-hafl">
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">科室负责人：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="sContacts" id="sContacts" value="@info.sContacts" placeholder="负责人" />
+                                </div>
+                            </div>
+                            </div>
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">电话：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="sTelphone" id="sTelphone" value="@info.sTelphone" placeholder="电话" />
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">科室简介：</label>
+                                <div class="col-lg-8">
+                                    <textarea class="form-control" name="sSummary" id="sSummary" rows="5" value="@info.sSummary" >@info.sSummary</textarea>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                                <div class="form-group m20">
+                                        <button class="btn btn-primary btn-save" type="submit"><i class="fa fa-check"></i> <span>保存</span></button>
+                                        <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+}
+

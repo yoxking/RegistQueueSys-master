@@ -1,0 +1,115 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    DsVersionInfo info = (DsVersionInfo)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script>
+}
+
+<form class="form-horizontal">
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">编号：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="sVerNo" id="sVerNo" readonly value="@info.sVerNo" placeholder="编号" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">版本名称：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="sVerName" id="sVerName" value="@info.sVerName" placeholder="版本名称" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">类别：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="sVerType" id="sVerType" value="@info.sVerType" placeholder="类别" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">更新模式：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="sUpMode" id="sUpMode" value="@info.sUpMode" placeholder="类别" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">版本号：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="sVerCode" id="sVerCode" value=" @info.sVerCode" placeholder="版本号" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">平台：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="sPlatform" id="sPlatform" value="@info.sPlatform" placeholder="平台" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">上传文件：</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" name="FilePath" id="FilePath" placeholder="上传素材" value="@info.sFileUrl" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">终端列表：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="sPlayers" id="sPlayers" value="@PageHelper.getPlayerInfoNameByNos(info.sPlayerNos)" placeholder="终端列表" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">更新说明：</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="sVerDesc" id="sVerDesc" rows="5">@info.sVerDesc</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">备注：</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="Comments" id="Comments" rows="3">@info.sComments</textarea>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                        <div class="form-group m20">
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,100 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    SysParams info = (SysParams)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script>
+}
+
+@using (Ajax.BeginForm("Save", null, new AjaxOptions()
+{
+    HttpMethod = "Post",
+    OnBegin = "SubAjax.Loading",
+    OnComplete = "SubAjax.Complate",
+    OnFailure = "SubAjax.Failure",
+    OnSuccess = "SubAjax.Success"
+},
+                                                                        new { @class = "form-horizontal dig-from", @role = "form" }))
+{
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                         <div class="form-group">
+                                 <label class="col-lg-3 control-label">编号：</label>
+                                 <div class="col-lg-8">
+                                     <input type="text" class="form-control" name="ParamNo" id="ParamNo" readonly value="@info.sParamNo" placeholder="编号" />
+                                 </div>
+                             </div>
+                  
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">字典键：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="KeyName" id="KeyName" value="@info.sKeyName" placeholder="字典键" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">字典值：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="KeyValue" id="KeyValue" value="@info.sKeyValue" placeholder="字典值" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">类型：</label>
+                                <div class="col-lg-8">
+                                    <select name="KeyType" id="KeyType" class="form-control" datatype="*" nullmsg="类型">
+                                        <option value="Other" @(info.sKeyType.ToString() == "Other" ? "selected" : "")>其他</option>
+                                        <option value="Service" @(info.sKeyType.ToString() == "Service" ? "selected" : "")>业务</option>
+                                        <option value="Evaluator" @(info.sKeyType.ToString() == "Evaluator" ? "selected" : "")>评价器</option>
+                                    </select> 
+                                </div>
+                            </div>                            
+                    </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">备注：</label>
+                    <div class="col-lg-8">
+                        <textarea type="text" class="form-control" name="Comments" id="Comments" rows="5">@info.sComments</textarea>
+                    </div>
+                </div>
+                    <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                        <div class="form-group m20">
+                            <button class="btn btn-primary btn-save" type="submit"><i class="fa fa-check"></i> <span>保存</span></button>
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>   
+}
+

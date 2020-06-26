@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A6956125-300B-4279-9419-28D6EA453B1E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EntFrm.Business.SQLServerDAL</RootNamespace>
+    <AssemblyName>EntFrm.Business.SQLServerDAL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\EntDebug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntFrm.Business.IDAL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EntDebug\EntFrm.Business.IDAL.dll</HintPath>
+    </Reference>
+    <Reference Include="EntFrm.Business.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EntDebug\EntFrm.Business.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="EntFrm.Framework.Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EntDebug\EntFrm.Framework.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BranchInfoDAL.cs" />
+    <Compile Include="CallerInfoDAL.cs" />
+    <Compile Include="ContentClassDAL.cs" />
+    <Compile Include="ContentInfoDAL.cs" />
+    <Compile Include="CounterInfoDAL.cs" />
+    <Compile Include="DsDwloadFlowsDAL.cs" />
+    <Compile Include="DsHrtbeatFlowsDAL.cs" />
+    <Compile Include="DsMaterialClassDAL.cs" />
+    <Compile Include="DsMaterialInfoDAL.cs" />
+    <Compile Include="DsPlayerClassDAL.cs" />
+    <Compile Include="DsPlayerInfoDAL.cs" />
+    <Compile Include="DsProgramClassDAL.cs" />
+    <Compile Include="DsProgramInfoDAL.cs" />
+    <Compile Include="DsPublishFlowsDAL.cs" />
+    <Compile Include="DsQuartzInfoDAL.cs" />
+    <Compile Include="DsResultFlowsDAL.cs" />
+    <Compile Include="DsVersionInfoDAL.cs" />
+    <Compile Include="EvaluateFlowsDAL.cs" />
+    <Compile Include="EvaluatorInfoDAL.cs" />
+    <Compile Include="LEDDisplayDAL.cs" />
+    <Compile Include="LEDMatrixDAL.cs" />
+    <Compile Include="LogsInfoDAL.cs" />
+    <Compile Include="MessageInfoDAL.cs" />
+    <Compile Include="OperateFlowsDAL.cs" />
+    <Compile Include="OperateHistoryDAL.cs" />
+    <Compile Include="OrganizInfoDAL.cs" />
+    <Compile Include="PermitInfoDAL.cs" />
+    <Compile Include="ProcessFlowsDAL.cs" />
+    <Compile Include="ProcessHistoryDAL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecipeDetailsDAL.cs" />
+    <Compile Include="RecipeFlowsDAL.cs" />
+    <Compile Include="RecipeHistoryDAL.cs" />
+    <Compile Include="RegistFlowsDAL.cs" />
+    <Compile Include="RegistHistoryDAL.cs" />
+    <Compile Include="RoleInfoDAL.cs" />
+    <Compile Include="RolePermitDAL.cs" />
+    <Compile Include="RUsersInfoDAL.cs" />
+    <Compile Include="ServiceInfoDAL.cs" />
+    <Compile Include="ServiceRotaDAL.cs" />
+    <Compile Include="StafferInfoDAL.cs" />
+    <Compile Include="StafferRotaDAL.cs" />
+    <Compile Include="SUsersInfoDAL.cs" />
+    <Compile Include="SWorkFlowsDAL.cs" />
+    <Compile Include="SysParamsDAL.cs" />
+    <Compile Include="TicketFlowsDAL.cs" />
+    <Compile Include="TicketStyleDAL.cs" />
+    <Compile Include="UserRoleDAL.cs" />
+    <Compile Include="ViewOperatFlowsDAL.cs" />
+    <Compile Include="ViewRecipeFlowsDAL.cs" />
+    <Compile Include="ViewRegistFlowsDAL.cs" />
+    <Compile Include="ViewServiceRotaDAL.cs" />
+    <Compile Include="ViewStafferRotaDAL.cs" />
+    <Compile Include="ViewTicketFlowsDAL.cs" />
+    <Compile Include="VoiceInfoDAL.cs" />
+    <Compile Include="WaitAreaDAL.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

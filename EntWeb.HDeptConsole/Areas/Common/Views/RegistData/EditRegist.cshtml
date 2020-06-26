@@ -1,0 +1,207 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+
+    List<ItemData> ItemList = (List<ItemData>)ViewBag.ItemList;
+    List<ItemData> WTimeList = (List<ItemData>)ViewBag.WTimeList;
+    string workingMode = ViewBag.WorkingMode.ToString();
+    ViewRegistFlows regflow = (ViewRegistFlows)ViewBag.StackHolder;
+
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+    </style>
+}
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+
+        var layer3;
+        jQuery(document).ready(function () {
+
+            layui.use(['layer','laydate'], function () {
+                var laydate = layui.laydate;
+                layer3 = layui.layer;
+
+                //执行一个laydate实例
+                laydate.render({
+                    elem: '#registDate' //指定元素 
+                    , type: 'datetime'//日期时间
+                    , min: 0
+                    , max: 7
+                }); 
+            });
+        });
+
+        function isTelAvailable(tel) {
+            var myreg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
+            if (!myreg.test(tel)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function isAgeAvailable(age) {
+            var myreg = /^[0-9]{1,2}$/;
+            if (!myreg.test(age)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        function isIdnoAvailable(idno) {
+            var myreg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+            if (!myreg.test(idno)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function onSubmit() {
+
+            var registId = $("#registId").val();
+            var itemno = $("#itemNo").val(); 
+            var registdate = $("#registDate").val();
+            var worktime = $("input[name='workTime']:checked").val();
+            var rusername = $("#ruserName").val();
+            var rusersex = $("input[name='ruserSex']:checked").val();
+            var idno = $("#idNo").val();
+            var Age = $("#age").val();
+            var tel = $("#telphone").val(); 
+
+
+            //if (!isIdnoAvailable(idno)) {
+            //    layer3.msg("身份证号码错误！");
+            //    return;
+            //}
+
+            if (!isAgeAvailable(Age)) {
+                layer3.msg("年龄输入错误！");
+                return;
+            }
+
+            if (rusername=='') {
+                layer3.msg("姓名输入错误！");
+                return;
+            }
+
+            //if (!isTelAvailable(tel)) {
+            //    layer3.msg("手机号码错误！");
+            //    return;
+            //}
+
+            if (itemno > 0) {
+                $.post(
+                    "/Common/RegistData/SaveRegist",
+                    { a: Math.random(), registNo: registId, itemNo: itemno, registDate: registdate, workTime: worktime, ruserName: rusername, ruserSex: rusersex, idNo: idno, age: Age,telphone: tel },
+                    function (data) {
+                        if (data == "SUCCESS") {
+
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                        }
+                        else {
+                            layer3.msg('保存失败!');
+                        }
+                    }
+                );
+            }
+            else {
+                layer3.msg('请正确选择业务或医生!');
+            }
+        }
+
+        function onCancel() {
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        }
+   </script>
+}
+
+<br />
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md8">
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <input type="hidden" id="registId" name="registId"  value="@regflow.sRFlowNo" />
+                    @if (workingMode.Equals("STAFF"))
+                    {
+                        <label class="layui-form-label">预约医生:</label>
+                    }
+                    else
+                    {
+                        <label class="layui-form-label">预约业务:</label>
+                    }
+                    <div class="layui-input-inline">
+                        <select id="itemNo" name="itemNo" lay-verify="required">
+                            <option value="-1">---请选择---</option>
+                            @if (ItemList != null && ItemList.Count > 0)
+                            {
+                                foreach (ItemData item in ItemList)
+                                {
+                                    <option value="@item.ItemName" @if(regflow.sServiceNo.Equals(item.ItemName)||regflow.sStafferNo.Equals(item.ItemName)) { <text>selected</text> } >@item.ItemValue</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">预约时间:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="registDate" name="registDate" value="@regflow.dRegistDate.ToString("yyyy-MM-dd HH:mm:ss")" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">预约时段:</label>
+                    <div class="layui-input-block">
+                        @if (WTimeList != null && WTimeList.Count > 0)
+                        {
+                            foreach (ItemData item in WTimeList)
+                            {
+                                <input type="radio" name="workTime" value="@item.ItemName" title="@item.ItemValue" @if(regflow.iWorkTime.ToString().Equals(item.ItemName)) {<text>checked</text> } >
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">姓名:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="ruserName" name="ruserName" required lay-verify="required" placeholder="请输入姓名" value="@regflow.sCnName" autocomplete="off" class="layui-input">
+                    </div>
+                    <label class="layui-form-label">性别:</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="ruserSex" value="1" title="男" @if (regflow.iSex == 1) { <text>checked </text> }>
+                        <input type="radio" name="ruserSex" value="0" title="女" @if (regflow.iSex == 0) { <text>checked </text> }>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">身份证号:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="idNo" name="idNo" required lay-verify="required" placeholder="请输入身份证号" autocomplete="off" class="layui-input" value="@regflow.sIdCardNo">
+                    </div>
+                    <label class="layui-form-label">年龄:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="age" name="age" required lay-verify="required" placeholder="请输入年龄" autocomplete="off" class="layui-input" value="@regflow.iAge">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">电话:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="telphone" name="telphone" required lay-verify="required" placeholder="请输入联系电话" autocomplete="off" class="layui-input" value="@regflow.sTelphone">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="onSubmit()">保存</button>
+                        <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="onCancel()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

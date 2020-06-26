@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="SendMQ">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="hostname" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="channel" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="queueManager" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="qManager" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="port" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="MSH6" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MSH2" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MSH1" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MSH3" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MSH4" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MSH5" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MSH7" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MSH8" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="MSH9" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="xml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendMQResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SendMQResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AnilysisMQ">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="hostname" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="channel" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="queueManager" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="qManager" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="port" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AnilysisMQResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AnilysisMQResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SendMQSoapIn">
+    <wsdl:part name="parameters" element="tns:SendMQ" />
+  </wsdl:message>
+  <wsdl:message name="SendMQSoapOut">
+    <wsdl:part name="parameters" element="tns:SendMQResponse" />
+  </wsdl:message>
+  <wsdl:message name="AnilysisMQSoapIn">
+    <wsdl:part name="parameters" element="tns:AnilysisMQ" />
+  </wsdl:message>
+  <wsdl:message name="AnilysisMQSoapOut">
+    <wsdl:part name="parameters" element="tns:AnilysisMQResponse" />
+  </wsdl:message>
+  <wsdl:portType name="MqWsSoap">
+    <wsdl:operation name="SendMQ">
+      <wsdl:input message="tns:SendMQSoapIn" />
+      <wsdl:output message="tns:SendMQSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AnilysisMQ">
+      <wsdl:input message="tns:AnilysisMQSoapIn" />
+      <wsdl:output message="tns:AnilysisMQSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MqWsSoap" type="tns:MqWsSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SendMQ">
+      <soap:operation soapAction="http://tempuri.org/SendMQ" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AnilysisMQ">
+      <soap:operation soapAction="http://tempuri.org/AnilysisMQ" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MqWsSoap12" type="tns:MqWsSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SendMQ">
+      <soap12:operation soapAction="http://tempuri.org/SendMQ" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AnilysisMQ">
+      <soap12:operation soapAction="http://tempuri.org/AnilysisMQ" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MqWs">
+    <wsdl:port name="MqWsSoap" binding="tns:MqWsSoap">
+      <soap:address location="http://10.177.124.28:8899/MQ_Webservice/MqWs.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MqWsSoap12" binding="tns:MqWsSoap12">
+      <soap12:address location="http://10.177.124.28:8899/MQ_Webservice/MqWs.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

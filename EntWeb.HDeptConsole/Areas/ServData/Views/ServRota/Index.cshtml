@@ -1,0 +1,232 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<ItemData> itemList = (List<ItemData>)ViewBag.ItemList;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+    </style>
+}
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+
+        var table;
+        var layer;
+
+        jQuery(document).ready(function () {
+
+            layui.use('layer', function () { //独立版的layer无需执行这一句
+                layer = layui.layer; //独立版的layer无需执行这一句
+            });
+
+            layui.use('table', function () {
+                table = layui.table;
+
+                //展示已知数据
+                table.render({
+                    elem: '#mytable1',
+                    id: 'idTable1',
+                    cols: [[ //标题栏
+                        {
+                            checkbox: true,
+                            LAY_CHECKED: false
+                        } //默认全选
+                        , {
+                            field: 'RotaName',
+                            title: '业务名称',
+                            width: 150
+                        }, {
+                            field: 'RotaType',
+                            title: '排班类型',
+                            width: 150,
+                            style: "color:red;",
+                            sort: true
+                        }, {
+                            field: 'Week1',
+                            title: '周一',
+                            width: 150
+                        }, {
+                            field: 'Week2',
+                            title: '周二',
+                            width: 150
+                        }, {
+                            field: 'Week3',
+                            title: '周三',
+                            width: 150
+                        }, {
+                            field: 'Week4',
+                            title: '周四',
+                            width: 150
+                        }, {
+                            field: 'Week5',
+                            title: '周五',
+                            width: 150
+                        }, {
+                            field: 'Week6',
+                            title: '周六',
+                            width: 150
+                        }, {
+                            field: 'Week7',
+                            title: '周日',
+                            width: 150
+                        }, {
+                            field: 'RotaNo',
+                            title: '编号',
+                            width: 150,
+                            sort: true
+                        }]],
+                    skin: 'row', //表格风格
+                    even: true,
+                    page: true, //是否显示分页
+                    limits: [10, 20, 50],
+                    limit: 10, //每页默认显示的数量
+                    height: 400,
+                    url: '/ServData/ServRota/getDataList_ServRota',
+                    request: {
+                        pageName: 'pageIndex', //页码的参数名称，默认：page
+                        limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                    },
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: ''
+                    },
+                    done: function (res, curr, count) {
+                    }
+                });
+
+            });
+        });
+
+        function onRefresh_TableData(serviceNo) {
+
+            if (table != null) {
+                table.reload('idTable1', {
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: serviceNo
+                    }
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            }
+        }
+
+        function onAddRota() {
+            layer.open({
+                type: 2,
+                title: '业务排班',
+                shadeClose: true,
+                shade: false,
+                maxmin: false, //开启最大化最小化按钮
+                area: ['660px', '420px'],
+                content: ['/ServData/ServRota/EditRota', 'no'],
+                end: function () {
+                    onRefresh();
+                }
+            });
+        }
+
+        function onDelRota() {
+            var checkStatus = table.checkStatus('idTable1'), data = checkStatus.data;
+
+            if (data.length > 0) {
+
+
+                layer.confirm('您确定要删除所选记录吗？', {
+                    btn: ['确定', '取消'] //按钮
+                }, function () {
+                    var idlist = "";
+                    jQuery.each(data, function (i, item) {
+
+                        idlist += item.RotaNo + ";";
+                    });
+
+                    if (idlist != null && idlist.length > 0) {
+                        idlist = idlist.substring(0, idlist.length - 1);
+                    }
+
+                    jQuery.post(
+                        "/ServData/ServRota/DelRota",
+                        { a: Math.random(), ids: idlist },
+                        function (data) {
+                            if (data == "SUCCESS") {
+                                layer.msg("取消成功!");
+                                onRefresh();
+                            }
+                            else {
+                                layer.msg('取消失败!');
+                            }
+                        }
+                    );
+                }, function () {
+                });
+            } else {
+                layer.msg("至少选择一条记录!");
+            }
+        }
+
+        function onRefresh() {
+            onRefresh_TableData("99999999");
+        }
+    </script>
+}
+
+
+<div class="vernav2 iconmenu">
+    <ul>
+        <li>
+            <a href="#formsub" class="editor">业务列表</a>
+            <span class="arrow"></span>
+            <ul id="formsub">
+                @if (itemList != null && itemList.Count > 0)
+                {
+                    foreach (ItemData item in itemList)
+                    {
+                        <li><a href="javascript:void(0)" onclick="onRefresh_TableData(@item.ItemName)">@item.ItemValue</a></li>
+                    }
+                }
+                else
+                {
+                    <li><a href="javascript:void(0)">暂无业务</a></li>
+                }
+            </ul>
+        </li>
+    </ul>
+    <a class="togglemenu"></a>
+    <br /><br />
+</div><!--leftmenu-->
+
+<div class="centercontent">
+
+    <div class="pageheader">
+
+        <ul class="hornav">
+            <li class="current"><a href="#activities1">排班表</a></li>
+        </ul>
+    </div><!--pageheader-->
+
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div id="activities1" class="subcontent">
+
+            <div class="msghead">
+                <ul class="msghead_menu">
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onAddRota()">添加临时排班</a></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onDelRota()">删除临时排班</a></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onRefresh()">刷新</a></li>
+                </ul>
+                <span class="clearall"></span>
+            </div><!--msghead-->
+
+            <div class="table-container">
+                <table class="layui-hide" id="mytable1" lay-filter="datatable"></table>
+            </div>
+
+        </div><!-- #updates -->
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div><!-- centercontent -->

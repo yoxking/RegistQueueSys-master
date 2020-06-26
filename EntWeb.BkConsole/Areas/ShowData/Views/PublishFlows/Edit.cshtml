@@ -1,0 +1,222 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Framework.Utility;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    DsPublishFlows info = (DsPublishFlows)ViewBag.StackHolder; 
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <link rel="stylesheet" href="~/Content/layui/css/layui.css"> 
+    <link rel="stylesheet" href="~/Content/layui/css/public.css"> 
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <!--layui引入-->
+    <script src="~/Content/layui/layui.js"></script>  
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            layui.use('laydate', function () {
+                var laydate = layui.laydate;
+
+                //执行一个laydate实例
+                laydate.render({
+                    elem: '#StartDate' //指定元素
+                    , type: 'date' 
+                });
+                 
+                laydate.render({
+                    elem: '#EnditDate'
+                    , type: 'date' 
+                });
+
+                laydate.render({
+                    elem: '#StartTime'
+                    , type: 'time'
+                });
+
+                laydate.render({
+                    elem: '#EnditTime'
+                    , type: 'time'
+                });
+
+                laydate.render({
+                    elem: '#DSchedule'
+                    , type: 'datetime'
+                });
+            });
+
+            layui.use(['form', 'layer'], function () { 
+                layui.form.render();
+            });
+        });
+
+        function onSelectPrograms() {
+            top.dialog({
+                url: '/ShowData/SelectPrograms/List',
+                title: '选择节目',
+                width: 650,
+                height: 400,
+                data: '', // 给 iframe 的数据
+                onclose: function () {
+                    if (this.returnValue != 'error') {
+                        $('#ProgramId').val(this.returnValue.split('|')[0]);
+                        $('#ProgramName').val(this.returnValue.split('|')[1]);
+                    }
+                },
+                oniframeload: function () {
+                }
+            }).showModal();
+        }
+
+        function onSelectPlayers() {
+            top.dialog({
+                url: '/ShowData/SelectPlayers/List',
+                title: '选择设备',
+                width: 650,
+                height: 400,
+                data: '', // 给 iframe 的数据
+                onclose: function () {
+                    if (this.returnValue != 'error') {
+                        $('#PlayerIds').val(this.returnValue.split('|')[0]);
+                        $('#PlayerNames').val(this.returnValue.split('|')[2]);
+                    }
+                },
+                oniframeload: function () {
+                }
+            }).showModal();
+        }
+    </script>
+}
+
+@using (Ajax.BeginForm("Save", null, new AjaxOptions()
+{
+    HttpMethod = "Post",
+    OnBegin = "SubAjax.Loading",
+    OnComplete = "SubAjax.Complate",
+    OnFailure = "SubAjax.Failure",
+    OnSuccess = "SubAjax.Success"
+},
+new { @class = "form-horizontal layui-form layui-row", @role = "form" }))
+{
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">任务编号：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="PFlowNo" id="PFlowNo" readonly value="@info.sPFlowNo" placeholder="任务编号" />
+                        </div>
+                    </div> 
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">节目列表：</label>
+                        <div class="col-lg-8">
+                            <input type="hidden" id="ProgramId" name="ProgramId" value="@info.sProgmNo" />
+                            <input type="text" id="ProgramName" class="form-control" value="@PageHelper.getProgramInfoNameByNo(info.sProgmNo)" readonly onclick="onSelectPrograms()" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">播放类型：</label>
+                        <div class="col-lg-8">
+                            <select class="form-control" name="ProgmType" id="ProgmType">
+                                <option value="Default">默认</option>
+                                <option value="Looplay">轮播</option>
+                                <option value="Intercut">插播</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">播放方式：</label>
+                        <div class="col-lg-8">
+                            <select class="form-control" name="PlayMode" id="PlayMode">
+                                <option value="Local">本地播放</option>
+                                <option value="Online">在线播放</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-lg-3 control-label">设备列表：</label>
+                        <div class="col-lg-8">
+                            <input type="hidden" id="PlayerIds" name="PlayerIds" value="@info.sPlayerNos" />
+                            <textarea id="PlayerNames" class="form-control" readonly rows="3" onclick="onSelectPlayers()">@PageHelper.getPlayerInfoNameByNos(info.sPlayerNos)</textarea>  
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">播放日期：</label>
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control" name="StartDate" id="StartDate" value='@info.dStartDate.ToString("yyyy-MM-dd")' placeholder="开始日期" />
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control" name="EnditDate" id="EnditDate" value='@info.dEnditDate.ToString("yyyy-MM-dd")' placeholder="结束日期" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">播放周次：</label>
+                        <div class="col-lg-8">
+                            <input type="checkbox" name="PlayWeeks" id="WeekDay1" @if (info.sPlayWeeks.IndexOf('1') >= 0) { <text> checked</text>} value="1" />周一
+                            <input type="checkbox" name="PlayWeeks" id="WeekDay2" @if (info.sPlayWeeks.IndexOf('2') >= 0) { <text> checked</text>} value="2" />周二
+                            <input type="checkbox" name="PlayWeeks" id="WeekDay3" @if (info.sPlayWeeks.IndexOf('3') >= 0) { <text> checked</text>} value="3" />周三
+                            <input type="checkbox" name="PlayWeeks" id="WeekDay4" @if (info.sPlayWeeks.IndexOf('4') >= 0) { <text> checked</text>} value="4" />周四
+                            <input type="checkbox" name="PlayWeeks" id="WeekDay5" @if (info.sPlayWeeks.IndexOf('5') >= 0) { <text> checked</text>} value="5" />周五
+                            <input type="checkbox" name="PlayWeeks" id="WeekDay6" @if (info.sPlayWeeks.IndexOf('6') >= 0) { <text> checked</text>} value="6" />周六
+                            <input type="checkbox" name="PlayWeeks" id="WeekDay7" @if (info.sPlayWeeks.IndexOf('0') >= 0) { <text> checked</text>} value="0" />周日
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">播放时间：</label>
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control" name="StartTime" id="StartTime" value="@info.sStartTime" placeholder="开始时间" />
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="text" class="form-control" name="EnditTime" id="EnditTime" value="@info.sEnditTime" placeholder="结束时间" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">下发时间：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="DSchedule" id="DSchedule" value='@info.dPublishDate.ToString("yyyy-MM-dd HH:mm:ss")' placeholder="下发计划时间" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">备注：</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="Comments" id="Comments" rows="5">@info.sComments</textarea>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                        <div class="form-group m20">
+                            <button class="btn btn-primary btn-save" type="submit"><i class="fa fa-check"></i> <span>保存</span></button>
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

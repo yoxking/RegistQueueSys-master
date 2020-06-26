@@ -1,0 +1,97 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    ViewBag.Title = "UserInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    SUsersInfo info = (SUsersInfo)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+    $(document).ready(function () {
+    });
+    </script>
+}
+ 
+@using (Ajax.BeginForm("Save", null, new AjaxOptions()
+{
+    HttpMethod = "Post",
+    OnBegin = "SubAjax.Loading",
+    OnComplete = "SubAjax.Complate",
+    OnFailure = "SubAjax.Failure",
+    OnSuccess = "SubAjax.Success"
+},
+new { @class = "form-horizontal dig-from", @role = "form" }))
+{
+    <div class="wrapper-content">
+        <div class="panel-body">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">姓名</label>
+                        <div class="col-lg-8">
+                            <input type="hidden" name="sSuNo" id="sSuNo" value="@info.sSuNo" />
+                            <input type="text" class="form-control" name="sTrueName" id="sTrueName" value="@info.sTrueName" placeholder="用户姓名" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">性别</label>
+                        <div class="col-lg-8">
+                            <select name="iSex" id="iSex" class="form-control" datatype="*" nullmsg="请选择性别">
+                                <option value="1" @(info.iSex == 1 ? "selected" : "")>男</option>
+                                <option value="0" @(info.iSex == 0 ? "selected" : "")> 女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">管理员类型</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="sDeptNo" id="sDeptNo" value="@(info.iAdminFlag != 0 ? "系统管理员" : "分诊台管理员")" readonly placeholder="管理员类型" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">联系电话</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="sTelphone" id="sTelphone" value="@info.sTelphone" placeholder="联系电话" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">电子邮箱</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="sEMail" id="sEMail" value="@info.sEMail" placeholder="邮箱" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">身份证号</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="sUIDNo" id="sUIDNo" value="@info.sUIDNo" placeholder="身份证号" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">简介</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="sComments" id="sComments" rows="3" >@info.sComments</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="hr-line-dashed">
+                    <div class="form-group m20">
+                        <div class="col-sm-2 col-sm-offset-2">
+                            <button class="btn btn-primary" type="submit"><i class="fa fa-check"></i> <span>确定保存</span></button>
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 取消返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

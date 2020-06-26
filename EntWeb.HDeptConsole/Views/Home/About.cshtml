@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+
+    string copyRight = (string)ViewBag.StackHolder["CopyRight"];
+}
+
+<br />
+<br />
+<div class="layui-container">
+    <ul class="layui-timeline">
+        <li class="layui-timeline-item">
+            <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+            <div class="layui-timeline-content layui-text">
+                <h3 class="layui-timeline-title">关于系统</h3>
+                <p>
+                    当前版本：v3.2<br />
+                    版权所有：@copyRight<br />
+                </p>
+            </div>
+        </li>
+    </ul>
+</div>

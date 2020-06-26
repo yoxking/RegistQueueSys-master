@@ -1,0 +1,88 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+    ViewBag.Title = "配置";
+
+
+    string serverIp=ViewBag.ServerIp ;
+    string wtcpPort=ViewBag.WTcpPort;
+    string interval=ViewBag.Interval;
+    string registeMode = ViewBag.RegisteMode;
+}
+
+@section PageStyleSheet{
+    <style type="text/css">
+    </style>
+}
+
+@section PageJavascript{
+    <script type="text/javascript">
+
+        var  layer2;
+        $(document).ready(function () {
+            layui.use('layer', function () {
+                layer2 = layui.layer;
+            });
+        });
+
+        function saveSetting() {
+
+            var b = 0;
+            var serverIp = $("#ServerIp").val();
+            var wtcpPort = $("#WTcpPort").val();
+            var registeMode = $("#registeMode").val();
+
+            $.post(
+                "/Profile/UptSetting",
+                { a: Math.random(), sServerIp: serverIp, sWtcpPort: wtcpPort, sRegisteMode: registeMode },
+                function (data) {
+                    if (data === "SUCCESS") {
+                        layer2.msg('修改成功!');
+                    }
+                    else {
+                        layer2.msg('修改失败!');
+                    }
+                }
+            );
+        }
+    </script>
+}
+
+
+<div class="page-main">
+    <div class="row row-cards">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">主服务IP地址</label>
+                                <input type="text" class="form-control" id="ServerIp" name="ServerIp" placeholder="主服务IP地址" value="@serverIp">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">主服务端口</label>
+                                <input type="text" class="form-control"  id="WTcpPort" name="WTcpPort" placeholder="主服务端口" value="@wtcpPort">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">报到模式</label>
+                                <select id="registeMode" name="registeMode" class="form-control"  >
+                                    <option value="MANUAL" @if(registeMode.Equals("MANUAL")) { <text> selected </text> }>手动报到</option>
+                                    <option value="AUTO"  @if(registeMode.Equals("AUTO")) { <text> selected </text>  }>自动报到</option>
+                                </select> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-primary" onclick="saveSetting()">保存</button>
+                    <button class="btn btn-primary" onclick="closeLayer()">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

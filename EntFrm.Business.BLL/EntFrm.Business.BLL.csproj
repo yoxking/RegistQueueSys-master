@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0FE30493-6FA2-4156-B5D5-AEBC52817DFD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EntFrm.Business.BLL</RootNamespace>
+    <AssemblyName>EntFrm.Business.BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\EntDebug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\EntWeb.Web.BkConsole\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntFrm.Business.DALFactory, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EntDebug\EntFrm.Business.DALFactory.dll</HintPath>
+    </Reference>
+    <Reference Include="EntFrm.Business.IDAL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EntDebug\EntFrm.Business.IDAL.dll</HintPath>
+    </Reference>
+    <Reference Include="EntFrm.Business.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EntDebug\EntFrm.Business.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="EntFrm.Framework.Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EntDebug\EntFrm.Framework.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BranchInfoBLL.cs" />
+    <Compile Include="CallerInfoBLL.cs" />
+    <Compile Include="ContentClassBLL.cs" />
+    <Compile Include="ContentInfoBLL.cs" />
+    <Compile Include="CounterInfoBLL.cs" />
+    <Compile Include="DsDwloadFlowsBLL.cs" />
+    <Compile Include="DsHrtbeatFlowsBLL.cs" />
+    <Compile Include="DsMaterialClassBLL.cs" />
+    <Compile Include="DsMaterialInfoBLL.cs" />
+    <Compile Include="DsPlayerClassBLL.cs" />
+    <Compile Include="DsPlayerInfoBLL.cs" />
+    <Compile Include="DsProgramClassBLL.cs" />
+    <Compile Include="DsProgramInfoBLL.cs" />
+    <Compile Include="DsPublishFlowsBLL.cs" />
+    <Compile Include="DsQuartzInfoBLL.cs" />
+    <Compile Include="DsResultFlowsBLL.cs" />
+    <Compile Include="DsVersionInfoBLL.cs" />
+    <Compile Include="EvaluateFlowsBLL.cs" />
+    <Compile Include="EvaluatorInfoBLL.cs" />
+    <Compile Include="LEDDisplayBLL.cs" />
+    <Compile Include="LEDMatrixBLL.cs" />
+    <Compile Include="LogsInfoBLL.cs" />
+    <Compile Include="MessageInfoBLL.cs" />
+    <Compile Include="OperateFlowsBLL.cs" />
+    <Compile Include="OperateHistoryBLL.cs" />
+    <Compile Include="OrganizInfoBLL.cs" />
+    <Compile Include="PermitInfoBLL.cs" />
+    <Compile Include="ProcessFlowsBLL.cs" />
+    <Compile Include="ProcessHistoryBLL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecipeDetailsBLL.cs" />
+    <Compile Include="RecipeFlowsBLL.cs" />
+    <Compile Include="RecipeHistoryBLL.cs" />
+    <Compile Include="RegistFlowsBLL.cs" />
+    <Compile Include="RegistHistoryBLL.cs" />
+    <Compile Include="RoleInfoBLL.cs" />
+    <Compile Include="RolePermitBLL.cs" />
+    <Compile Include="RUsersInfoBLL.cs" />
+    <Compile Include="ServiceInfoBLL.cs" />
+    <Compile Include="ServiceRotaBLL.cs" />
+    <Compile Include="StafferInfoBLL.cs" />
+    <Compile Include="StafferRotaBLL.cs" />
+    <Compile Include="SUsersInfoBLL.cs" />
+    <Compile Include="SWorkFlowsBLL.cs" />
+    <Compile Include="SysParamsBLL.cs" />
+    <Compile Include="TicketFlowsBLL.cs" />
+    <Compile Include="TicketStyleBLL.cs" />
+    <Compile Include="UserRoleBLL.cs" />
+    <Compile Include="ViewOperatFlowsBLL.cs" />
+    <Compile Include="ViewRecipeFlowsBLL.cs" />
+    <Compile Include="ViewRegistFlowsBLL.cs" />
+    <Compile Include="ViewServiceRotaBLL.cs" />
+    <Compile Include="ViewStafferRotaBLL.cs" />
+    <Compile Include="ViewTicketFlowsBLL.cs" />
+    <Compile Include="VoiceInfoBLL.cs" />
+    <Compile Include="WaitAreaBLL.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

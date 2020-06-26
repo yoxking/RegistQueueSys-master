@@ -1,0 +1,91 @@
+﻿@{
+    Layout = null;
+
+    string appName = (string)ViewBag.StackHolder["AppName"];
+    string copyRight = (string)ViewBag.StackHolder["CopyRight"];
+}
+
+
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>分诊台管理平台-登录页面</title>
+    <link rel="stylesheet" href="~/content/layui/css/layui.css" type="text/css" /> 
+    <link rel="stylesheet" href="~/Content/css/style.default.css" type="text/css" /> 
+    <script type="text/javascript" src="~/content/layui/layui.all.js"></script> 
+    <!--[if IE 9]>
+        <link rel="stylesheet" media="screen" href="~/content/css/style.ie9.css"/>
+    <![endif]-->
+    <!--[if IE 8]>
+        <link rel="stylesheet" media="screen" href="~/content/css/style.ie8.css"/>
+    <![endif]-->  
+</head>
+
+<body class="loginpage">
+    <div class="loginbox">
+        <div class="loginboxinner">
+
+            <div class="logo">
+                <h1 class="logo"><span>分诊控制台</span></h1>
+                <span class="slogan" style="color:#eeeeee;font-size:14px;">@appName</span>
+            </div><!--logo-->
+
+            <br clear="all" /><br />
+         
+                <div class="username">
+                    <div class="usernameinner">
+                        <input type="text" name="username" id="username" placeholder="用户名" />
+                    </div>
+                </div>
+
+                <div class="password">
+                    <div class="passwordinner">
+                        <input type="password" name="password" id="password" placeholder="密码" />
+                    </div>
+                </div>
+
+                <button id="btnlogin" onclick="onlogin()">登录</button> 
+                <div class="keep">版权所有:2018 @copyRight</div>
+
+        </div><!--loginboxinner-->
+    </div><!--loginbox-->
+    <script type="text/javascript" src="~/Content/js/jquery-1.7.min.js" ></script>
+    <script type="text/javascript">
+        function onlogin() {
+             
+                var username = $('#username').val();
+                var password = $('#password').val(); 
+                var b = true;
+                var layer;
+                layui.use('layer', function () {
+                    layer = layui.layer;
+                });   
+
+                if (username == "" || password == "") {
+                    b = false;
+                } 
+
+                if (b) {
+                    $.post(
+                        "/System/Auth/AjaxLogin",
+                        { a: Math.random(), username: username, password: password},
+                        function (data) {
+                            if (data == "SUCCESS") {
+                                window.location = "/StaffData/MainFrame/Index";
+                            } 
+                            else { 
+                                layer.msg('账号或密码错误!');
+                            }
+                        }
+                    );
+                }
+                else {
+                    layer.msg('账号或密码不能为空!'); 
+                }  
+        }
+    </script>
+
+</body>
+</html>

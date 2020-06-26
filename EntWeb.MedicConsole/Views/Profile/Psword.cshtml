@@ -1,0 +1,94 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+    ViewBag.Title = "密码";
+}
+
+@section PageStyleSheet{
+    <style type="text/css">
+    </style>
+}
+
+@section PageJavascript{
+    <script type="text/javascript">
+
+        var  layer2;
+        $(document).ready(function () {
+            layui.use('layer', function () {
+                layer2 = layui.layer;
+            });
+        });
+
+        function savePsword() {
+
+            var b = 0; 
+            var oldPsword = $("#oldpsword").val();
+            var newPsword = $("#newpsword").val();
+            var newPsword2 = $("#newpsword2").val();
+
+            if (oldPsword === "" || newPsword === "" || newPsword2 === "") {
+                b = 1;
+            }
+            else if (newPsword2 !== newPsword) {
+                b = 2;
+            } 
+
+            if (b === 0) {
+                $.post(
+                    "/Profile/UptPsword",
+                    { a: Math.random(), sOldPsword: oldPsword, sNewPsword: newPsword },
+                    function (data) {
+                        if (data === "SUCCESS") {
+                            layer2.msg('密码修改成功!');
+                        }
+                        else {
+                            layer2.msg('密码修改失败!');
+                        }
+                    }
+                );
+            }
+            else if (b === 1) {
+                layer2.msg('账号或密码不能为空!');
+            }
+            else {
+                layer2.msg('两次输入的密码不相同!');
+            }
+        } 
+    </script>
+}
+
+
+<div class="page-main">
+    <div class="row row-cards">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row"> 
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">原密码</label>
+                                <input type="password" class="form-control" id="oldpsword" name="oldpsword" placeholder="原密码" >
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">新密码</label>
+                                <input type="password" class="form-control" id="newpsword" name="newpsword" placeholder="新密码" >
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">重复新密码</label>
+                                <input type="password" class="form-control" id="newpsword2" name="newpsword2" placeholder="重复新密码" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-primary" onclick="savePsword()">保存</button>
+                    <button class="btn btn-primary" onclick="closeLayer()">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

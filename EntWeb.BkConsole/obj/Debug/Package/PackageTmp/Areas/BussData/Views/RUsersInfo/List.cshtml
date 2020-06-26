@@ -1,0 +1,180 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Business.Model.Collections;
+@using EntWeb.BkConsole;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "病人信息管理";
+
+    RUsersInfoCollections infoList = (RUsersInfoCollections)ViewBag.StackHolder["infoList"];
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#selectAll").click(function () {
+                var ischecked = this.checked;
+                $("input:checkbox[name='infosId']").each(function () {
+                    if ($(this).attr("disabled") != "disabled") {
+                        this.checked = ischecked;
+                    }
+                }); 
+            }); 
+        });
+
+        //点击添加
+        function addnew() {
+            dig.addModel('添加病人信息', '/BussData/RUsersInfo/Add', 890, 550, function () {
+                if (this.returnValue == 'Success') {
+                    location.reload();
+                }
+            });
+        }
+
+        //点击修改
+        function update(n) {
+            dig.addModel('编辑病人信息', '/BussData/RUsersInfo/Edit/' + n, 890, 550, function () {
+                if (this.returnValue == 'Success') {
+                    location.reload();
+                }
+            });
+        }
+
+        //点击查看
+        function detail(n) {
+            dig.addModel('查看病人详细', '/BussData/RUsersInfo/Detail/' + n, 890, 550, function () {
+            });
+        }
+
+        function deletes() {
+            var msg = "你确定要删除勾选的记录吗?";
+            dig.confirm('删除操作', msg, function () {
+                var result = "";
+                $("input:checkbox[name='infosId']").each(function () {
+                    if (this.checked) {
+                        result += this.value + ";"
+                    }
+                });
+
+                if (result == "") {
+                    dig.alertError("提示", "请选择要删除的记录！");
+                } else {
+                    result = result.substring(0, result.length - 1);
+
+                    $.post('/BussData/RUsersInfo/Delete?ids=' + result, '', function (result) {
+                        if (result.Status == 'Success') {
+                            location.reload();
+                        } else {
+                            dig.alertError('提示', resul.Message);
+                        }
+                    }, 'json');
+                }
+            });
+        }
+
+    </script>
+}
+
+<!-- table star -->
+<div class="row col-lg-12">
+    <div class="wrapper wrapper-content animated fadeInUp">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>病人信息管理</h5>
+                <div class="ibox-tools rboor">
+                    &nbsp;
+                    @*<a class="btn btn-primary btn-xs p310" id="addnew" onclick="addnew();"><i class="im-plus"></i> 新增</a>
+                    <a class="btn btn-primary btn-xs p310" id="deletes" onclick="deletes();"><i class="im-remove4"></i> 删除</a>*@
+                </div>
+            </div>
+            <div class="ibox-content">
+                <!-- search star -->
+                @using (Ajax.BeginForm("Search", null, new AjaxOptions() { }, new { @id = "form1", @class = "form-horizontal", @method = "post" }))
+                {
+                    <div class="form-horizontal clearfix">
+                        <div class="col-lg-4 col-sm-3 pl0" style="width:50%;">
+                            &nbsp;
+                        </div>
+                        <div class="col-lg-4 col-sm-4" style="float:right;">
+                            <div class="form-group">
+                                <div class="col-lg-12 col-sm-12 input-group">
+                                    @Html.TextBox("sKeyword", null, new { @class = "input-sm form-control", @placeholder = "请输入姓名或者身份证号" })
+                                    <span class="input-group-btn">
+                                        <button type="submit" onclick="submit()" class="btn btn-sm btn-primary"> 搜索</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!-- search end -->
+                <div class="divider"></div><br />
+                <div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <table id="example" class="table table-striped table-bordered table-hover dataTables-example dataTable" cellspacing="0" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th class="tn" style="padding: 10px 5px !important;width:50px !important;"><input id="selectAll" name="selectAll" type="checkbox" value=""></th>
+                                <th>姓名</th> 
+                                <th>年龄</th>
+                                <th>性别</th> 
+                                <th>身份证号</th> 
+                                <th>电话</th>  
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (null == infoList || infoList.Count < 1)
+                            {
+                                <tr>
+                                    <td colspan="7">暂无信息</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (RUsersInfo m in infoList)
+                                {
+                                    <tr>
+                                        <td class="tn">
+                                            <input type="checkbox" name="infosId" value="@m.sRUserNo" />
+                                        </td> 
+                                        <td>
+                                            @m.sCnName
+                                        </td> 
+                                        <td>
+                                            @m.iAge
+                                        </td>
+                                        <td>
+                                            @(m.iSex==0?"女":"男")
+                                        </td> 
+                                        <td>
+                                            @m.sIdCardNo
+                                        </td> 
+                                        <td>
+                                            @m.sTelphone
+                                        </td>  
+                                        <td>
+                                            @*<a class="btn btn-primary btn-xs p310" id="modify" onclick="update(@m.sRUserNo)"><i class="im-pencil2"></i> 编辑</a>*@
+                                            <a class="btn btn-primary btn-xs p310" id="detail" onclick="detail('@m.sRUserNo')"><i class="im-pencil2"></i> 详细</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                    <!-- page -->
+                    <div class="bottom">
+                        @Html.Partial("_Paging")
+                    </div>
+                    <!-- page -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

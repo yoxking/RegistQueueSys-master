@@ -1,0 +1,117 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    CallerInfo info = (CallerInfo)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script>
+}
+
+<form class="form-horizontal">
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">呼叫器编号：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="CallerNo" id="CallerNo" value="@info.sCallerNo" readonly placeholder="编号"  />
+                        </div>
+                    </div>
+
+                    <div class="clearfix f-hafl">
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">呼叫器名称：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="CallerName" id="CallerName" value="@info.sCallerName" placeholder="发送者编号"  />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">呼叫器串口：</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" name="SerialPort" id="SerialPort" placeholder="呼叫器串口" value="@info.sSerialPort"  />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">呼叫器地址码：</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" name="PhyAddr" id="PhyAddr" placeholder="呼叫器地址码" value="@info.iPhyAddr"  />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:3px; padding-right:5px;">呼叫器协议：</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" name="Protocol" id="Protocol" placeholder="呼叫器协议" value="@info.sProtocol" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:3px; padding-right:5px;">通信模式：</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" name="CommMode" id="CommMode" placeholder="通信模式" value="@info.sCommMode" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:3px; padding-right:5px;">评价器：</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" name="EvaVCode" id="EvaVCode" placeholder="评价器地址码" value="@PageHelper.getEvaluatorInfoNameByNo(info.sEvalorNo)"  />
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">比特率：</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" name="Baudrate" id="Baudrate" placeholder="比特率" value="@info.iBaudrate"  />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">备注：</label>
+                            <div class="col-lg-8">
+                                <textarea type="text" class="form-control" name="Comments" id="Comments" rows="5" >@info.sComments</textarea>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                            <div class="form-group m20">
+                                <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

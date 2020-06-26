@@ -1,0 +1,1338 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<ItemData> itemList = (List<ItemData>)ViewBag.ItemList;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+    </style>
+}
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+
+        var table;
+        var layer;
+
+        jQuery(document).ready(function () {
+
+            layui.use('layer', function () { //独立版的layer无需执行这一句
+                layer = layui.layer; //独立版的layer无需执行这一句
+            });
+
+            layui.use('table', function () {
+                table = layui.table;
+
+                //展示已知数据
+                table.render({
+                    elem: '#mytable1',
+                    id: 'idTable1',
+                    cols: [[ //标题栏
+                        {
+                            checkbox: true,
+                            LAY_CHECKED: false
+                        } //默认全选
+                        , {
+                            field: 'TicketNo',
+                            title: '序号',
+                            width: 150,
+                            sort: true
+                        }, {
+                            field: 'RUserName',
+                            title: '病人姓名',
+                            width: 150,
+                            templet: '#ruserTpl',
+                            sort: true
+                        }, {
+                            field: 'StafferName',
+                            title: '挂号医生',
+                            width: 150
+                        }, {
+                            field: 'ProcessState',
+                            title: '状态',
+                            width: 150,
+                            style: "color:red;"
+                        }, {
+                            field: 'PriorityType',
+                            title: '优先',
+                            width: 120
+                        }, {
+                            field: 'DelayTime',
+                            title: '延迟(分钟)',
+                            width: 150
+                        }, {
+                            field: 'EnqueueTime',
+                            title: '挂号时间',
+                            width: 150,
+                            templet: function (d) {
+                                if (d !== null) {
+
+                                    var val = d.EnqueueTime;
+                                    var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+                                    var hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                                    var minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                                    return hour + ":" + minute;
+                                }
+                                return "";
+                            }
+                        }, {
+                            field: 'BeginTime',
+                            title: '叫号时间',
+                            width: 150,
+                            templet: function (d) {
+                                if (d !== null) {
+
+                                    var val = d.BeginTime;
+                                    var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+                                    var hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                                    var minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                                    return hour + ":" + minute;
+                                }
+                                return "";
+                            }
+                        }, {
+                            field: 'PFlowNo',
+                            title: '编号',
+                            width: 150
+                        }]],
+                    skin: 'row', //表格风格
+                    even: true,
+                    page: true, //是否显示分页
+                    limits: [20, 40, 60],
+                    limit: 20, //每页默认显示的数量
+                    height: 400,
+                    url: '/StaffData/MainFrame/getDataList_Queuing',
+                    request: {
+                        pageName: 'pageIndex', //页码的参数名称，默认：page
+                        limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                    },
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: ''
+                    },
+                    done: function (res, curr, count) {
+                    }
+                });
+
+                //展示已知数据
+                table.render({
+                    elem: '#mytable2',
+                    id: 'idTable2',
+                    cols: [[ //标题栏
+                        {
+                            checkbox: true,
+                            LAY_CHECKED: false
+                        } //默认全选
+                        , {
+                            field: 'TicketNo',
+                            title: '序号',
+                            width: 150,
+                            sort: true
+                        }, {
+                            field: 'RUserName',
+                            title: '病人姓名',
+                            width: 150,
+                            templet: '#ruserTpl',
+                            sort: true
+                        }, {
+                            field: 'StafferName',
+                            title: '挂号医生',
+                            width: 150
+                        }, {
+                            field: 'ProcessState',
+                            title: '状态',
+                            width: 150,
+                            style: "color:red;"
+                        }, {
+                            field: 'PriorityType',
+                            title: '优先',
+                            width: 120
+                        }, {
+                            field: 'DelayTime',
+                            title: '延迟(分钟)',
+                            width: 150
+                        }, {
+                            field: 'EnqueueTime',
+                            title: '挂号时间',
+                            width: 150,
+                            templet: function (d) {
+                                if (d !== null) {
+
+                                    var val = d.EnqueueTime;
+                                    var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+                                    var hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                                    var minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                                    return hour + ":" + minute;
+                                }
+                                return "";
+                            }
+                        }, {
+                            field: 'BeginTime',
+                            title: '叫号时间',
+                            width: 150,
+                            templet: function (d) {
+                                if (d !== null) {
+
+                                    var val = d.BeginTime;
+                                    var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+                                    var hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                                    var minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                                    return hour + ":" + minute;
+                                }
+                                return "";
+                            }
+                        }, {
+                            field: 'PFlowNo',
+                            title: '编号',
+                            width: 150
+                        }]],
+                    skin: 'row', //表格风格
+                    even: true,
+                    page: true, //是否显示分页
+                    limits: [20, 40, 60],
+                    limit: 20, //每页默认显示的数量
+                    height: 400,
+                    url: '/StaffData/MainFrame/getDataList_Waiting',
+                    request: {
+                        pageName: 'pageIndex', //页码的参数名称，默认：page
+                        limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                    },
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: ''
+                    },
+                    done: function (res, curr, count) {
+                    }
+                });//展示已知数据
+
+                table.render({
+                    elem: '#mytable3',
+                    id: 'idTable3',
+                    cols: [[ //标题栏
+                        {
+                            checkbox: true,
+                            LAY_CHECKED: false
+                        } //默认全选
+                        , {
+                            field: 'TicketNo',
+                            title: '序号',
+                            width: 150,
+                            sort: true
+                        }, {
+                            field: 'RUserName',
+                            title: '病人姓名',
+                            width: 150,
+                            templet: '#ruserTpl',
+                            sort: true
+                        }, {
+                            field: 'StafferName',
+                            title: '挂号医生',
+                            width: 150
+                        }, {
+                            field: 'ProcessState',
+                            title: '状态',
+                            width: 150,
+                            style: "color:red;"
+                        }, {
+                            field: 'PriorityType',
+                            title: '优先',
+                            width: 120
+                        }, {
+                            field: 'DelayTime',
+                            title: '延迟(分钟)',
+                            width: 150
+                        }, {
+                            field: 'EnqueueTime',
+                            title: '挂号时间',
+                            width: 150,
+                            templet: function (d) {
+                                if (d !== null) {
+
+                                    var val = d.EnqueueTime;
+                                    var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+                                    var hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                                    var minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                                    return hour + ":" + minute;
+                                }
+                                return "";
+                            }
+                        }, {
+                            field: 'BeginTime',
+                            title: '叫号时间',
+                            width: 150,
+                            templet: function (d) {
+                                if (d !== null) {
+
+                                    var val = d.BeginTime;
+                                    var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+                                    var hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                                    var minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                                    return hour + ":" + minute;
+                                }
+                                return "";
+                            }
+                        }, {
+                            field: 'PFlowNo',
+                            title: '编号',
+                            width: 150
+                        }]],
+                    skin: 'row', //表格风格
+                    even: true,
+                    page: true, //是否显示分页
+                    limits: [20, 40, 60],
+                    limit: 20, //每页默认显示的数量
+                    height: 400,
+                    url: '/StaffData/MainFrame/getDataList_Finished',
+                    request: {
+                        pageName: 'pageIndex', //页码的参数名称，默认：page
+                        limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                    },
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: ''
+                    },
+                    done: function (res, curr, count) {
+                    }
+                });
+
+                //展示已知数据
+                table.render({
+                    elem: '#mytable5',
+                    id: 'idTable5',
+                    cols: [[ //标题栏
+                        {
+                            checkbox: true,
+                            LAY_CHECKED: false
+                        } //默认全选
+                        , {
+                            field: 'RUserName',
+                            title: '病人姓名',
+                            width: 150,
+                            templet: '#ruserTpl',
+                            sort: true
+                        }, {
+                            field: 'RegistType',
+                            title: '挂号类型',
+                            width: 150
+                        }, {
+                            field: 'StafferName',
+                            title: '挂号医生',
+                            width: 150
+                        }, {
+                            field: 'RegWorkTime',
+                            title: '时间',
+                            width: 150
+                        },{
+                            field: 'DataFrom',
+                            title: '来源',
+                            width: 150
+                        }, {
+                            field: 'RegistTime',
+                            title: '挂号时间',
+                            width: 150,
+                            templet: function (d) {
+                                if (d !== null) {
+
+                                    var val = d.RegistTime;
+                                    var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+                                    var hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                                    var minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                                    return hour + ":" + minute;
+                                }
+                                return "";
+                            }
+                        }, {
+                            field: 'RegistNo',
+                            title: '编号',
+                            width: 150
+                        }]],
+                    skin: 'row', //表格风格
+                    even: true,
+                    page: true, //是否显示分页
+                    limits: [20, 40, 60],
+                    limit: 20, //每页默认显示的数量
+                    height: 400,
+                    url: '/StaffData/MainFrame/getDataList_Regist',
+                    request: {
+                        pageName: 'pageIndex', //页码的参数名称，默认：page
+                        limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                    },
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: ''
+                    },
+                    done: function (res, curr, count) {
+                    }
+                });
+
+            });
+
+            jQuery('#cardNo').bind('keyup', function (event) {
+
+                if (event.keyCode === "13") {
+                    onRegisterScan();
+                }
+            });
+
+            //setInterval('onRefresh_TableData()', 60000);
+            (function ($) {
+                funObj = {
+                    timeUserFun: 'timeUserFun'
+                };
+
+                $[funObj.timeUserFun] = function (t) {
+                    var time = t || 2;
+                    var userTime = time * 60;
+                    var objTime = {
+                        init: 0,
+                        time: function () {
+                            objTime.init += 1;
+                            if (objTime.init === userTime) {
+                                location.reload();  // 用户到达未操作事件 做一些处理
+                            }
+                        },
+                        eventFun: function () {
+                            clearInterval(testUser);
+                            objTime.init = 0;
+                            testUser = setInterval(objTime.time, 1000);
+                        }
+                    };
+
+                    var testUser = setInterval(objTime.time, 1000);
+
+                    var body = document.querySelector('html');
+                    body.addEventListener("click", objTime.eventFun);
+                    body.addEventListener("keydown", objTime.eventFun);
+                    body.addEventListener("mousemove", objTime.eventFun);
+                    body.addEventListener("mousewheel", objTime.eventFun);
+                };
+            })(window);
+            //     直接调用 参数代表分钟数,可以有一位小数;
+            //timeUserFun(1);
+        });
+
+        function onRefresh_TableData(StafferNo) {
+
+            var sWhere = "";
+            if (StafferNo !== null && StafferNo !== "") {
+                if (StafferNo == "99999999") {
+                    sWhere = "1=1";
+                }
+                else {
+                    jQuery("#sltedItem").val(StafferNo);
+                    sWhere = " StafferNo = '" + StafferNo + "' ";
+                }
+            }
+
+            console.log(sWhere)
+
+            if (table !== null) {
+
+                table.reload('idTable1', {
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: sWhere
+                    }
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+
+                table.reload('idTable2', {
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: sWhere
+                    }
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+
+                table.reload('idTable3', {
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: sWhere
+                    }
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+
+                table.reload('idTable5', {
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: sWhere
+                    }
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            }
+        }
+
+        function onCallBackData(data) {
+            jQuery("#cbackItem").val(data);
+        }
+
+        //等待人员操作
+        function onSetPriority() {
+
+            var checkStatus = table.checkStatus('idTable1'), data = checkStatus.data;
+
+            if (data.length > 0) {
+
+                var idlist = "";
+                jQuery.each(data, function (i, item) {
+
+                    idlist += item.PFlowNo + ";";
+                });
+
+                if (idlist !== null && idlist.length > 0) {
+                    idlist = idlist.substring(0, idlist.length - 1);
+                }
+
+                layer.open({
+                    type: 2,
+                    title: '优先类型',
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['600px', '400px'],
+                    content: ['/StaffData/MainFrame/PriorityType', 'no'],
+                    end: function () {
+
+                        var temp = jQuery("#cbackItem").val();
+                        if (temp > 0) {
+                            jQuery.ajax({
+                                type: "POST",
+                                url: "/StaffData/MainFrame/doSetPriority",
+                                data: {
+                                    ids: idlist,
+                                    priorityType: temp + ""
+                                },
+                                success: function (data) {
+                                    layer.msg(data.Message);
+                                    onRefresh_Table1();
+                                },
+                                complete: function (XMLHttpRequest, textStatus) {
+                                },
+                                error: function () {
+                                    layer.msg("操作失败!", { icon: 2 });
+                                }
+                            });
+                        }
+                    }
+                });
+
+            } else {
+                layer.msg("请先选择一条记录!", { icon: 0 });
+            }
+        }
+
+        function onSetTriage() {
+
+            var checkStatus = table.checkStatus('idTable1'), data = checkStatus.data;
+
+            if (data.length > 0) {
+
+                var idlist = "";
+                jQuery.each(data, function (i, item) {
+
+                    idlist += item.PFlowNo + ";";
+                });
+
+                if (idlist !== null && idlist.length > 0) {
+                    idlist = idlist.substring(0, idlist.length - 1);
+                }
+
+                layer.open({
+                    type: 2,
+                    title: '分诊',
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['600px', '400px'],
+                    content: ['/StaffData/MainFrame/SelectStaff', 'no'],
+                    end: function () {
+                        var temp = jQuery("#cbackItem").val();
+                        if (temp > 0) {
+                            jQuery.ajax({
+                                type: "POST",
+                                url: "/StaffData/MainFrame/doSetTriage",
+                                data: {
+                                    ids: idlist,
+                                    StafferNo: temp + ""
+                                },
+                                success: function (data) {
+                                    layer.msg(data.Message);
+                                    onRefresh_Table1();
+                                },
+                                complete: function (XMLHttpRequest, textStatus) {
+                                },
+                                error: function () {
+                                    layer.msg("操作失败!", { icon: 2 });
+                                }
+                            });
+                        }
+                    }
+                });
+            } else {
+                layer.msg("请先选择一条记录!", { icon: 0 });
+            }
+        }
+
+        function onSetExchange() {
+
+            var checkStatus = table.checkStatus('idTable1'), data = checkStatus.data;
+
+            if (data.length > 0) {
+
+                var idlist = "";
+                jQuery.each(data, function (i, item) {
+
+                    idlist += item.PFlowNo + ";";
+                });
+
+                if (idlist !== null && idlist.length > 0) {
+                    idlist = idlist.substring(0, idlist.length - 1);
+                }
+
+                layer.open({
+                    type: 2,
+                    title: '转诊',
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['600px', '400px'],
+                    content: ['/StaffData/MainFrame/SelectStaff', 'no'],
+                    end: function () {
+                        var temp = jQuery("#cbackItem").val();
+                        if (temp > 0) {
+                            jQuery.ajax({
+                                type: "POST",
+                                url: "/StaffData/MainFrame/doSetExchange",
+                                data: {
+                                    ids: idlist,
+                                    StafferNo: temp + ""
+                                },
+                                success: function (data) {
+                                    layer.msg(data.Message);
+                                    onRefresh_Table1();
+                                },
+                                complete: function (XMLHttpRequest, textStatus) {
+                                },
+                                error: function () {
+                                    layer.msg("操作失败!", { icon: 2 });
+                                }
+                            });
+                        }
+                    }
+                });
+            } else {
+                layer.msg("请先选择一条记录!", { icon: 0 });
+            }
+        }
+
+        function onSetHangup() {
+            var checkStatus = table.checkStatus('idTable1'), data = checkStatus.data;
+
+            if (data.length > 0) {
+
+                var idlist = "";
+                jQuery.each(data, function (i, item) {
+
+                    idlist += item.PFlowNo + ";";
+                });
+
+                if (idlist !== null && idlist.length > 0) {
+                    idlist = idlist.substring(0, idlist.length - 1);
+                }
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "/StaffData/MainFrame/doSetHangup",
+                    data: {
+                        ids: idlist
+                    },
+                    success: function (data) {
+                        layer.msg(data.Message);
+                        onRefresh_Table1();
+                        onRefresh_Table3();
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                    },
+                    error: function () {
+                        layer.msg("操作失败!", { icon: 2 });
+                    }
+                });
+            } else {
+                layer.msg("请先选择一条记录!", { icon: 0 });
+            }
+        }
+
+        function onSetDelayTime() {
+
+            var checkStatus = table.checkStatus('idTable1'), data = checkStatus.data;
+
+            if (data.length > 0) {
+
+                var idlist = "";
+                jQuery.each(data, function (i, item) {
+
+                    idlist += item.PFlowNo + ";";
+                });
+
+                if (idlist !== null && idlist.length > 0) {
+                    idlist = idlist.substring(0, idlist.length - 1);
+                }
+
+                layer.open({
+                    type: 2,
+                    title: '延迟',
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['600px', '400px'],
+                    content: ['/StaffData/MainFrame/DelayTime', 'no'],
+                    end: function () {
+                        var temp = jQuery("#cbackItem").val();
+                        if (temp > 0) {
+                            jQuery.ajax({
+                                type: "POST",
+                                url: "/StaffData/MainFrame/doSetDelayTime",
+                                data: {
+                                    ids: idlist,
+                                    delayTime: temp + ""
+                                },
+                                success: function (data) {
+                                    layer.msg(data.Message);
+                                    onRefresh_Table1();
+                                },
+                                complete: function (XMLHttpRequest, textStatus) {
+                                },
+                                error: function () {
+                                    layer.msg("操作失败!", { icon: 2 });
+                                }
+                            });
+                        }
+                    }
+                });
+            } else {
+                layer.msg("请先选择一条记录!", { icon: 0 });
+            }
+        }
+
+        function onSetPassticket() {
+            var checkStatus = table.checkStatus('idTable1'), data = checkStatus.data;
+
+            if (data.length > 0) {
+
+                var idlist = "";
+                jQuery.each(data, function (i, item) {
+
+                    idlist += item.PFlowNo + ";";
+                });
+
+                if (idlist !== null && idlist.length > 0) {
+                    idlist = idlist.substring(0, idlist.length - 1);
+                }
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "/StaffData/MainFrame/doSetPassticket",
+                    data: {
+                        ids: idlist
+                    },
+                    success: function (data) {
+                        layer.msg(data.Message);
+                        onRefresh_Table1();
+                        onRefresh_Table2();
+                        onRefresh_Table3();
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                    },
+                    error: function () {
+                        layer.msg("操作失败!", { icon: 2 });
+                    }
+                });
+            } else {
+                layer.msg("请先选择一条记录!", { icon: 0 });
+            }
+        }
+
+        function onSetGreenChannel() {
+            var checkStatus = table.checkStatus('idTable1'), data = checkStatus.data;
+
+            if (data.length > 0) {
+
+                var idlist = "";
+                jQuery.each(data, function (i, item) {
+
+                    idlist += item.PFlowNo + ";";
+                });
+
+                if (idlist !== null && idlist.length > 0) {
+                    idlist = idlist.substring(0, idlist.length - 1);
+                }
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "/StaffData/MainFrame/doSetGreenChannel",
+                    data: {
+                        ids: idlist
+                    },
+                    success: function (data) {
+                        layer.msg(data.Message);
+                        onRefresh_Table1();
+                        onRefresh_Table3();
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                    },
+                    error: function () {
+                        layer.msg("操作失败!", { icon: 2 });
+                    }
+                });
+            } else {
+                layer.msg("请先选择一条记录!", { icon: 0 });
+            }
+        }
+
+        function onAutoWaitticket() {
+            jQuery.ajax({
+                type: "POST",
+                url: "/StaffData/MainFrame/doAutoWaitticket",
+                success: function (data) {
+                    layer.msg(data.Message);
+                    onRefresh_Table1();
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                },
+                error: function () {
+                    layer.msg("操作失败!", { icon: 2 });
+                }
+            });
+        }
+
+        function onCallSpecTicket() {
+            var checkStatus = table.checkStatus('idTable1'), data = checkStatus.data;
+
+            if (data.length > 0) {
+
+                var idlist = data[0].PFlowNo;
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "/StaffData/MainFrame/doCallSpecTicket",
+                    data: {
+                        ids: idlist
+                    },
+                    success: function (data) {
+                        layer.msg(data.Message);
+                        onRefresh_Table1();
+                        onRefresh_Table2();
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                    },
+                    error: function () {
+                        layer.msg("操作失败!", { icon: 2 });
+                    }
+                });
+            } else {
+                layer.msg("请先选择一条记录!", { icon: 0 });
+            }
+        }
+
+        function onRefresh_Table1() {
+            var StafferNo = jQuery("#sltedItem").val();
+
+            if (StafferNo !== null && StafferNo.length > 0 && table !== null) {
+
+                var sWhere = " StafferNo = '" + StafferNo + "' ";
+                table.reload('idTable1', {
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: sWhere
+                    }
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            }
+        }
+
+        //叫号等候人员操作
+        function onRefresh_Table2() {
+            var StafferNo = jQuery("#sltedItem").val();
+
+            if (StafferNo !== null && StafferNo.length > 0 && table !== null) {
+
+                var sWhere = " StafferNo = '" + StafferNo + "' ";
+                table.reload('idTable2', {
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: sWhere
+                    }
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            }
+        }
+
+        //已就诊人员操作
+        function onSetDiagnosis() {
+            var checkStatus = table.checkStatus('idTable3'), data = checkStatus.data;
+
+            if (data.length > 0) {
+
+                var idlist = "";
+                jQuery.each(data, function (i, item) {
+
+                    idlist += item.PFlowNo + ";";
+                });
+
+                if (idlist !== null && idlist.length > 0) {
+                    idlist = idlist.substring(0, idlist.length - 1);
+                }
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "/StaffData/MainFrame/doSetDiagnosis",
+                    data: {
+                        ids: idlist
+                    },
+                    success: function (data) {
+                        layer.msg(data.Message);
+                        onRefresh_Table1();
+                        onRefresh_Table3();
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                    },
+                    error: function () {
+                        layer.msg("操作失败!", { icon: 2 });
+                    }
+                });
+            } else {
+                layer.msg("请先选择一条记录!", { icon: 0 });
+            }
+        }
+
+        function onSetRediagnosis() {
+            var checkStatus = table.checkStatus('idTable3'), data = checkStatus.data;
+
+            if (data.length > 0) {
+
+                var idlist = "";
+                jQuery.each(data, function (i, item) {
+
+                    idlist += item.PFlowNo + ";";
+                });
+
+                if (idlist !== null && idlist.length > 0) {
+                    idlist = idlist.substring(0, idlist.length - 1);
+                }
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "/StaffData/MainFrame/doSetRediagnosis",
+                    data: {
+                        ids: idlist
+                    },
+                    success: function (data) {
+                        layer.msg(data.Message);
+                        onRefresh_Table1();
+                        onRefresh_Table3();
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                    },
+                    error: function () {
+                        layer.msg("操作失败!", { icon: 2 });
+                    }
+                });
+            } else {
+                layer.msg("请先选择一条记录!", { icon: 0 });
+            }
+        }
+
+        function onRefresh_Table3() {
+            var StafferNo = jQuery("#sltedItem").val();
+
+            if (StafferNo !== null && StafferNo.length > 0 && table !== null) {
+
+                var sWhere = " StafferNo = '" + StafferNo + "' ";
+                table.reload('idTable3', {
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: sWhere
+                    }
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            }
+        }
+
+        //未报到人员操作
+        function onUpdateRUser() {
+
+            layer.open({
+                type: 2,
+                title: '录入信息',
+                shadeClose: true,
+                shade: false,
+                maxmin: false, //开启最大化最小化按钮
+                area: ['680px', '420px'],
+                content: ['/StaffData/MainFrame/RegistUser', 'no'],
+                end: function () {
+                    onRefresh_Table5();
+                }
+            });
+        }
+
+        function onRegisterMore() {
+            var checkStatus = table.checkStatus('idTable5'), data = checkStatus.data;
+
+            if (data.length > 0) {
+
+                var idlist = "";
+                jQuery.each(data, function (i, item) {
+
+                    idlist += item.RegistNo + ";";
+                });
+
+                if (idlist !== null && idlist.length > 0) {
+                    idlist = idlist.substring(0, idlist.length - 1);
+                }
+
+                layer.open({
+                    type: 2,
+                    title: '分诊',
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['600px', '400px'],
+                    content: ['/StaffData/MainFrame/SelectStaff', 'no'],
+                    end: function () {
+                        var temp = jQuery("#cbackItem").val();
+                        if (temp > 0) {
+
+                            jQuery.ajax({
+                                type: "POST",
+                                url: "/StaffData/MainFrame/doRegisterMore",
+                                data: {
+                                    ids: idlist,
+                                    serviceNo: '',
+                                    StafferNo: temp
+                                },
+                                success: function (data) {
+                                    layer.msg(data.Message);
+                                    onRefresh_Table5();
+                                },
+                                complete: function (XMLHttpRequest, textStatus) {
+                                },
+                                error: function () {
+                                    layer.msg("操作失败!", { icon: 2 });
+                                }
+                            });
+                        }
+                    }
+                }); 
+
+            } else {
+                layer.msg("请先选择一条记录!", { icon: 0 });
+            }
+        }
+
+        function onRegisterScan() {
+            var cardno = jQuery("#cardNo").val();
+
+            if (cardno !== null && cardno.length > 0) {
+
+                layer.open({
+                    type: 2,
+                    title: '分诊',
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['600px', '400px'],
+                    content: ['/StaffData/MainFrame/SelectStaff', 'no'],
+                    end: function () {
+                        var temp = jQuery("#cbackItem").val();
+                        if (temp > 0) {
+
+                            jQuery.ajax({
+                                type: "POST",
+                                url: "/StaffData/MainFrame/doRegisterMore",
+                                data: {
+                                    ids: cardno,
+                                    serviceNo: '',
+                                    StafferNo: temp
+                                },
+                                success: function (data) {
+                                    layer.msg(data.Message);
+                                    onRefresh_Table5();
+                                },
+                                complete: function (XMLHttpRequest, textStatus) {
+                                },
+                                error: function () {
+                                    layer.msg("操作失败!", { icon: 2 });
+                                }
+                            });
+                        }
+                    }
+                }); 
+            } else {
+                layer.msg("请输入扫描码!", { icon: 0 });
+            }
+        }
+
+        function onRefresh_Table5() {
+            var StafferNo = jQuery("#sltedItem").val();
+
+            if (StafferNo !== null && StafferNo.length > 0 && table !== null) {
+
+                var sWhere = " StafferNo = '" + StafferNo + "' ";
+                table.reload('idTable5', {
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: sWhere
+                    }
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            }
+        }
+
+        function onOpenLayer(id) {
+
+            if (id !== "") {
+                layer.open({
+                    type: 2,
+                    title: '病人详细',
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['660px', '420px'],
+                    content: ['/Common/RUserInfo/Detail?id=' + id, 'no'],
+                    end: function () {
+                        onRefresh();
+                    }
+                });
+            }
+        }
+
+        function onQueuingQuery1() {
+            var keyword = jQuery("#keyword1").val();
+
+            var sWhere = " 1=1 ";
+            if (keyword !== null && keyword.length > 0 ) {
+
+                sWhere = " ( CnName Like '%" + keyword + "%' Or EnName Like '%" + keyword + "%' Or PFlowNo Like '%" + keyword + "%' ) ";
+            }
+            table.reload('idTable1', {
+                where: { //设定异步数据接口的额外参数，任意设
+                    condition: sWhere
+                }
+                , page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+
+        }
+
+        function onQueuingQuery3() {
+            var keyword = jQuery("#keyword3").val();
+            var pstatus = jQuery("#dpPStatus3").val();
+
+            var sWhere = " 1=1 ";
+            if (keyword !== null && keyword.length > 0 ) {
+
+                sWhere = " ( CnName Like '%" + keyword + "%' Or EnName Like '%" + keyword + "%'  Or PFlowNo Like '%" + keyword + "%' ) ";
+            }
+
+            if (pstatus !== '0') {
+                sWhere += " And ProcessState=" + pstatus;
+            }
+
+            table.reload('idTable3', {
+                where: { //设定异步数据接口的额外参数，任意设
+                    condition: sWhere
+                }
+                , page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        }
+
+        function onRegisterQuery() {
+            var keyword = jQuery("#keyword5").val();
+
+            var sWhere = " 1=1 ";
+            if (keyword !== null && keyword.length > 0 ) {
+
+                sWhere = " ( CnName Like '%" + keyword + "%' Or EnName Like '%" + keyword + "%' Or RFlowNo Like '%" + keyword + "%' ) ";
+            }
+
+            table.reload('idTable5', {
+                where: { //设定异步数据接口的额外参数，任意设
+                    condition: sWhere
+                }
+                , page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        }
+
+        function onRegisteRCard() {
+            parent.Staffer_RCardRegisteDialog();
+        }
+
+        function onEnqueueRCard() {
+            parent.Staffer_RCardEnqueueDialog();
+        }
+
+        function onRegisteSCode() {
+            parent.Staffer_SCodeRegisteDialog();
+        }
+
+        function onEnqueueSCode() {
+            parent.Staffer_SCodeEnqueueDialog();
+        }
+
+    </script>
+    <script type="text/html" id="ruserTpl">
+        <button type="button" onclick="onOpenLayer('{{d.RUserNo}}')" class="stdbtn">{{d.RUserName}}</button>
+    </script>
+}
+
+<input type="hidden" id="sltedItem" name="sltedItem" value="99999999" />
+<input type="hidden" id="cbackItem" name="cbackItem" value="0" />
+<div class="vernav2 iconmenu">
+    <ul>
+        <li>
+            <a href="#formsub" class="editor">医生列表</a>
+            <span class="arrow"></span>
+            <ul id="formsub">
+                @if (itemList != null && itemList.Count > 0)
+                {
+                    foreach (ItemData item in itemList)
+                    {
+                        <li><a href="javascript:void(0)" onclick="onRefresh_TableData('@item.ItemName')">@item.ItemValue</a></li>
+                    }
+                }
+                else
+                {
+                    <li><a href="javascript:void(0)">暂无医生</a></li>
+                }
+            </ul>
+        </li>
+    </ul>
+    <a class="togglemenu"></a>
+    <br /><br />
+</div><!--leftmenu-->
+
+<div class="centercontent">
+
+    <div class="pageheader">
+        <ul class="hornav">
+            <li class="current"><a href="#activities1">排队人员列表</a></li>
+            <li><a href="#activities2">叫号等候列表</a></li>
+            <li><a href="#activities3">已诊人员列表</a></li>
+            <li><a href="#activities5">报到人员列表</a></li>
+        </ul>
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div id="activities1" class="subcontent">
+
+            <div class="msghead">
+                <ul class="msghead_menu">
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onSetPriority()">优先</a></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onSetTriage()">分诊</a></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onSetExchange()">转诊</a></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onSetHangup()">挂起</a></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onSetDelayTime()">延迟</a></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onSetPassticket()">过号</a></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onSetGreenChannel()">绿色通道</a></li>
+                    @*<li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onSetGreenChannel()">弃号</a></li>*@
+                    @*<li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onAutoWaitticket()">按序叫号</a></li>*@
+                    @*<li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onCallSpecTicket()">叫号</a></li>*@
+                    @*<li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onRefresh_Table1()">刷新</a></li>*@
+                    <li style="margin-left:50px;"><span style="padding:10px 2px;">检索：</span></li>
+                    <li style="margin-right:10px;"><input type="text" name="keyword1" id="keyword1" placeholder="请输入门诊号或者姓名" style="padding:6px 2px;" /></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onQueuingQuery1()">查找</a></li>
+                </ul>
+                <div class="clearall"></div>
+            </div><!--msghead-->
+
+            <div class="table-container">
+                <table class="layui-hide" id="mytable1" lay-filter="datatable"></table>
+            </div>
+
+        </div><!-- #updates -->
+
+        <div id="activities2" class="subcontent" style="display: none;">
+
+            <div class="msghead">
+                <ul class="msghead_menu">
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onRefresh_Table2()">刷新</a></li>
+                </ul>
+                <span class="clearall"></span>
+            </div><!--msghead-->
+
+            <div class="table-container">
+                <table class="layui-hide" id="mytable2" lay-filter="datatable"></table>
+            </div>
+
+        </div><!-- #updates -->
+
+        <div id="activities3" class="subcontent" style="display: none;">
+
+            <div class="msghead">
+                <ul class="msghead_menu">
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onSetDiagnosis()">初诊</a></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onSetRediagnosis()">复诊</a></li>
+                    @*<li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onRefresh_Table3()">刷新</a></li>*@
+                    <li style="margin-left:50px;"><span style="padding:10px 2px;">检索：</span></li>
+                    <li style="margin-right:10px;">
+                        <select id="dpPStatus3" style="padding:6px 2px;">
+                            <option value="0">所有人员</option>
+                            <option value="32">已就诊</option>
+                            <option value="33">过号</option>
+                            <option value="34">挂起</option>
+                            <option value="35">绿色通道</option>
+                        </select>
+                    </li>
+                    <li style="margin-right:10px;"><input type="text" name="keyword3" id="keyword3" placeholder="请输入门诊号或者姓名" style="padding:6px 2px;" /></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onQueuingQuery3()">查找</a></li>
+                </ul>
+                <span class="clearall"></span>
+            </div><!--msghead-->
+
+            <div class="table-container">
+                <table class="layui-hide" id="mytable3" lay-filter="datatable"></table>
+            </div>
+
+        </div><!-- #updates -->
+
+        <div id="activities5" class="subcontent" style="display: none;">
+
+            <div class="msghead">
+                <ul class="msghead_menu">
+                    <li style="margin-right:10px;"><input type="text" name="cardNo" id="cardNo" placeholder="扫码" style="padding:6px 2px;" /></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onRegisterScan()">扫码报到</a></li>
+                    <li style="margin-right:50px;"><a href="javascript:void(0)" onclick="onRegisterMore()">报到</a></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onUpdateRUser()">手工录入</a></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onEnqueueRCard()">刷卡报到</a></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onRegisteRCard()">刷卡挂号</a></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onEnqueueSCode()">扫码报到</a></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onRegisteSCode()">扫码挂号</a></li>
+                    <li style="margin-left:50px;"><span style="padding:10px 2px;">检索：</span></li>
+                    <li style="margin-right:10px;"><input type="text" name="keyword5" id="keyword5" placeholder="请输入门诊号或者姓名" style="padding:6px 2px;" /></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onRegisterQuery()">查找</a></li>
+                </ul>
+                <span class="clearall"></span>
+            </div><!--msghead-->
+
+            <div class="table-container">
+                <table class="layui-hide" id="mytable5" lay-filter="datatable"></table>
+            </div>
+
+        </div><!-- #updates -->
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div><!-- centercontent -->

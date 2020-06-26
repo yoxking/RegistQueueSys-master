@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8C59004E-C997-4F58-9B6F-ADDC976F4B6D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>EntFrm.DataAdapter</RootNamespace>
+    <AssemblyName>EntFrm.DataAdapter</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DotNetty.Buffers, Version=0.4.8.0, Culture=neutral, PublicKeyToken=bc13ca065fa06c29, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetty.Buffers.0.4.8\lib\net45\DotNetty.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetty.Codecs, Version=0.4.8.0, Culture=neutral, PublicKeyToken=bc13ca065fa06c29, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetty.Codecs.0.4.8\lib\net45\DotNetty.Codecs.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetty.Common, Version=0.4.8.0, Culture=neutral, PublicKeyToken=bc13ca065fa06c29, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetty.Common.0.4.8\lib\net45\DotNetty.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetty.Handlers, Version=0.4.8.0, Culture=neutral, PublicKeyToken=bc13ca065fa06c29, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetty.Handlers.0.4.8\lib\net45\DotNetty.Handlers.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetty.Transport, Version=0.4.8.0, Culture=neutral, PublicKeyToken=bc13ca065fa06c29, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetty.Transport.0.4.8\lib\net45\DotNetty.Transport.dll</HintPath>
+    </Reference>
+    <Reference Include="EntFrm.Business.BLL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\EntFrm.Business.BLL.dll</HintPath>
+    </Reference>
+    <Reference Include="EntFrm.Business.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\EntFrm.Business.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="EntFrm.Framework.Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\EntFrm.Framework.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentScheduler, Version=5.3.0.0, Culture=neutral, PublicKeyToken=b76503528a14ebd1, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentScheduler.5.3.0\lib\net40\FluentScheduler.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.1.0\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.1.1.1\lib\netstandard1.1\Microsoft.Extensions.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.1.1.1\lib\netstandard1.1\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.12.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.3.1\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.4.0\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.4.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="websocket-sharp">
+      <HintPath>..\packages\WebSocketSharp.1.0.3-rc11\lib\websocket-sharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Business\AdapterFactory.cs" />
+    <Compile Include="Business\BsfuyouAdapter.cs" />
+    <Compile Include="Business\CqEyeykAdapter.cs" />
+    <Compile Include="Business\IAdapterBusiness.cs" />
+    <Compile Include="Business\IBusinessHelper.cs" />
+    <Compile Include="Business\IServiceBusiness.cs" />
+    <Compile Include="Business\LzfuyouAdapter.cs" />
+    <Compile Include="Business\PingtangAdapter.cs" />
+    <Compile Include="Business\Qh5thrmAdapter.cs" />
+    <Compile Include="Business\SantaizyyAdapter.cs" />
+    <Compile Include="Business\WzfuyouAdapter.cs" />
+    <Compile Include="Business\YcrenminAdapter.cs" />
+    <Compile Include="Business\YyshuangAdapter.cs" />
+    <Compile Include="Connected Services\DicContentService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\MessagePackService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\MssgQueueService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SettingDialog.Designer.cs">
+      <DependentUpon>SettingDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\BranchData.cs" />
+    <Compile Include="Entities\CmmdData.cs" />
+    <Compile Include="Entities\CounterData.cs" />
+    <Compile Include="Entities\HeartBeat.cs" />
+    <Compile Include="Entities\NettyData.cs" />
+    <Compile Include="Entities\NettyType.cs" />
+    <Compile Include="Entities\ProgramData.cs" />
+    <Compile Include="Entities\ResultData.cs" />
+    <Compile Include="Entities\ServiceData.cs" />
+    <Compile Include="Entities\StafferData.cs" />
+    <Compile Include="Entities\VTicketData.cs" />
+    <Compile Include="Entities\WaitingData.cs" />
+    <Compile Include="Entities\WhereData.cs" />
+    <Compile Include="Entities\WSocketData.cs" />
+    <Compile Include="Entities\XSubData.cs" />
+    <Compile Include="MsSqlDAL\HisBranchDAL.cs" />
+    <Compile Include="MsSqlDAL\HisDocRotaDAL.cs" />
+    <Compile Include="MsSqlDAL\HisDoctorDAL.cs" />
+    <Compile Include="MsSqlDAL\HisInspectDAL.cs" />
+    <Compile Include="MsSqlDAL\HisPatientDAL.cs" />
+    <Compile Include="MsSqlDAL\HisPhexamDAL.cs" />
+    <Compile Include="MsSqlDAL\HisRecipeDetailDAL.cs" />
+    <Compile Include="MsSqlDAL\HisRecipeInfoDAL.cs" />
+    <Compile Include="MsSqlDAL\HisRegisteDAL.cs" />
+    <Compile Include="MySqlDAL\HisBranchDAL.cs" />
+    <Compile Include="MySqlDAL\HisDocRotaDAL.cs" />
+    <Compile Include="MySqlDAL\HisDoctorDAL.cs" />
+    <Compile Include="MySqlDAL\HisInspectDAL.cs" />
+    <Compile Include="MySqlDAL\HisPatientDAL.cs" />
+    <Compile Include="MySqlDAL\HisPhexamDAL.cs" />
+    <Compile Include="MySqlDAL\HisRecipeDetailDAL.cs" />
+    <Compile Include="MySqlDAL\HisRecipeInfoDAL.cs" />
+    <Compile Include="MySqlDAL\HisRegisteDAL.cs" />
+    <Compile Include="OracleDAL\HisBranchDAL.cs" />
+    <Compile Include="OracleDAL\HisDocRotaDAL.cs" />
+    <Compile Include="OracleDAL\HisDoctorDAL.cs" />
+    <Compile Include="OracleDAL\HisInspectDAL.cs" />
+    <Compile Include="OracleDAL\HisPatientDAL.cs" />
+    <Compile Include="OracleDAL\HisPhexamDAL.cs" />
+    <Compile Include="OracleDAL\HisRecipeDetailDAL.cs" />
+    <Compile Include="OracleDAL\HisRecipeInfoDAL.cs" />
+    <Compile Include="OracleDAL\HisRegisteDAL.cs" />
+    <Compile Include="HisData\HisBranchInfo.cs" />
+    <Compile Include="HisData\HisDoctorInfo.cs" />
+    <Compile Include="HisData\HisDoctorRota.cs" />
+    <Compile Include="HisData\HisInspectInfo.cs" />
+    <Compile Include="HisData\HisPatientInfo.cs" />
+    <Compile Include="HisData\HisPhexamInfo.cs" />
+    <Compile Include="HisData\HisRecipeDetail.cs" />
+    <Compile Include="HisData\HisRecipeInfo.cs" />
+    <Compile Include="HisData\HisRequestUtil.cs" />
+    <Compile Include="MainFrame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainFrame.Designer.cs">
+      <DependentUpon>MainFrame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AsynQueue.cs" />
+    <Compile Include="Models\EventArgs.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Pubutils\IDbaseHelper.cs" />
+    <Compile Include="Pubutils\IEncryptHelper.cs" />
+    <Compile Include="Pubutils\IPageService.cs" />
+    <Compile Include="Pubutils\IPublicConsts.cs" />
+    <Compile Include="Pubutils\IPublicHelper.cs" />
+    <Compile Include="Pubutils\WsRequestUtil.cs" />
+    <Compile Include="Pubutils\IUserContext.cs" />
+    <Compile Include="Pubutils\LoggerHelper.cs" />
+    <Compile Include="Pubutils\XmlConvertUtil.cs" />
+    <Compile Include="RegSoftware.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegSoftware.Designer.cs">
+      <DependentUpon>RegSoftware.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\MessageService.cs" />
+    <Compile Include="Services\NettyChannelMap.cs" />
+    <Compile Include="Services\NettyHostHandler.cs" />
+    <Compile Include="Services\NettyHostService.cs" />
+    <Compile Include="Services\PgmTaskService.cs" />
+    <Compile Include="Services\ScheduleService.cs" />
+    <Compile Include="Services\UpdateDataService.cs" />
+    <Compile Include="Services\WebSocketHandler.cs" />
+    <Compile Include="Services\WebSocketService.cs" />
+    <EmbeddedResource Include="Dialogs\SettingDialog.resx">
+      <DependentUpon>SettingDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainFrame.resx">
+      <DependentUpon>MainFrame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="RegSoftware.resx">
+      <DependentUpon>RegSoftware.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\DicContentService\DicContentService.wsdl" />
+    <None Include="Connected Services\DicContentService\EntFrm.DataAdapter.DicContentService.getDicContentByPageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\DicContentService\EntFrm.DataAdapter.DicContentService.getDicContentResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\DicContentService\IDicContent.wsdl" />
+    <None Include="Connected Services\MessagePackService\EntFrm.DataAdapter.MessagePackService.getMessageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\MessagePackService\EntFrm.DataAdapter.MessagePackService.sendMessageResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\MessagePackService\MessagePack.wsdl" />
+    <None Include="Connected Services\MessagePackService\MessagePackImplService.wsdl" />
+    <None Include="Connected Services\MssgQueueService\EntFrm.DataAdapter.MssgQueueService.AnilysisMQResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\MssgQueueService\EntFrm.DataAdapter.MssgQueueService.SendMQResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\MssgQueueService\MQtoWS.wsdl" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\DicContentService\configuration91.svcinfo" />
+    <None Include="Connected Services\DicContentService\configuration.svcinfo" />
+    <None Include="Connected Services\DicContentService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\MessagePackService\configuration91.svcinfo" />
+    <None Include="Connected Services\MessagePackService\configuration.svcinfo" />
+    <None Include="Connected Services\MessagePackService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\MssgQueueService\configuration91.svcinfo" />
+    <None Include="Connected Services\MssgQueueService\configuration.svcinfo" />
+    <None Include="Connected Services\MssgQueueService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="favicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\DicContentService\" />
+    <WCFMetadataStorage Include="Connected Services\MessagePackService\" />
+    <WCFMetadataStorage Include="Connected Services\MssgQueueService\" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

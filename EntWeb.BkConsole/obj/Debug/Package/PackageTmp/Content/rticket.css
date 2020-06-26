@@ -1,0 +1,76 @@
+﻿.layui-elem-quote {
+    line-height: 60px;
+    font-weight: bold;
+    font-size: 36px;
+}
+
+.f36 {
+    font-size: 36px;
+}
+
+.layui-card {
+    background-color: #1E5656;
+    margin: 30px;
+    font-size: 36px;
+    color: #FFFFFF;
+    font-weight: bold;
+    text-align: center;
+}
+
+.layui-card a {
+    display: block;
+    color: white;
+    line-height: 100px;
+}
+
+.layui-card a:hover{ 
+    color:red; 
+}
+    
+.fr {
+    float: right;
+}
+
+.m30 {
+    margin: 30px;
+    width: 50%;
+}
+
+.layui-form-pane .layui-form-label {
+    line-height: 60px;
+    height: 60px;
+    font-size: 36px;
+    width: 200px;
+}
+
+.layui-form-pane .layui-input-block {
+    margin-left: 200px;
+}
+
+.layui-form-pane .layui-input {
+    line-height: 60px;
+    height: 60px;
+    font-size: 36px;
+}
+
+.rb {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.layui-btn {
+    line-height: 60px;
+    height: 60px;
+    font-size: 36px;
+}
+
+.layui-btn-group {
+    margin-left: 30px;
+}
+
+    .layui-btn-group .layui-btn {
+        line-height: 60px;
+        height: 60px;
+        font-size: 36px;
+    }

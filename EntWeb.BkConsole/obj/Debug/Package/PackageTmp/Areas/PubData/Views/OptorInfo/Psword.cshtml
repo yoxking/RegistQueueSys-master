@@ -1,0 +1,79 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    ViewBag.Title = "PasswordSet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    SUsersInfo info = (SUsersInfo)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+    $(document).ready(function () {
+    });
+    </script>
+}
+
+@using (Ajax.BeginForm("UpdatePsword", null, new AjaxOptions()
+        {
+            HttpMethod = "Post",
+            OnBegin = "SubAjax.Loading",
+            OnComplete = "SubAjax.Complate",
+            OnFailure = "SubAjax.Failure",
+            OnSuccess = "SubAjax.Success"
+        },
+        new { @class = "form-horizontal mform tip-wal", @role = "form" }))
+{
+    <div class="wrapper-content">
+        <div class="panel-body">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">操作账号：</label>
+                        <div class="col-lg-8">
+                            <input type="hidden" name="sSuNo" id="sSuNo" value="@info.sSuNo" />
+                            <label style="padding-top:6px; position:absolute; font-size:14px; font-weight:200;">@info.sLoginID</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">原始密码：</label>
+                        <div class="col-lg-8">
+                            <input type="password" class="form-control" name="sOldPsword" id="sOldPsword" placeholder="原始密码" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">新密码：</label>
+                        <div class="col-lg-8">
+                            <input type="password" class="form-control" name="sNewPsword" id="sNewPsword" placeholder="新密码" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">确认密码：</label>
+                        <div class="col-lg-8">
+                            <input type="password" class="form-control" name="sNewPsword2" id="sNewPsword2" placeholder="确认密码" />
+                        </div>
+                    </div>
+                </div>
+                <div class="hr-line-dashed">
+                    <div class="form-group m20">
+                        <div class="col-sm-2 col-sm-offset-2">
+                            <button class="btn btn-primary" type="submit"><i class="fa fa-check"></i> <span>确定保存</span></button>
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 取消返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+

@@ -1,0 +1,36 @@
+delete from CallerInfo
+GO
+delete from CounterInfo
+GO
+delete from EvaluateFlows
+GO
+delete from IdCardInfo
+GO
+delete from IdentifyFlows
+GO
+delete from LEDDisplay
+GO
+delete from LogsInfo
+GO
+delete from OrganizInfo
+GO
+delete from PermitInfo
+GO
+delete from ProcessFlows
+GO
+delete from ServiceInfo
+GO
+delete from StaffInfo
+GO
+delete from SUsersInfo
+GO
+delete from SWorkFlows
+GO
+delete from TicketFlows
+GO
+delete from TicketStyle
+GO
+delete from TTSInfo
+GO
+delete from VoiceInfo
+GO 

@@ -1,0 +1,122 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    MessageInfo info = (MessageInfo)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script>
+}
+
+<form class="form-horizontal">
+    <form class="form-horizontal">
+        <div class="wrapper-content">
+            <div class="panel-body" style="padding-top:0px;">
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">编号：</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" name="MessNo" id="MessNo" value="@info.sMessNo" placeholder="编号" readonly="readonly" />
+                            </div>
+                        </div>
+                        <div class="clearfix f-hafl">
+                            <div class="col-hafl">
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">发送者：</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" name="MSender" id="MSender"value="@PageHelper.getStafferInfoNameByNo(info.sMSender)" placeholder="类型"  />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">发送时间：</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" name="SendDate" id="SendDate" value="@info.dSendDate.ToString("yyyy-MM-dd HH:mm")"  />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-hafl"> 
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">接收者：</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" name="MReceiver" id="MReceiver" placeholder="接收者" value="护士站" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">阅读时间：</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" name="ReceiveDate" id="ReceiveDate" value="@info.dReceiveDate.ToString("yyyy-MM-dd HH:mm")" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">消息标题：</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" name="MTitle" id="MTitle" value="@info.sMTitle" placeholder="消息标题" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">内容：</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" name="MContent" id="MContent" rows="5" >@info.sMContent</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">附件：</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" name="AttachFile" id="AttachFile" value="@info.sAttachFile" placeholder="附件" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">备注：</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" id="Comments" name="Comments" rows="3" >@info.sComments</textarea>
+                            </div>
+                        </div>
+
+                        <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                            <div class="form-group m20">
+                                <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</form>

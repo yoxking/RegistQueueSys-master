@@ -1,0 +1,10 @@
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\TestApp\bin\Debug\TestApp.exe.config
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\TestApp\bin\Debug\TestApp.exe
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\TestApp\bin\Debug\TestApp.pdb
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\TestApp\obj\Debug\TestApp.csprojAssemblyReference.cache
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\TestApp\obj\Debug\TestApp.Form1.resources
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\TestApp\obj\Debug\TestApp.Properties.Resources.resources
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\TestApp\obj\Debug\TestApp.csproj.GenerateResource.cache
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\TestApp\obj\Debug\TestApp.csproj.CoreCompileInputs.cache
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\TestApp\obj\Debug\TestApp.exe
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\TestApp\obj\Debug\TestApp.pdb

@@ -1,0 +1,31 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>分诊控制台</title>
+    <!-- BEGIN STYLES --> 
+    <link rel="stylesheet" href="~/content/layui/css/layui.css" type="text/css" /> 
+    @RenderSection("PageSpecificStyleSheetIncludes", required: false)
+    <!-- END STYLES -->
+</head>
+
+<body class="withvernav">
+    <div class="bodywrapper"> 
+
+        @RenderBody()
+
+    </div><!--bodywrapper-->
+    <!-- BEGIN JAVASCRIPTS -->
+    <script type="text/javascript" src="~/content/js/jquery-1.7.min.js"></script> 
+    <script type="text/javascript" src="~/content/layui/layui.all.js"></script> 
+
+    @RenderSection("PageSpecificJavascriptIncludes", required: false)
+    <!-- END JAVASCRIPTS -->
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+E:\Project_Storage\云零售收银管理系统\EntFrm.Solution\EntFrm.Framework.Utility\bin\Release\EntFrm.Framework.Utility.dll
+E:\Project_Storage\云零售收银管理系统\EntFrm.Solution\EntFrm.Framework.Utility\bin\Release\EntFrm.Framework.Utility.pdb
+E:\Project_Storage\云零售收银管理系统\EntFrm.Solution\EntFrm.Framework.Utility\bin\Release\Newtonsoft.Json.dll
+E:\Project_Storage\云零售收银管理系统\EntFrm.Solution\EntFrm.Framework.Utility\bin\Release\Newtonsoft.Json.xml
+E:\Project_Storage\云零售收银管理系统\EntFrm.Solution\EntFrm.Framework.Utility\obj\Release\EntFrm.Framework.Utility.dll
+E:\Project_Storage\云零售收银管理系统\EntFrm.Solution\EntFrm.Framework.Utility\obj\Release\EntFrm.Framework.Utility.pdb
+E:\Project_Storage\云零售收银管理系统\EntFrm.Solution\EntFrm.Framework.Utility\obj\Release\EntFrm.Framework.Utility.csprojResolveAssemblyReference.cache

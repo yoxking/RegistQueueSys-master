@@ -1,0 +1,144 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Framework.Utility;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    SUsersInfo info = (SUsersInfo)ViewBag.StackHolder;
+    List<ItemObject> itemList = (List<ItemObject>)ViewBag.ItemList;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+        $(document).ready(function () {            
+         });
+    </script>
+}
+
+@using (Ajax.BeginForm("Save", null, new AjaxOptions()
+                           {
+                               HttpMethod = "Post",
+                               OnBegin = "SubAjax.Loading",
+                               OnComplete = "SubAjax.Complate",
+                               OnFailure = "SubAjax.Failure",
+                               OnSuccess = "SubAjax.Success"
+                           },
+                          new { @class = "form-horizontal dig-from", @role = "form" }))
+{
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">部门：</label>
+                        <div class="col-lg-8">
+                            <select id="sBranchNo" name="sBranchNo" class="form-control select2" datatype="*" nullmsg="请选择分组">
+                                <option value="00000000" )>默认</option>
+                                @if (itemList != null && itemList.Count > 0)
+                                {
+                                    foreach (ItemObject item in itemList)
+                                    {
+                                        <option value="@item.Name" @if(item.Name.Equals(info.sBranchNo)) { <text>selected</text>}>@item.Value</option>
+                                    }
+                                } 
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="clearfix f-hafl">
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">账号：</label>
+                                <div class="col-lg-8">
+                                    <input type="hidden" name="sSuNo" id="sSuNo" value="@info.sSuNo" />
+                                    <input type="text" class="form-control" name="sLoginID" id="sLoginID" value="@info.sLoginID" placeholder="登录账号" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">邮箱：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="sEMail" id="sEMail" value="@info.sEMail" placeholder="邮箱" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" >性别：</label>
+                                <div class="col-lg-8">
+                                    <select name="iSex" id="iSex" class="form-control" datatype="*" nullmsg="请选择性别">
+                                        <option value="1" @(info.iSex == 1 ? "selected" : "")>男</option>
+                                        <option value="0" @(info.iSex == 0 ? "selected" : "")> 女</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">用户姓名：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="sTrueName" id="sTrueName" value="@info.sTrueName" placeholder="用户姓名" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">联系电话：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="sTelphone" id="sTelphone" value="@info.sTelphone" placeholder="联系电话" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">管理员类型：</label>
+                                <div class="col-lg-8" >
+                                    <select name="iAdminFlag" id="iAdminFlag" class="form-control" datatype="*" nullmsg="请选择类型">
+                                        <option value="1" @(info.iAdminFlag == 1 ? "selected" : "")>系统管理员</option>
+                                        <option value="0" @(info.iAdminFlag == 0 ? "selected" : "")>分诊台管理员</option>
+                                    </select> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">身份证号：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="sUIDNo" id="sUIDNo" value="@info.sUIDNo" placeholder="身份证号" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">简介：</label>
+                        <div class="col-lg-8">
+                            <textarea class="form-control" name="sComments" rows="5" id="sComments">@info.sComments</textarea> 
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed" style="margin:0;">
+                        <div class="form-group m20">
+                            <div class="col-sm-2 col-sm-offset-2">
+                                <button class="btn btn-primary btn-save" type="submit"><i class="fa fa-check"></i> <span>确定保存</span></button>
+                                <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 取消返回</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

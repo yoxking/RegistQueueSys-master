@@ -1,0 +1,321 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "发药";
+}
+
+@section PageStyleSheet{
+    <style type="text/css">
+        .layui-table-cell {
+            height: 40px;
+            line-height: 40px;
+        }
+    </style>
+}
+
+@section PageJavascript{
+    <script type="text/javascript">
+
+        var table;
+        var layer;
+
+        $(document).ready(function () {
+
+            layui.use('layer', function () { //独立版的layer无需执行这一句
+                layer = layui.layer; //独立版的layer无需执行这一句
+            });
+
+            layui.use('table', function () {
+                table = layui.table;
+
+                //展示已知数据
+                table.render({
+                    elem: '#mytable1',
+                    id: 'idTable1',
+                    cols: [[ //标题栏
+                        {
+                            checkbox: true,
+                            LAY_CHECKED: false
+                        } //默认全选
+                        , {
+                            field: 'TicketNo',
+                            title: '票号',
+                            width: 100
+                        }, {
+                            field: 'RUserName',
+                            title: '姓名',
+                            width: 150,
+                            templet: '#ruserTpl'
+                        }, {
+                            field: 'EnqueueTime',
+                            title: '排队时间',
+                            width: 100,
+                            templet: function (d) {
+                                if (d !== null) {
+
+                                    var val = d.EnqueueTime;
+                                    var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+                                    var hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                                    var minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                                    return hour + ":" + minute;
+                                }
+                                return "";
+                            }
+                        }, {
+                            field: 'RegistNo',
+                            title: '病历编号',
+                            width: 150,
+                            templet: '#recipeTpl'
+                        }, {
+                            field: 'ProcessState',
+                            title: '状态',
+                            width: 100, 
+                            templet:'#stateTpl'
+                        }, {
+                            field: 'DataFrom',
+                            title: '药房',
+                            width: 150 
+                        }, {
+                            title: '操作',
+                            width: 300,
+                            templet: '#opertTpl'
+                        }, {
+                            field: 'RFlowNo',
+                            title: '编号',
+                            width: 150,
+                            sort: true
+                        }]],
+                    skin: 'row', //表格风格
+                    even: true,
+                    page: true, //是否显示分页
+                    limits: [10, 20, 50],
+                    limit: 10, //每页默认显示的数量
+                    height: 480,
+                    url: '/MFrame/getDataList_TakeRecipe',
+                    request: {
+                        pageName: 'pageIndex', //页码的参数名称，默认：page
+                        limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                    },
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: ''
+                    },
+                    done: function (res, curr, count) {
+                    }
+                });
+
+            });
+        });
+
+        function onQueryit() {
+
+            var processState = $("#processState").val();
+            var keyword = $("#keyword").val();
+
+            var sWhere = " ProcessState=" + processState + " And ( CnName Like '%" + keyword + "%' Or EnName Like '%" + keyword + "%' Or RFlowNo='" + keyword + "') ";
+
+            if (processState == 2) {
+                sWhere = " ProcessState<=" + processState + " And ( CnName Like '%" + keyword + "%' Or EnName Like '%" + keyword + "%' Or RFlowNo='" + keyword + "') ";
+            }
+
+            $("#hdWhere").val(sWhere);
+            refreshTable();
+        }
+
+        function refreshTable() {
+
+            var sWhere = $("#hdWhere").val();
+
+            if (table !== null) {
+
+                table.reload('idTable1', {
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: sWhere
+                    }
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            }
+        }
+
+        function callRecipe(id) {
+
+            if (id !== "") {
+                $.post(
+                    "/Recipe/CallRecipe",
+                    { a: Math.random(), sRFlowNo: id },
+                    function (data) {
+                        if (data === "SUCCESS") {
+                            //layer.msg('呼叫成功!');
+                            //window.location.reload();
+                            refreshTable();
+                        }
+                        else {
+                            layer.msg('呼叫失败!');
+                        }
+                    }
+                );
+            }
+        }
+
+        function passRecipe(id) {
+
+            if (id !== "") {
+                $.post(
+                    "/Recipe/PassRecipe",
+                    { a: Math.random(), sRFlowNo: id },
+                    function (data) {
+                        if (data === "SUCCESS") {
+                            //layer.msg('呼叫成功!');
+                            //window.location.reload();
+                            refreshTable();
+                        }
+                        else {
+                            layer.msg('过号失败!');
+                        }
+                    }
+                );
+            }
+        }
+
+        function requeueRecipe(id) {
+
+            if (id !== "") {
+                $.post(
+                    "/Recipe/RequeueRecipe",
+                    { a: Math.random(), sRFlowNo: id },
+                    function (data) {
+                        if (data === "SUCCESS") {
+                            //layer.msg('重新排队成功!');
+                            //window.location.reload();
+                            refreshTable();
+                        }
+                        else {
+                            layer.msg('重新排队失败!');
+                        }
+                    }
+                );
+            }
+        }
+
+        function finishRecipe(id) {
+
+            if (id !== "") {
+                $.post(
+                    "/Recipe/FinishRecipe",
+                    { a: Math.random(), sRFlowNo: id },
+                    function (data) {
+                        if (data === "SUCCESS") {
+                            //window.location.reload();
+
+                            refreshTable();
+                        }
+                        else {
+                            layer.msg('操作失败!');
+                        }
+                    }
+                );
+            }
+        }
+
+        function doFinishRecipes() {
+
+            var checkStatus = table.checkStatus('idTable1'), data = checkStatus.data;
+
+            if (data.length > 0) {
+
+                var idlist = "";
+                jQuery.each(data, function (i, item) {
+
+                    idlist += item.RFlowNo + ";";
+                });
+
+                if (idlist !== null && idlist.length > 0) {
+                    idlist = idlist.substring(0, idlist.length - 1);
+                }
+
+                $.post(
+                    "/Recipe/FinishRecipes",
+                    { a: Math.random(), sRFlowNos: idlist },
+                    function (data) {
+                        if (data === "SUCCESS") {
+
+                            refreshTable();
+                        }
+                        else {
+                            layer.msg('操作失败!');
+                        }
+                    }
+                );
+            }
+        }
+
+    </script>
+    <script type="text/html" id="stateTpl">
+        {{# if(d.ProcessState=='叫号中') { }}
+            <span style="color:green">{{ d.ProcessState }}</span> 
+        {{# } else { }}
+            <span style="color:red">{{ d.ProcessState }}</span>
+        {{# } }}
+    </script>
+    <script type="text/html" id="opertTpl">
+        {{# if(d.ProcessState!='已完成') { }}
+        <button class="btn btn-primary" onclick="callRecipe('{{ d.RFlowNo }}')">呼叫</button>
+        <button class="btn btn-primary" onclick="passRecipe('{{ d.RFlowNo }}')">过号</button>
+        <button class="btn btn-primary" onclick="requeueRecipe('{{ d.RFlowNo }}')">重新排队</button>
+        <button class="btn btn-primary" onclick="finishRecipe('{{ d.RFlowNo }}')">完成发药</button>
+        {{# } }}
+    </script>
+}
+
+
+<div class="container">
+    <div class="page-header">
+        <h1 class="page-title">
+            列表
+        </h1>
+        <div class="page-subtitle">
+            &nbsp;<input type="hidden" id="hdWhere" name="hdWhere" />
+        </div>
+        <div class="page-options d-flex">
+            <select class="form-control custom-select w-auto" id="processState" name="processState">
+                <option value="2">未呼叫</option>
+                <option value="3">已过号</option>
+                <option value="4">已呼叫</option>
+            </select>
+            <div class="input-icon ml-2">
+                <span class="input-icon-addon">
+                    <i class="fe fe-search"></i>
+                </span>
+                <input type="text" id="keyword" name="keyword" class="form-control w-10" placeholder="输入卡号或姓名查找">
+            </div>
+            <div class="input-icon ml-2">
+                <button class="btn btn-primary btn-block" onclick="onQueryit()">查找</button>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cards">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="col-10">
+                        <h3 class="card-title">呼叫排队列表</h3>
+                    </div>
+                    <div class="col-2">
+                        <button class="btn btn-primary btn-block" onclick="doFinishRecipes()">批量完成发药</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <!--表格-->
+                            <table class="layui-hide" id="mytable1" lay-filter="datatable"></table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,176 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    LEDMatrix info = (LEDMatrix)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script>
+}
+
+@using (Ajax.BeginForm("Save", null, new AjaxOptions()
+{
+    HttpMethod = "Post",
+    OnBegin = "SubAjax.Loading",
+    OnComplete = "SubAjax.Complate",
+    OnFailure = "SubAjax.Failure",
+    OnSuccess = "SubAjax.Success"
+},
+                                                            new { @class = "form-horizontal dig-from", @role = "form" }))
+{
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">编号：</label>
+                        <div class="col-lg-8"> 
+                            <input type="text" class="form-control" name="MatrixNo" id="MatrixNo" value="@info.sMatrixNo" readonly placeholder="编号" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">综合屏名称：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="MatrixName" id="MatrixName" value="@info.sMatrixName" placeholder="综合屏名称" />
+                        </div>
+                    </div>
+
+                    <div class="clearfix f-hafl">
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">模式：</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" name="MatrixModel" id="MatrixModel" value="@info.sMatrixModel" placeholder="模式" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">串口：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <select class="form-control" name="SerialPort" id="SerialPort">
+                                        <option value="COM1" @if (info.sSerialPort == "COM1") { <text> selected</text>}>COM1</option>
+                                        <option value="COM2" @if (info.sSerialPort == "COM2") { <text> selected</text>}>COM2</option>
+                                        <option value="COM3" @if (info.sSerialPort == "COM3") { <text> selected</text>}>COM3</option>
+                                        <option value="COM4" @if (info.sSerialPort == "COM4") { <text> selected</text>}>COM4</option>
+                                        <option value="COM5" @if (info.sSerialPort == "COM5") { <text> selected</text>}>COM5</option>
+                                        <option value="COM6" @if (info.sSerialPort == "COM6") { <text> selected</text>}>COM6</option>
+                                        <option value="COM7" @if (info.sSerialPort == "COM7") { <text> selected</text>}>COM7</option>
+                                        <option value="COM8" @if (info.sSerialPort == "COM8") { <text> selected</text>}>COM8</option>
+                                        <option value="COM9" @if (info.sSerialPort == "COM9") { <text> selected</text>}>COM9</option>
+                                    </select> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">协议：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <select class="form-control" name="Protocol" id="Protocol">
+                                        <option value="Eq2013" @if (info.sProtocol == "Eq2013") { <text> selected</text>}>Eq2013</option>
+                                        <option value="Pdc101" @if (info.sProtocol == "Pdc101") { <text> selected</text>}>Pdc101</option> 
+                                    </select> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">行数：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="DisplayRows" id="DisplayRows" value="@info.iDisplayRows" placeholder="行数" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">比特率：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="Baudrate" id="Baudrate" value="@info.iBaudrate" placeholder="比特率" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">格式：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="ParamFormat" id="ParamFormat" value="@info.sParamFormat" placeholder="格式" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">端口：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="LocalPort" id="LocalPort" value="@info.sLocalPort" placeholder="端口" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">超时：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="TimeoutSec" id="TimeoutSec" value="@info.iTimeoutSec" placeholder="超时" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">地址：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <input class="form-control" name="PhyAddr" id="PhyAddr" value="@info.iPhyAddr" placeholder="地址" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">IP地址：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="IpAddress" id="IpAddress" value="@info.sIpAddress" placeholder="IP地址" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">业务组：</label>
+                        <div class="col-lg-8" >
+                            <input type="text" class="form-control" name="ServiceNos" id="ServiceNos" value="@info.sServiceNos"  />
+                        </div> 
+                    </div> 
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">显示格式：</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="DisplayFormat" id="DisplayFormat" rows="2">@info.sDisplayFormat</textarea>
+                        </div>
+                    </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">备注：</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" name="Comments" id="Comments" rows="3" placeholder="备注">@info.sComments</textarea>
+                            </div>
+                        </div>
+                   
+                    <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                        <div class="form-group m20">
+                            <button class="btn btn-primary btn-save" type="submit"><i class="fa fa-check"></i> <span>保存</span></button>
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

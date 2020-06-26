@@ -1,0 +1,155 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Business.Model.Collections;
+
+@{
+    Layout = null;
+
+    string sLoginId = (string)ViewBag.LoginId;
+    string sTopMenu = (string)ViewBag.TopMenu;
+    string sSubMenu = (string)ViewBag.SubMenu;
+    string sAppName = (string)ViewBag.AppName;
+
+    BranchInfoCollections branchList = (BranchInfoCollections)ViewBag.BranchList;
+    string branchNo=ViewBag.BranchNo.ToString();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>分诊管理系统-排队叫号管理</title>
+    <link href="/Content/themes/css/dpl-min.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/themes/css/jquery.gritter.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/themes/css/fonts.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/themes/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/themes/css/dialog.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/themes/css/index.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="header">
+        <div class="dl-title">
+            <span>@sAppName</span>
+            <img src="/Content/themes/images/admin/admin_logo_arrow.gif" class="logo-arrow" />
+        </div>
+        <div style="position:absolute;top:25px;line-height:25px;margin-left:50%;">
+            @*@{Html.RenderAction("Refresh");}*@&nbsp;
+        </div>
+        <div class="fyt_nav dl-main-nav">
+            <div class="dl-inform"><div class="dl-inform-title"><s class="dl-inform-icon dl-up"></s></div></div>
+            <ul id="J_Nav" class="nav-list ks-clear">
+                @Html.Raw(sTopMenu) 
+            </ul>
+        </div>
+
+        <div class="dl-log">
+            <div class="dl_sel_site"> 
+                <select id="branchno" class="form-control" >
+                    @if (branchList != null && branchList.Count > 0)
+                    {
+                        foreach (BranchInfo info in branchList)
+                        {
+                            <option value="@info.sBranchNo" @if (info.sBranchNo.Equals(branchNo)) { <text> selected</text> } > @info.sBranchName</option>
+                        }
+                    }
+                    else
+                    {
+                       <option value="00000000">请选择分诊台</option>
+                    }
+                </select>
+                <button class="btn btn-primary btn-save"  type="button"  id="btn-exbranch"><i class="fa fa-check"></i> <span>切换</span></button> 
+            </div>
+            <div class="dl_sel_site dl_sel" style="margin-right:50px;">
+                <a href="javascript:void(0)" id="sel_site">
+                    <span id="site-name" style="color:#fff;font-size:14px;">
+                        @sLoginId
+                    </span><b></b>
+                </a>
+                <!-- begin -->
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="javascript:ShowOptorInfo();"><i class="im-user"></i> 个人信息</a>
+                    </li>
+                    <li>
+                        <a href="javascript:ShowPassword();"><i class="im-cog2"></i> 修改密码</a>
+                    </li> 
+                    <li>
+                        <a class="dl_exit" href="javascript:void(0);"><i class="im-switch"></i> 退出系统</a>
+                    </li>
+                </ul>
+                <!-- end -->
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <ul id="J_NavContent" class="dl-tab-conten"></ul>
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="/Content/js/jquery.min.js"></script>
+<script type="text/javascript" src="/Content/js/bui.js"></script>
+<script type="text/javascript" src="/Content/js/common/main-min.js"></script>
+<script type="text/javascript" src="/Content/js/index.js"></script>
+<script>
+    //Menu
+    BUI.use('common/main', function () {
+        var config = @Html.Raw(sSubMenu);
+        //var config = [{ "id": "StatisReport", "homePage": "TStatis", "menu": [{ "text": "业务管理", "icon": "", "collapsed": true, "items": [{ "id": "TStatis", "text": "分诊台管理", "href": "/PubData/Test/Index", "icon": "" }, { "id": "TFlows", "text": "医生管理", "href": "/PubData/Test/Index", "icon": "" }, { "id": "EStatis", "text": "挂号管理", "href": "/PubData/Test/Index", "icon": "" }, { "id": "EFlows", "text": "收费管理", "href": "/PubData/Test/Index", "icon": "" }] }] }, { "id": "SystemManage", "homePage": "SUsers", "menu": [{ "text": "系统管理", "icon": "", "items": [{ "id": "SUsers", "text": "管理员列表", "href": "/System/SUsers/List", "icon": "" }, { "id": "Setting", "text": "系统设置", "href": "/System/Setting/Index", "icon": "" }] }] }];
+        new PageUtil.MainPage({
+            modulesConfig: config
+        });
+    });
+
+    //展示帮助列
+    $("#sel_site").click(function () {
+        $(".dropdown-menu").toggle(200);
+    });
+    //展示用户档案
+    function ShowOptorInfo() {
+        dig.addModel('个人信息', '/PubData/OptorInfo/Index', 890, 550, function () { });
+    }
+    //展示修改密码
+    function ShowPassword() {
+        dig.addModel('修改密码', '/PubData/OptorInfo/Psword', 485, 300, function () { });
+    }
+    //退出
+    $('.dl_exit').click(function () {
+        var msg = "您确定要退出本系统吗？";
+        dig.confirm("退出确认", msg, function () {
+            window.location = "/System/Auth/Logout";
+        });
+    });
+    //加载
+    $(function () {
+        $('.logo').click(function () {
+            $('.nav-list>li').eq(0).find('a').click();
+        });
+    });
+    $('#username').keydown(function (e) {
+        if (e.keyCode == 13) {
+            $('.btn-submit').click();
+        }
+    });
+    //切换账户
+    $('.btn-submit').click(function () {
+        $.post('/Sys/User/ChangeUserName/' + $('#username').val().toLowerCase(), null, function (res) {
+            if (res.Status == 'y') {
+                window.location = "/Sys/Home/Index";
+            } else {
+                dig.alertError('提示', res.Msg);
+            }
+        }, 'json');
+    });
+
+    $('#btn-exbranch').click(function () {
+        $.post('/PubData/MainPage/UpdateBranch?branchNo=' + $('#branchno').val(), null, function (res) {
+            if (res.Status == 'Success') {
+                dig.alertSuccess('提示', "切换成功，请重新登录系统!");
+            } else {
+                dig.alertError('提示', res.Message);
+            }
+        }, 'json');
+    });
+
+
+</script>

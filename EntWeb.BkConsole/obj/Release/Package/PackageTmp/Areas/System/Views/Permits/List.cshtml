@@ -1,0 +1,196 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Business.Model.Collections;
+@using EntWeb.BkConsole;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "权限管理";
+
+    PermitInfoCollections infoList = (PermitInfoCollections)ViewBag.StackHolder["infoList"];
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#selectAll").click(function () {
+                var ischecked = this.checked;
+                $("input:checkbox[name='infosId']").each(function () {
+                    if ($(this).attr("disabled") != "disabled") {
+                        this.checked = ischecked;
+                    }
+                });
+
+                
+            });
+
+        });
+
+        //点击添加
+        function addnew() {
+            dig.addModel('添加/编辑权限', '/System/Permits/Add', 700, 380, function () {
+                if (this.returnValue == 'Success') {
+                    location.reload();
+                }
+            });
+        }
+
+        //点击修改
+        function update(n) {
+            dig.addModel('添加/编辑权限', '/System/Permits/Edit/'+ n, 700, 380, function () {
+                if (this.returnValue == 'Success') {
+                    location.reload();
+                }
+            });
+        } 
+
+        function deletes() {
+            var msg = "你确定要删除勾选的记录吗?";
+            dig.confirm('删除操作', msg, function () {
+                var result = "";
+                $("input:checkbox[name='infosId']").each(function () {
+                    if (this.checked) {
+                        result += this.value + ";"
+                    }
+                });
+
+                if (result == "") {
+                    dig.alertError("提示", "请选择要删除的记录！");
+                } else {
+                    result = result.substring(0, result.length - 1);
+
+                    $.post('/System/Permits/Delete?ids=' + result, '', function (result) {
+                        if (result.Status == 'Success') {
+                            location.reload();
+                        } else {
+                            dig.alertError('提示', resul.Message);
+                        }
+                    }, 'json');
+                }
+            });
+        }
+         
+    </script>
+}
+
+<!-- table star -->
+<div class="row col-lg-12">
+    <div class="wrapper wrapper-content animated fadeInUp">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>权限信息</h5>
+                <div class="ibox-tools rboor">
+                    <a class="btn btn-primary btn-xs p310" id="addnew" onclick="addnew();"><i class="im-plus"></i> 新增</a>
+                    <a class="btn btn-primary btn-xs p310" id="deletes" onclick="deletes();"><i class="im-remove4"></i> 删除</a> 
+                </div>
+            </div>
+            <div class="ibox-content">
+                <!-- search star -->
+                @using (Ajax.BeginForm("Index", null, new AjaxOptions() { }, new { @id = "form1", @class = "form-horizontal", @method = "get" }))
+                {
+                    <div class="form-horizontal clearfix">
+                        <div class="col-lg-4 col-sm-3 pl0" style="width:50%;">
+                            <div class="form-group">
+                                &nbsp;
+                                @*<label class="control-label" style="width:100px; float:left;">分组：</label>
+                                    <div class="col-lg-8 col-sm-7" style="width:150px !important;">
+                                        <select id="code" name="code" class="input-sm form-control input-s-sm inline" style="width:auto;" >
+                                            <option value="">全部</option>
+                                            <option value="00000000">管理员</option>
+                                        </select>
+                                    </div>
+                                    <label class="control-label" style="width:50px; float:left;">性别：</label>
+                                    <div class="col-lg-8 col-sm-7" style="width:120px !important;">
+                                        <select id="sex" name="sex" class="input-sm form-control input-s-sm inline" >
+                                            <option value="">全部</option>
+                                            <option value="1">男</option>
+                                            <option value="0">女</option>
+                                        </select>
+                                    </div>*@
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-4" style="float:right;">
+                            <div class="form-group">
+                                <div class="col-lg-12 col-sm-12 input-group">
+                                    @Html.TextBox("Search", null, new { @class = "input-sm form-control", @placeholder = "请输入查询关键词" })
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-sm btn-primary"> 搜索</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <!-- search end -->
+                <div class="divider"></div><br />
+                <div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <table id="example" class="table table-striped table-bordered table-hover dataTables-example dataTable" cellspacing="0" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th class="tn" style="padding: 10px 5px !important;width:50px !important;"><input id="selectAll" name="selectAll" type="checkbox" value=""></th>
+                                <th>编号</th> 
+                                <th>权限名称</th>
+                                <th>上级权限</th>
+                                <th>排序</th>
+                                <th>路径</th>
+                                <th>图标</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (null == infoList || infoList.Count < 1)
+                            {
+                                <tr>
+                                    <td colspan="8">暂无信息</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (PermitInfo m in infoList)
+                                {
+                                    <tr>
+                                        <td class="tn">
+                                            <input type="checkbox" name="infosId" value="@m.sPermitNo" />
+                                        </td>
+                                        <td>
+                                            @m.sPermitNo
+                                        </td>
+                                        <td style="text-align:left;">
+                                            @m.sPermitName
+                                        </td>
+                                        <td>
+                                            @PageHelper.getPermitNameByNo(m.sParentNo)
+                                        </td>
+                                        <td>
+                                            @m.iOrderNo
+                                        </td>
+                                        <td>
+                                            @m.sPFunction
+                                        </td>
+                                        <td>
+                                            @m.sPPicture
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-primary btn-xs p310" id="modify" onclick="update(@m.sPermitNo)"><i class="im-pencil2"></i> 编辑</a> 
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                    <!-- page -->
+                    <div class="bottom">
+                        @Html.Partial("_Paging")
+                    </div>
+                    <!-- page -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

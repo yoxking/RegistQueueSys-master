@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:tns="http://impl.websevice.mdm.aadata.cn/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="urn:hl7-org:v3" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="DicContentService" targetNamespace="http://impl.websevice.mdm.aadata.cn/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:import namespace="urn:hl7-org:v3" location="http://10.177.124.33:8011/mdm1/webservice/dicContent?wsdl=IDicContent.wsdl" />
+  <wsdl:types />
+  <wsdl:binding name="DicContentServiceSoapBinding" type="ns1:IDicContent">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getDicContentByPage">
+      <soap12:operation soapAction="" style="document" />
+      <wsdl:input name="getDicContentByPage">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getDicContentByPageResponse">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDicContent">
+      <soap12:operation soapAction="" style="document" />
+      <wsdl:input name="getDicContent">
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getDicContentResponse">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DicContentService">
+    <wsdl:port name="DicContentPort" binding="tns:DicContentServiceSoapBinding">
+      <soap12:address location="http://10.177.124.33:8011/mdm1/webservice/dicContent" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

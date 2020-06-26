@@ -1,0 +1,178 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+
+    List<ItemData> StaffList = (List<ItemData>)ViewBag.StaffList;
+    List<ItemData> WTimeList = (List<ItemData>)ViewBag.WTimeList;
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+
+        var layer3;
+        jQuery(document).ready(function () {
+
+            layui.use('layer', function () {
+                layer3 = layui.layer;
+            }); 
+        });
+
+        function onSubmit() {
+
+            var StafferNo = $("#StafferNo").val();
+            var weekday1 = $("#week1").val();
+            var weekday2 = $("#week2").val();
+            var weekday3= $("#week3").val();
+            var weekday4 = $("#week4").val();
+            var weekday5 = $("#week5").val();
+            var weekday6 = $("#week6").val();
+            var weekday7 = $("#week7").val();
+
+            if (StafferNo > 0) {
+                $.post(
+                    "/StaffData/StaffRota/SaveRota",
+                    { a: Math.random(), StafferNo: StafferNo, week1: weekday1, week2: weekday2, week3: weekday3, week4: weekday4, week5: weekday5, week6: weekday6, week7: weekday7 },
+                    function (data) {
+                        if (data === "SUCCESS") {
+                            layer3.msg("保存成功!");
+                        }
+                        else {
+                            layer3.msg('保存失败!');
+                        }
+                    }
+                );
+            } else {
+                layer3.msg('请正确选择医生!');
+            }
+        }
+
+        function onCancel() {
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        }
+    </script>
+}
+
+<br />
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md8">
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">选择医生:</label>
+                    <div class="layui-input-inline">
+                        <select id="StafferNo" name="StafferNo" lay-verify="required">
+                            <option value="-1">---请选择---</option>
+                            @if (StaffList != null && StaffList.Count > 0)
+                            {
+                                foreach (ItemData item in StaffList)
+                                {
+                                    <option value="@item.ItemName">@item.ItemValue</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">周一:</label>
+                    <div class="layui-input-inline">
+                        <select id="week1" name="week1" lay-verify="required">
+                            @if (WTimeList != null && WTimeList.Count > 0)
+                            {
+                                foreach (ItemData item in WTimeList)
+                                {
+                                    <option value="@item.ItemName">@item.ItemValue</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <label class="layui-form-label">周二:</label>
+                    <div class="layui-input-inline">
+                        <select id="week2" name="week2" lay-verify="required">
+                            @if (WTimeList != null && WTimeList.Count > 0)
+                            {
+                                foreach (ItemData item in WTimeList)
+                                {
+                                    <option value="@item.ItemName">@item.ItemValue</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">周三:</label>
+                    <div class="layui-input-inline">
+                        <select id="week3" name="week3" lay-verify="required">
+                            @if (WTimeList != null && WTimeList.Count > 0)
+                            {
+                                foreach (ItemData item in WTimeList)
+                                {
+                                    <option value="@item.ItemName">@item.ItemValue</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <label class="layui-form-label">周四:</label>
+                    <div class="layui-input-inline">
+                        <select id="week4" name="week4" lay-verify="required">
+                            @if (WTimeList != null && WTimeList.Count > 0)
+                            {
+                                foreach (ItemData item in WTimeList)
+                                {
+                                    <option value="@item.ItemName">@item.ItemValue</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">周五:</label>
+                    <div class="layui-input-inline">
+                        <select id="week5" name="week5" lay-verify="required">
+                            @if (WTimeList != null && WTimeList.Count > 0)
+                            {
+                                foreach (ItemData item in WTimeList)
+                                {
+                                    <option value="@item.ItemName">@item.ItemValue</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <label class="layui-form-label">周六:</label>
+                    <div class="layui-input-inline">
+                        <select id="week6" name="week6" lay-verify="required">
+                            @if (WTimeList != null && WTimeList.Count > 0)
+                            {
+                                foreach (ItemData item in WTimeList)
+                                {
+                                    <option value="@item.ItemName">@item.ItemValue</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">周日:</label>
+                    <div class="layui-input-inline">
+                        <select id="week7" name="week7" lay-verify="required">
+                            @if (WTimeList != null && WTimeList.Count > 0)
+                            {
+                                foreach (ItemData item in WTimeList)
+                                {
+                                    <option value="@item.ItemName">@item.ItemValue</option>
+                                }
+                            }
+                        </select>
+                    </div> 
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="onSubmit()">保存</button>
+                        <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="onCancel()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

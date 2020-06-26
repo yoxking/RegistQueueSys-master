@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="118a73ec-869e-45ea-97bb-5ff4feb83161" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://127.0.0.1:9811/queueService?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="QueueService.xsd" MetadataType="Schema" ID="6f6a9c1d-ccf5-4a07-ad8f-960c3f813404" SourceId="1" SourceUrl="http://localhost:9811/QueueService?xsd=xsd1" />
+    <MetadataFile FileName="QueueService1.xsd" MetadataType="Schema" ID="97e837ff-0446-4c4d-ad09-de0be5c81c92" SourceId="1" SourceUrl="http://localhost:9811/QueueService?xsd=xsd0" />
+    <MetadataFile FileName="QueueService.wsdl" MetadataType="Wsdl" ID="6fb49f78-7b90-4fdb-a849-9c0f1e5e0bda" SourceId="1" SourceUrl="http://127.0.0.1:9811/queueService?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

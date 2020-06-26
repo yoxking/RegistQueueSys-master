@@ -1,0 +1,109 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<ItemData> itemList = (List<ItemData>)ViewBag.ItemList;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+    </style>
+}
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+
+        function onRefresh_TableData(StafferNo) {
+
+             
+        }
+    </script>
+}
+
+
+<div class="vernav2 iconmenu">
+    <ul>
+        <li>
+            <a href="#formsub" class="editor">医生列表</a>
+            <span class="arrow"></span>
+            <ul id="formsub">
+                @if (itemList != null && itemList.Count > 0)
+                {
+                    foreach (ItemData item in itemList)
+                    {
+                        <li><a href="javascript:void(0)" onclick="onRefresh_TableData(@item.ItemName)">@item.ItemValue</a></li>
+                    }
+                }
+                else
+                {
+                    <li><a href="javascript:void(0)">暂无医生</a></li>
+                }
+            </ul>
+        </li>
+    </ul>
+    <a class="togglemenu"></a>
+    <br /><br />
+</div><!--leftmenu-->
+
+<div class="centercontent">
+
+    <div class="pageheader">
+
+        <ul class="hornav">
+            <li class="current"><a href="#activities1">今日统计</a></li>
+            <li><a href="#activities2">一周统计</a></li>
+            <li><a href="#activities3">一月统计</a></li>
+        </ul>
+    </div><!--pageheader-->
+
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div id="activities1" class="subcontent">
+
+            <div class="msghead">
+                <ul class="msghead_menu"> 
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onRefresh()">刷新</a></li>
+                </ul>
+                <span class="clearall"></span>
+            </div><!--msghead-->
+
+            <div class="table-container">
+                <table class="layui-hide" id="mytable1" lay-filter="datatable"></table>
+            </div>
+
+        </div><!-- #updates -->
+
+        <div id="activities2" class="subcontent" style="display: none;">
+
+            <div class="msghead">
+                <ul class="msghead_menu"> 
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onRefresh()">刷新</a></li>
+                </ul>
+                <span class="clearall"></span>
+            </div><!--msghead-->
+
+            <div class="table-container">
+                <table class="layui-hide" id="mytable2" lay-filter="datatable"></table>
+            </div>
+
+        </div><!-- #updates -->
+
+        <div id="activities3" class="subcontent" style="display: none;">
+
+            <div class="msghead">
+                <ul class="msghead_menu"> 
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onRefresh()">刷新</a></li>
+                </ul>
+                <span class="clearall"></span>
+            </div><!--msghead-->
+
+            <div class="table-container">
+                <table class="layui-hide" id="mytable3" lay-filter="datatable"></table>
+            </div>
+
+        </div><!-- #updates -->
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div><!-- centercontent -->

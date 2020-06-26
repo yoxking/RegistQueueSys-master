@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="urn:hl7-org:v3" name="IDicContent" targetNamespace="urn:hl7-org:v3" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema xmlns:tns="urn:hl7-org:v3" elementFormDefault="unqualified" targetNamespace="urn:hl7-org:v3" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="getDicContent" type="tns:getDicContent" />
+      <xs:element name="getDicContentByPage" type="tns:getDicContentByPage" />
+      <xs:element name="getDicContentByPageResponse" type="tns:getDicContentByPageResponse" />
+      <xs:element name="getDicContentResponse" type="tns:getDicContentResponse" />
+      <xs:complexType name="getDicContentByPage">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="serviceID" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="pageNum" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getDicContentByPageResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getDicContent">
+        <xs:sequence>
+          <xs:element minOccurs="0" form="qualified" name="serviceID" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="fieldName" type="xs:string" />
+          <xs:element minOccurs="0" form="qualified" name="fieldValue" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getDicContentResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getDicContentByPage">
+    <wsdl:part name="parameters" element="ns1:getDicContentByPage" />
+  </wsdl:message>
+  <wsdl:message name="getDicContent">
+    <wsdl:part name="parameters" element="ns1:getDicContent" />
+  </wsdl:message>
+  <wsdl:message name="getDicContentByPageResponse">
+    <wsdl:part name="parameters" element="ns1:getDicContentByPageResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDicContentResponse">
+    <wsdl:part name="parameters" element="ns1:getDicContentResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IDicContent">
+    <wsdl:operation name="getDicContentByPage">
+      <wsdl:input name="getDicContentByPage" message="ns1:getDicContentByPage" />
+      <wsdl:output name="getDicContentByPageResponse" message="ns1:getDicContentByPageResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDicContent">
+      <wsdl:input name="getDicContent" message="ns1:getDicContent" />
+      <wsdl:output name="getDicContentResponse" message="ns1:getDicContentResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

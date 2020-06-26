@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EE7A6851-01F8-4201-9868-E48783C4E56C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EntFrm.Framework.Utility</RootNamespace>
+    <AssemblyName>EntFrm.Framework.Utility</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\EntDebug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.12.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.12\lib\net40\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EntDebug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.12.2.1100\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dbase\MylHelper.cs" />
+    <Compile Include="Device\NCallerConvertUtil.cs" />
+    <Compile Include="Device\NCallerDataModel.cs" />
+    <Compile Include="Collection\ItemObject.cs" />
+    <Compile Include="Common\DocPrintHelper.cs" />
+    <Compile Include="Common\PdfPrintHelper.cs" />
+    <Compile Include="Controls\CkGroupBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlPanelEx.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ControlPanelEx.Designer.cs">
+      <DependentUpon>ControlPanelEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ListViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\MarqueeBoxEx.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MarqueeBoxEx.Designer.cs">
+      <DependentUpon>MarqueeBoxEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RdGroupBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\RdGroupBoxEx.Designer.cs">
+      <DependentUpon>RdGroupBoxEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RichTextBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TabControlEx.cs" />
+    <Compile Include="Controls\TicketButtonEx.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TicketButtonEx.Designer.cs">
+      <DependentUpon>TicketButtonEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TimerDisplayEx.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TimerDisplayEx.Designer.cs">
+      <DependentUpon>TimerDisplayEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dbase\OrlHelper.cs" />
+    <Compile Include="Encrypt\Base64Helper.cs" />
+    <Compile Include="Encrypt\EnconfigHelper.cs" />
+    <Compile Include="File\IniFileHelper.cs" />
+    <Compile Include="File\MyFileHelper.cs" />
+    <Compile Include="Image\ImageConvert.cs" />
+    <Compile Include="Device\Eq2008DataStruct.cs" />
+    <Compile Include="Device\Eq2008LedDisplay.cs" />
+    <Compile Include="Device\Pdc101LedDisplay.cs" />
+    <Compile Include="Device\Pdc102LedDisplay.cs" />
+    <Compile Include="IntFilter\FilterChain.cs" />
+    <Compile Include="IntFilter\InterFilter.cs" />
+    <Compile Include="Media\MediaPlayEx.cs" />
+    <Compile Include="Controls\TicketButton.cs" />
+    <Compile Include="Printer\PrintHelper.cs" />
+    <Compile Include="SerialPort\ByteConvertUtil.cs" />
+    <Compile Include="SerialPort\CallerSerialPort.cs" />
+    <Compile Include="SerialPort\ISerialPortBase.cs" />
+    <Compile Include="SerialPort\LederSerialPort.cs" />
+    <Compile Include="SoftRegist\EncDogModel.cs" />
+    <Compile Include="SoftRegist\EncryptDogEx.cs" />
+    <Compile Include="SoftRegist\RegKeyModel.cs" />
+    <Compile Include="String\DiffStrHelper.cs" />
+    <Compile Include="String\PinYinHelper.cs" />
+    <Compile Include="System\ConfigureHelper.cs" />
+    <Compile Include="System\AssemblyHelper.cs" />
+    <Compile Include="Netweb\CacheHelper.cs" />
+    <Compile Include="Date\CalendarHelper.cs" />
+    <Compile Include="Collection\CollectionUtil.cs" />
+    <Compile Include="Common\CommonHelper.cs" />
+    <Compile Include="Common\ConvertHelper.cs" />
+    <Compile Include="Netweb\CookieHelper.cs" />
+    <Compile Include="Encrypt\EncryptHelper.cs" />
+    <Compile Include="Common\EnumHelper.cs" />
+    <Compile Include="Common\ExceptionHelper.cs" />
+    <Compile Include="Netweb\FetchHelper.cs" />
+    <Compile Include="File\FileUpHelper.cs" />
+    <Compile Include="Image\ImageHelper.cs" />
+    <Compile Include="Netweb\JsonHelper.cs" />
+    <Compile Include="Netweb\JscriptHelper.cs" />
+    <Compile Include="Netweb\MailHelper.cs" />
+    <Compile Include="Netweb\NetHelper.cs" />
+    <Compile Include="Common\ObjectHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="String\RegExpHelper.cs" />
+    <Compile Include="Netweb\SerializeHelper.cs" />
+    <Compile Include="Dbase\SqlHelper.cs" />
+    <Compile Include="Dbase\SqlModel.cs" />
+    <Compile Include="String\StringHelper.cs" />
+    <Compile Include="Netweb\XmlHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\ControlPanelEx.resx">
+      <DependentUpon>ControlPanelEx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MarqueeBoxEx.resx">
+      <DependentUpon>MarqueeBoxEx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TicketButtonEx.resx">
+      <DependentUpon>TicketButtonEx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TimerDisplayEx.resx">
+      <DependentUpon>TimerDisplayEx.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

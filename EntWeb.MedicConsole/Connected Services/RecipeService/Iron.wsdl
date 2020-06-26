@@ -1,0 +1,877 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.iron-tech.cn/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.iron-tech.cn/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.iron-tech.cn/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBoxInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="patientid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="windowno" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBoxInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetBoxInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPresNoByXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XMLPresInfo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPresNoByXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPresNoByXMLResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFirmpres">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="patientid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="windowNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFirmpresResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetFirmpresResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWindowsNO">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="patientid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="windowNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWindowsNOResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetWindowsNOResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWindowsNOByCard">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="patientid" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWindowsNOByCardResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetWindowsNOByCardResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PresBack">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="patientid" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PresBackResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PresBackResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="windowStatusUpdate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="yfcode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="windowNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="openorclose" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="windowStatusUpdateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="windowStatusUpdateResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMedInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="XMLMedInfo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMedInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMedInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStoreTable">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Machine" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetStoreTableResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetStoreTableResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBoxInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBoxInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetBoxInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBoxInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPresNoByXMLSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPresNoByXML" />
+  </wsdl:message>
+  <wsdl:message name="GetPresNoByXMLSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPresNoByXMLResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFirmpresSoapIn">
+    <wsdl:part name="parameters" element="tns:GetFirmpres" />
+  </wsdl:message>
+  <wsdl:message name="GetFirmpresSoapOut">
+    <wsdl:part name="parameters" element="tns:GetFirmpresResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetWindowsNOSoapIn">
+    <wsdl:part name="parameters" element="tns:GetWindowsNO" />
+  </wsdl:message>
+  <wsdl:message name="GetWindowsNOSoapOut">
+    <wsdl:part name="parameters" element="tns:GetWindowsNOResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetWindowsNOByCardSoapIn">
+    <wsdl:part name="parameters" element="tns:GetWindowsNOByCard" />
+  </wsdl:message>
+  <wsdl:message name="GetWindowsNOByCardSoapOut">
+    <wsdl:part name="parameters" element="tns:GetWindowsNOByCardResponse" />
+  </wsdl:message>
+  <wsdl:message name="PresBackSoapIn">
+    <wsdl:part name="parameters" element="tns:PresBack" />
+  </wsdl:message>
+  <wsdl:message name="PresBackSoapOut">
+    <wsdl:part name="parameters" element="tns:PresBackResponse" />
+  </wsdl:message>
+  <wsdl:message name="windowStatusUpdateSoapIn">
+    <wsdl:part name="parameters" element="tns:windowStatusUpdate" />
+  </wsdl:message>
+  <wsdl:message name="windowStatusUpdateSoapOut">
+    <wsdl:part name="parameters" element="tns:windowStatusUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMedInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMedInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetMedInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMedInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetStoreTableSoapIn">
+    <wsdl:part name="parameters" element="tns:GetStoreTable" />
+  </wsdl:message>
+  <wsdl:message name="GetStoreTableSoapOut">
+    <wsdl:part name="parameters" element="tns:GetStoreTableResponse" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldHttpGetIn" />
+  <wsdl:message name="HelloWorldHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetBoxInfoHttpGetIn">
+    <wsdl:part name="patientid" type="s:string" />
+    <wsdl:part name="windowno" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetBoxInfoHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPresNoByXMLHttpGetIn">
+    <wsdl:part name="XMLPresInfo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPresNoByXMLHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetFirmpresHttpGetIn">
+    <wsdl:part name="patientid" type="s:string" />
+    <wsdl:part name="windowNo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetFirmpresHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetWindowsNOHttpGetIn">
+    <wsdl:part name="patientid" type="s:string" />
+    <wsdl:part name="windowNo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetWindowsNOHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetWindowsNOByCardHttpGetIn">
+    <wsdl:part name="patientid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetWindowsNOByCardHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="PresBackHttpGetIn">
+    <wsdl:part name="patientid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PresBackHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="windowStatusUpdateHttpGetIn">
+    <wsdl:part name="yfcode" type="s:string" />
+    <wsdl:part name="windowNo" type="s:string" />
+    <wsdl:part name="openorclose" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="windowStatusUpdateHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMedInfoHttpGetIn">
+    <wsdl:part name="XMLMedInfo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMedInfoHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStoreTableHttpGetIn">
+    <wsdl:part name="Machine" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStoreTableHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldHttpPostIn" />
+  <wsdl:message name="HelloWorldHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetBoxInfoHttpPostIn">
+    <wsdl:part name="patientid" type="s:string" />
+    <wsdl:part name="windowno" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetBoxInfoHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPresNoByXMLHttpPostIn">
+    <wsdl:part name="XMLPresInfo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPresNoByXMLHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetFirmpresHttpPostIn">
+    <wsdl:part name="patientid" type="s:string" />
+    <wsdl:part name="windowNo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetFirmpresHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetWindowsNOHttpPostIn">
+    <wsdl:part name="patientid" type="s:string" />
+    <wsdl:part name="windowNo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetWindowsNOHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetWindowsNOByCardHttpPostIn">
+    <wsdl:part name="patientid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetWindowsNOByCardHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="PresBackHttpPostIn">
+    <wsdl:part name="patientid" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PresBackHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="windowStatusUpdateHttpPostIn">
+    <wsdl:part name="yfcode" type="s:string" />
+    <wsdl:part name="windowNo" type="s:string" />
+    <wsdl:part name="openorclose" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="windowStatusUpdateHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMedInfoHttpPostIn">
+    <wsdl:part name="XMLMedInfo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMedInfoHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStoreTableHttpPostIn">
+    <wsdl:part name="Machine" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetStoreTableHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="HospitalServiceSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:测试WebService用,无其他用途&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBoxInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:发送药筐闪灯指令,病人到药房窗口取药,调用此接口 &lt;br/&gt;【参数】:patientid,识别标识(处方号,发票号,病人ID号,就诊号卡,病历号,任务ID...);windowNo,药房前台窗口号 &lt;br/&gt;【返回】 1,成功;0,失败;&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:GetBoxInfoSoapIn" />
+      <wsdl:output message="tns:GetBoxInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPresNoByXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:病人去收费处缴费.调用此接口. (传入收费信息,返回窗口号) &lt;br/&gt;【参数】:收费信息(病人信息+药品信息+用法用量+注意事项) &lt;br/&gt;【返回】:成功,回传发药窗口号; 失败,返回'0';&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:GetPresNoByXMLSoapIn" />
+      <wsdl:output message="tns:GetPresNoByXMLSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFirmpres">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:确认发药后需要调用此接口 &lt;br/&gt;【参数】:PID,识别标识(处方号,发票号,病人ID号,就诊号卡,病历号,任务ID...);windowNo,药房前台窗口号 &lt;br/&gt;【返回】 1,成功;0,失败;&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:GetFirmpresSoapIn" />
+      <wsdl:output message="tns:GetFirmpresSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWindowsNO">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:确认窗口后需要调用此接口 &lt;br/&gt;【参数】:patientid,识别标识(处方号,发票号,病人ID号,就诊号卡,病历号,任务ID...);windowNo,药房前台窗口号 &lt;br/&gt;【返回】 1,成功;0,失败;&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:GetWindowsNOSoapIn" />
+      <wsdl:output message="tns:GetWindowsNOSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWindowsNOByCard">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:获取发票流水号对应窗口号 &lt;br/&gt;【参数】:patientid,识别标识(处方号,发票号,病人ID号,就诊号卡,病历号,任务ID...); &lt;br/&gt;【返回】1,成功;0,无数据;-1异常;&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:GetWindowsNOByCardSoapIn" />
+      <wsdl:output message="tns:GetWindowsNOByCardSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PresBack">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:退费接口,传入退费票据号 &lt;br/&gt;【参数】:patientid,识别标识(处方号,发票号,病人ID号,就诊号卡,病历号,任务ID...); &lt;br/&gt;【返回】 1,成功;0,失败;&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:PresBackSoapIn" />
+      <wsdl:output message="tns:PresBackSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="windowStatusUpdate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:打开或关闭IRON药房窗口 &lt;br/&gt;【参数】:windowNo:窗口号&lt;br/&gt;     windowState:&lt;br/&gt;1为开启状态，0为关闭状态&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:windowStatusUpdateSoapIn" />
+      <wsdl:output message="tns:windowStatusUpdateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMedInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">传入药品信息(参数为XML字符串格式类型),成功返回1，失败返回0</wsdl:documentation>
+      <wsdl:input message="tns:GetMedInfoSoapIn" />
+      <wsdl:output message="tns:GetMedInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStoreTable">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">返回XML格式字符串的药品库存信息&lt;br/&gt;参数：Machine为设备编号，参数值为两位，如‘01’；传入‘00’为全部快发设备库存</wsdl:documentation>
+      <wsdl:input message="tns:GetStoreTableSoapIn" />
+      <wsdl:output message="tns:GetStoreTableSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="HospitalServiceHttpGet">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:测试WebService用,无其他用途&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:HelloWorldHttpGetIn" />
+      <wsdl:output message="tns:HelloWorldHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBoxInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:发送药筐闪灯指令,病人到药房窗口取药,调用此接口 &lt;br/&gt;【参数】:patientid,识别标识(处方号,发票号,病人ID号,就诊号卡,病历号,任务ID...);windowNo,药房前台窗口号 &lt;br/&gt;【返回】 1,成功;0,失败;&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:GetBoxInfoHttpGetIn" />
+      <wsdl:output message="tns:GetBoxInfoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPresNoByXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:病人去收费处缴费.调用此接口. (传入收费信息,返回窗口号) &lt;br/&gt;【参数】:收费信息(病人信息+药品信息+用法用量+注意事项) &lt;br/&gt;【返回】:成功,回传发药窗口号; 失败,返回'0';&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:GetPresNoByXMLHttpGetIn" />
+      <wsdl:output message="tns:GetPresNoByXMLHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFirmpres">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:确认发药后需要调用此接口 &lt;br/&gt;【参数】:PID,识别标识(处方号,发票号,病人ID号,就诊号卡,病历号,任务ID...);windowNo,药房前台窗口号 &lt;br/&gt;【返回】 1,成功;0,失败;&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:GetFirmpresHttpGetIn" />
+      <wsdl:output message="tns:GetFirmpresHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWindowsNO">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:确认窗口后需要调用此接口 &lt;br/&gt;【参数】:patientid,识别标识(处方号,发票号,病人ID号,就诊号卡,病历号,任务ID...);windowNo,药房前台窗口号 &lt;br/&gt;【返回】 1,成功;0,失败;&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:GetWindowsNOHttpGetIn" />
+      <wsdl:output message="tns:GetWindowsNOHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWindowsNOByCard">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:获取发票流水号对应窗口号 &lt;br/&gt;【参数】:patientid,识别标识(处方号,发票号,病人ID号,就诊号卡,病历号,任务ID...); &lt;br/&gt;【返回】1,成功;0,无数据;-1异常;&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:GetWindowsNOByCardHttpGetIn" />
+      <wsdl:output message="tns:GetWindowsNOByCardHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PresBack">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:退费接口,传入退费票据号 &lt;br/&gt;【参数】:patientid,识别标识(处方号,发票号,病人ID号,就诊号卡,病历号,任务ID...); &lt;br/&gt;【返回】 1,成功;0,失败;&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:PresBackHttpGetIn" />
+      <wsdl:output message="tns:PresBackHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="windowStatusUpdate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:打开或关闭IRON药房窗口 &lt;br/&gt;【参数】:windowNo:窗口号&lt;br/&gt;     windowState:&lt;br/&gt;1为开启状态，0为关闭状态&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:windowStatusUpdateHttpGetIn" />
+      <wsdl:output message="tns:windowStatusUpdateHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMedInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">传入药品信息(参数为XML字符串格式类型),成功返回1，失败返回0</wsdl:documentation>
+      <wsdl:input message="tns:GetMedInfoHttpGetIn" />
+      <wsdl:output message="tns:GetMedInfoHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStoreTable">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">返回XML格式字符串的药品库存信息&lt;br/&gt;参数：Machine为设备编号，参数值为两位，如‘01’；传入‘00’为全部快发设备库存</wsdl:documentation>
+      <wsdl:input message="tns:GetStoreTableHttpGetIn" />
+      <wsdl:output message="tns:GetStoreTableHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="HospitalServiceHttpPost">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:测试WebService用,无其他用途&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:HelloWorldHttpPostIn" />
+      <wsdl:output message="tns:HelloWorldHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBoxInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:发送药筐闪灯指令,病人到药房窗口取药,调用此接口 &lt;br/&gt;【参数】:patientid,识别标识(处方号,发票号,病人ID号,就诊号卡,病历号,任务ID...);windowNo,药房前台窗口号 &lt;br/&gt;【返回】 1,成功;0,失败;&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:GetBoxInfoHttpPostIn" />
+      <wsdl:output message="tns:GetBoxInfoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPresNoByXML">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:病人去收费处缴费.调用此接口. (传入收费信息,返回窗口号) &lt;br/&gt;【参数】:收费信息(病人信息+药品信息+用法用量+注意事项) &lt;br/&gt;【返回】:成功,回传发药窗口号; 失败,返回'0';&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:GetPresNoByXMLHttpPostIn" />
+      <wsdl:output message="tns:GetPresNoByXMLHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFirmpres">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:确认发药后需要调用此接口 &lt;br/&gt;【参数】:PID,识别标识(处方号,发票号,病人ID号,就诊号卡,病历号,任务ID...);windowNo,药房前台窗口号 &lt;br/&gt;【返回】 1,成功;0,失败;&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:GetFirmpresHttpPostIn" />
+      <wsdl:output message="tns:GetFirmpresHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWindowsNO">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:确认窗口后需要调用此接口 &lt;br/&gt;【参数】:patientid,识别标识(处方号,发票号,病人ID号,就诊号卡,病历号,任务ID...);windowNo,药房前台窗口号 &lt;br/&gt;【返回】 1,成功;0,失败;&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:GetWindowsNOHttpPostIn" />
+      <wsdl:output message="tns:GetWindowsNOHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWindowsNOByCard">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:获取发票流水号对应窗口号 &lt;br/&gt;【参数】:patientid,识别标识(处方号,发票号,病人ID号,就诊号卡,病历号,任务ID...); &lt;br/&gt;【返回】1,成功;0,无数据;-1异常;&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:GetWindowsNOByCardHttpPostIn" />
+      <wsdl:output message="tns:GetWindowsNOByCardHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PresBack">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:退费接口,传入退费票据号 &lt;br/&gt;【参数】:patientid,识别标识(处方号,发票号,病人ID号,就诊号卡,病历号,任务ID...); &lt;br/&gt;【返回】 1,成功;0,失败;&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:PresBackHttpPostIn" />
+      <wsdl:output message="tns:PresBackHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="windowStatusUpdate">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">【描述】:打开或关闭IRON药房窗口 &lt;br/&gt;【参数】:windowNo:窗口号&lt;br/&gt;     windowState:&lt;br/&gt;1为开启状态，0为关闭状态&lt;br/&gt;</wsdl:documentation>
+      <wsdl:input message="tns:windowStatusUpdateHttpPostIn" />
+      <wsdl:output message="tns:windowStatusUpdateHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMedInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">传入药品信息(参数为XML字符串格式类型),成功返回1，失败返回0</wsdl:documentation>
+      <wsdl:input message="tns:GetMedInfoHttpPostIn" />
+      <wsdl:output message="tns:GetMedInfoHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStoreTable">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">返回XML格式字符串的药品库存信息&lt;br/&gt;参数：Machine为设备编号，参数值为两位，如‘01’；传入‘00’为全部快发设备库存</wsdl:documentation>
+      <wsdl:input message="tns:GetStoreTableHttpPostIn" />
+      <wsdl:output message="tns:GetStoreTableHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HospitalServiceSoap" type="tns:HospitalServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://www.iron-tech.cn/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBoxInfo">
+      <soap:operation soapAction="http://www.iron-tech.cn/GetBoxInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPresNoByXML">
+      <soap:operation soapAction="http://www.iron-tech.cn/GetPresNoByXML" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFirmpres">
+      <soap:operation soapAction="http://www.iron-tech.cn/GetFirmpres" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWindowsNO">
+      <soap:operation soapAction="http://www.iron-tech.cn/GetWindowsNO" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWindowsNOByCard">
+      <soap:operation soapAction="http://www.iron-tech.cn/GetWindowsNOByCard" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PresBack">
+      <soap:operation soapAction="http://www.iron-tech.cn/PresBack" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="windowStatusUpdate">
+      <soap:operation soapAction="http://www.iron-tech.cn/windowStatusUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMedInfo">
+      <soap:operation soapAction="http://www.iron-tech.cn/GetMedInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStoreTable">
+      <soap:operation soapAction="http://www.iron-tech.cn/GetStoreTable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="HospitalServiceSoap12" type="tns:HospitalServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://www.iron-tech.cn/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBoxInfo">
+      <soap12:operation soapAction="http://www.iron-tech.cn/GetBoxInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPresNoByXML">
+      <soap12:operation soapAction="http://www.iron-tech.cn/GetPresNoByXML" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFirmpres">
+      <soap12:operation soapAction="http://www.iron-tech.cn/GetFirmpres" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWindowsNO">
+      <soap12:operation soapAction="http://www.iron-tech.cn/GetWindowsNO" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWindowsNOByCard">
+      <soap12:operation soapAction="http://www.iron-tech.cn/GetWindowsNOByCard" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PresBack">
+      <soap12:operation soapAction="http://www.iron-tech.cn/PresBack" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="windowStatusUpdate">
+      <soap12:operation soapAction="http://www.iron-tech.cn/windowStatusUpdate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMedInfo">
+      <soap12:operation soapAction="http://www.iron-tech.cn/GetMedInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStoreTable">
+      <soap12:operation soapAction="http://www.iron-tech.cn/GetStoreTable" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="HospitalServiceHttpGet" type="tns:HospitalServiceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="HelloWorld">
+      <http:operation location="/HelloWorld" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBoxInfo">
+      <http:operation location="/GetBoxInfo" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPresNoByXML">
+      <http:operation location="/GetPresNoByXML" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFirmpres">
+      <http:operation location="/GetFirmpres" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWindowsNO">
+      <http:operation location="/GetWindowsNO" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWindowsNOByCard">
+      <http:operation location="/GetWindowsNOByCard" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PresBack">
+      <http:operation location="/PresBack" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="windowStatusUpdate">
+      <http:operation location="/windowStatusUpdate" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMedInfo">
+      <http:operation location="/GetMedInfo" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStoreTable">
+      <http:operation location="/GetStoreTable" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="HospitalServiceHttpPost" type="tns:HospitalServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="HelloWorld">
+      <http:operation location="/HelloWorld" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBoxInfo">
+      <http:operation location="/GetBoxInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPresNoByXML">
+      <http:operation location="/GetPresNoByXML" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFirmpres">
+      <http:operation location="/GetFirmpres" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWindowsNO">
+      <http:operation location="/GetWindowsNO" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWindowsNOByCard">
+      <http:operation location="/GetWindowsNOByCard" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PresBack">
+      <http:operation location="/PresBack" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="windowStatusUpdate">
+      <http:operation location="/windowStatusUpdate" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMedInfo">
+      <http:operation location="/GetMedInfo" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStoreTable">
+      <http:operation location="/GetStoreTable" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HospitalService">
+    <wsdl:port name="HospitalServiceSoap" binding="tns:HospitalServiceSoap">
+      <soap:address location="http://10.177.124.204/HospitalService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="HospitalServiceSoap12" binding="tns:HospitalServiceSoap12">
+      <soap12:address location="http://10.177.124.204/HospitalService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="HospitalServiceHttpGet" binding="tns:HospitalServiceHttpGet">
+      <http:address location="http://10.177.124.204/HospitalService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="HospitalServiceHttpPost" binding="tns:HospitalServiceHttpPost">
+      <http:address location="http://10.177.124.204/HospitalService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

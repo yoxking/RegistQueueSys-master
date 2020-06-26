@@ -1,0 +1,129 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Business.Model.Collections;
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+
+    string sServerIp=ViewBag.ServerIp.ToString();
+    string sWTcpPort=ViewBag.WTcpPort.ToString();
+    string sSTcpPort = ViewBag.STcpPort.ToString();
+    string sWHttpPort=ViewBag.WHttpPort.ToString();
+    string sBranchNo = ViewBag.BranchNo.ToString();
+    string sRediagInterval = ViewBag.RediagInterval.ToString();
+    string sWorkingMode = ViewBag.WorkingMode.ToString();
+    string sRegisteMode = ViewBag.RegisteMode.ToString();
+    List<ItemData> BranchList = (List<ItemData>)ViewBag.BranchList;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+    </style>
+}
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+
+        var layer2;
+        jQuery(document).ready(function () {
+            layui.use('layer', function () {
+                layer2 = layui.layer;
+            });
+        });
+
+        function onSave() {
+
+            var serverIp = $("#serverIp").val();
+            var txtWTcpPort = $("#txtWTcpPort").val();
+            var txtSTcpPort = $("#txtSTcpPort").val();
+            var txtWHttpPort = $("#txtWHttpPort").val();
+            var txtBranchNo = $("#txtBranchNo").val();
+            var rediagInterval = $("#txtRediagInterval").val();
+            var rdWorkingMode = $("input[name='rdWorkingMode']:checked").val();
+            var rdRegisteMode = $("input[name='rdRegisteMode']:checked").val();
+
+
+                $.post(
+                    "/Common/Setting/Saveit",
+                    { a: Math.random(), ServerIp: serverIp, WTcpPort: txtWTcpPort, STcpPort: txtSTcpPort, WHttpPort: txtWHttpPort, BranchNo: txtBranchNo, RediagInterval:rediagInterval,WorkingMode: rdWorkingMode, RegisteMode: rdRegisteMode },
+                    function (data) {
+                        if (data === "SUCCESS") {
+                            layer2.msg("保存成功!");
+                        }
+                        else {
+                            layer2.msg('保存失败!');
+                        }
+                    }
+                );
+        }
+
+        function onCancel() {
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        }
+    </script>
+}
+
+<br />
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md8">
+            <div class="layui-form"> 
+                <div class="layui-form-item">
+                    <label class="layui-form-label">分诊主机IP:</label>
+                    <div class="layui-input-inline">
+                        <input type="text"  class="layui-input" id="serverIp" name="txtServerIp" value="@sServerIp" placeholder="127.0.0.1" >
+                    </div>
+                </div> 
+                <div class="layui-form-item">
+                    <label class="layui-form-label">wtcp端口:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="txtWTcpPort" name="txtWTcpPort"  value="@sWTcpPort" required lay-verify="required" placeholder="9815" autocomplete="off" class="layui-input">
+                    </div>
+                    <label class="layui-form-label">stcp端口:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="txtSTcpPort" name="txtSTcpPort"  value="@sSTcpPort" required lay-verify="required" placeholder="9816" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">whttp端口:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="txtWHttpPort" name="txtWHttpPort"  value="@sWHttpPort" required lay-verify="required" placeholder="9817" autocomplete="off" class="layui-input">
+                    </div>
+                    <label class="layui-form-label">&nbsp;</label>
+                    <div class="layui-input-inline">
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">门诊科室:</label>
+                    <div class="layui-input-inline">
+                       <input type="text" id="txtBranchNo" name="txtBranchNo" value="@PageService.GetBranchName(sBranchNo)" readonly class="layui-input" />
+                    </div>
+                    <label class="layui-form-label">复诊间隔:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="txtRediagInterval" name="txtRediagInterval" value="@sRediagInterval" required lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">工作模式:</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="rdWorkingMode" value="STAFF" title="医生模式" @if (sWorkingMode.Equals("STAFF")) { <text> checked </text> }>
+                        <input type="radio" name="rdWorkingMode" value="SERVICE" title="业务模式" @if (sWorkingMode.Equals("SERVICE")) { <text> checked </text> }> 
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">报到模式:</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="rdRegisteMode" value="MANUAL" title="手动报到" @if (sRegisteMode.Equals("MANUAL")) { <text> checked </text>   }>
+                        <input type="radio" name="rdRegisteMode" value="AUTO" title="自动报到" @if (sRegisteMode.Equals("AUTO")) { <text> checked </text>  }>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="onSave()">保存</button>
+                        <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="onCancel()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

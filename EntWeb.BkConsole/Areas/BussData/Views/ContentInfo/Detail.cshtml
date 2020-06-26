@@ -1,0 +1,135 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Business.Model.Collections;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    ContentInfo info = (ContentInfo)ViewBag.StackHolder;
+    ContentClassCollections cntClassList = (ContentClassCollections)ViewBag.CntClassList;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script>
+}
+
+<form class="form-horizontal">
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">编号：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="ContNo" id="ContNo" readonly value="@info.sContNo" placeholder="编号" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">标题：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="Title" id="Title" value="@info.sTitle" placeholder="标题" />
+                        </div>
+                    </div>
+
+                    <div class="clearfix f-hafl">
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" >栏目：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="ClassNo" id="ClassNo" value="@PageHelper.getContentClassNameByNo(info.sClassNo)" placeholder="标题" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">作者：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="Author" id="Author" value="@info.sAuthor" placeholder="作者" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">是否热门：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <input type="text" class="form-control" name="IsHot" id="IsHot" value="@(info.iIsHot==0?"否":"是")" placeholder="作者" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" >发布时间：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="PublicDate" id="PublicDate" value="@info.dPublicDate.ToString("yyyy-MM-dd")" placeholder="发布时间" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" >是否置顶：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <input type="text" class="form-control" name="IsTop" id="IsTop" value="@(info.iIsTop==0?"否":"是")" placeholder="作者" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">是否推荐：</label>
+                                <div class="col-lg-8" >
+                                    <input type="text" class="form-control" name="IsPop" id="IsPop" value="@(info.iIsPop==0?"否":"是")" placeholder="作者" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">图片：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="PostPicture" id="PostPicture" value="@info.sPostPicture" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">正文内容：</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="NContent" rows="5" id="NContent" placeholder="正文内容">@info.sNContent</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">备注：</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="Comments" rows="3" id="Comments">@info.sComments</textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                        <div class="form-group m20">
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+

@@ -1,0 +1,127 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Business.Model.Collections;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    CounterInfo info = (CounterInfo)ViewBag.StackHolder;
+
+    VoiceInfoCollections ttsList = (VoiceInfoCollections)ViewBag.TtsList;
+    LEDDisplayCollections LedList = (LEDDisplayCollections)ViewBag.LedList;
+    CallerInfoCollections CallerList =(CallerInfoCollections)ViewBag.CallerList;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script>
+}
+
+<form class="form-horizontal">
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">编号：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="CounterNo" id="CounterNo" readonly value="@info.sCounterNo" placeholder="编号" />
+                        </div>
+                    </div>
+
+                    <div class="clearfix f-hafl">
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">窗口名称：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="CounterName" id="CounterName" value="@info.sCounterName" placeholder="窗口名称" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">语音样式：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="TtsStylesNo" id="TtsStylesNo" value="@PageHelper.getVoiceInfoNameByNo(info.sVoiceStyleNos)" placeholder="语音样式" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">LED窗口屏：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="LedDisplayNo" id="LedDisplayNo" value="@PageHelper.getLEDDisplayNameByNo(info.sLedDisplayNo)" placeholder="LED窗口屏" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">呼叫器：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="CallerNo" id="CallerNo" value="@PageHelper.getCallerInfoNameByNo(info.sCallerNo)" placeholder="呼叫器" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">窗口别名：</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" name="CounterAlias" id="CounterAlias" value="@info.sCounterAlias" placeholder="窗口别名" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">LED屏地址：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="LedAddress" id="LedAddress" value="@info.iLedAddress" placeholder="LED屏地址" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">自动登录：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="IsAutoLogon" id="IsAutoLogon" value="@info.iIsAutoLogon" placeholder="是否自动登录" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">呼叫器地址：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="CallerAddress" id="CallerAddress" value="@info.iCallerAddress" placeholder="呼叫器地址" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">备注：</label>
+                    <div class="col-lg-8">
+                        <textarea type="text" class="form-control" name="Comments" id="Comments" rows="5" >@info.sComments</textarea>
+                    </div>
+                </div>
+                <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                    <div class="form-group m20">
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+    </form>

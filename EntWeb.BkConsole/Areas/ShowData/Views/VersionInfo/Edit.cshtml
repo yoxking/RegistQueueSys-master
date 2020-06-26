@@ -1,0 +1,190 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Business.Model.Collections;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    DsVersionInfo info = (DsVersionInfo)ViewBag.StackHolder; 
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <link rel="stylesheet" href="~/Content/layui/css/layui.css">
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script src="~/Content/layui/layui.js"></script> 
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            layui.use('upload', function () {
+                var upload = layui.upload;
+
+                //执行实例
+                var uploadInst = upload.render({
+                    elem: '#ppicture' //绑定元素
+                    , url: '/Handle/UploadAttach' //上传接口
+                    , type: 'post' //默认post
+                    , done: function (res) {
+                        //上传完毕回调
+                        if (res.code == 0) {
+
+                            $("#FilePath").val(res.data.src);
+                            $("#FilePath2").html(res.data.src);
+                        }
+                        else {
+                            dig.alertError('提示', res.msg);
+                        }
+                    }
+                    , accept: 'file'
+                    , error: function (res) {
+                        //请求异常回调
+                        dig.alertError('提示', res.message);
+                    }
+                });
+            });
+        });
+
+        function onSelectPlayers() {
+            top.dialog({
+                url: '/ShowData/SelectPlayers/List',
+                title: '选择设备',
+                width: 650,
+                height: 400,
+                data: '', // 给 iframe 的数据
+                onclose: function () {
+                    if (this.returnValue != 'error') {
+                        $('#PlayerIds').val(this.returnValue.split('|')[0]);
+                        $('#PlayerNames').val(this.returnValue.split('|')[2]);
+                    }
+                },
+                oniframeload: function () {
+                }
+            }).showModal();
+        }
+    </script>
+}
+
+@using (Ajax.BeginForm("Save", null, new AjaxOptions()
+{
+    HttpMethod = "Post",
+    OnBegin = "SubAjax.Loading",
+    OnComplete = "SubAjax.Complate",
+    OnFailure = "SubAjax.Failure",
+    OnSuccess = "SubAjax.Success"
+},
+new { @class = "form-horizontal dig-from", @role = "form" }))
+{
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">编号：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="VerNo" readonly id="VerNo" value="@info.sVerNo" placeholder="编号" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">版本名称：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="VerName" id="VerName" value="@info.sVerName" placeholder="版本名称" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">类别：</label>
+                        <div class="col-lg-8">
+                            <select id="VerType" name="VerType" class="form-control">
+                                <option value="ShowerApp">展示屏更新程序</option>
+                                <option value="MServiceApp">主服务更新程序</option>
+                                <option value="ExploreApp">自助报到程序</option>
+                                <option value="CallerApp">叫号更新程序</option>
+                                <option value="TicketApp">触摸取票程序</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">版本号：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="VerCode" id="VerCode" value="@info.sVerCode" placeholder="版本号" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">平台：</label>
+                        <div class="col-lg-8">
+                            <select id="Platform" name="Platform" class="form-control">
+                                <option value="Windows">Windows平台</option>
+                                <option value="Android">Android平台</option>
+                                <option value="Linux">Linux平台</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">更新模式：</label>
+                        <div class="col-lg-8">
+                            <select id="UpMode" name="UpMode" class="form-control">
+                                <option value="Increment">增量更新</option> 
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">上传程序：</label>
+                        <div class="col-lg-8">
+                            <input type="hidden" name="FilePath" id="FilePath" value="@info.sFileUrl" />
+                            <button type="button" class="layui-btn" id="ppicture">
+                                <i class="layui-icon">&#xe67c;</i>上传程序
+                            </button>
+                            <div id="FilePath2">@info.sFileUrl</div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-lg-3 control-label">设备列表：</label>
+                        <div class="col-lg-8">
+                            <input type="hidden" id="PlayerIds" name="PlayerIds" value="@info.sPlayerNos" />
+                            <textarea id="PlayerNames" class="form-control" readonly rows="3" onclick="onSelectPlayers()">@PageHelper.getPlayerInfoNameByNos(info.sPlayerNos)</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">更新说明：</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="VerDesc" id="VerDesc" rows="5">@info.sVerDesc</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">备注：</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="Comments" id="Comments" rows="3">@info.sComments</textarea>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                        <div class="form-group m20">
+                            <button class="btn btn-primary btn-save" type="submit"><i class="fa fa-check"></i> <span>保存</span></button>
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

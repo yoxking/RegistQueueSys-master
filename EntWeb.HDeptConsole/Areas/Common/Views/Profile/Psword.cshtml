@@ -1,0 +1,106 @@
+﻿@using EntFrm.Framework.Web;
+
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+
+    LoginerInfo Info = (LoginerInfo)ViewBag.Info;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+    </style>
+}
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+
+        var layer2;
+        jQuery(document).ready(function () {
+            layui.use('layer', function () {
+                layer2 = layui.layer;
+            });       
+        });
+
+        function onSave() {
+
+            var b = 0;
+            var userno = $("#userno").val();
+            var oldPsword = $("#oldpsword").val();
+            var newPsword = $("#newpsword").val();
+            var newPsword2 = $("#newpsword2").val();
+
+            if (oldPsword === "" || newPsword === "" || newPsword2 === "" ) {
+                b = 1;
+            } 
+            else if (newPsword2 !== newPsword) {
+                b = 2;
+            }
+
+
+            if (b===0) {
+                $.post(
+                    "/Common/Profile/UpdatePswd",
+                    { a: Math.random(), sUserNo: userno, sOldPsword:oldPsword,sNewPsword: newPsword },
+                    function (data) {
+                        if (data === "SUCCESS") {
+                            layer2.msg('密码修改成功!');
+                        }
+                        else {
+                            layer2.msg('密码修改失败!');
+                        }
+                    }
+                );
+            }
+            else if(b===1){                
+                layer2.msg('账号或密码不能为空!');
+            }  
+            else {
+                layer2.msg('两次输入的密码不相同!');
+            }
+        }
+
+        function onCancel() {
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        }
+    </script>
+}
+
+<br />
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md8">
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">账号:</label>
+                    <div class="layui-form-mid layui-word-aux">@Info.LoginId</div>
+                    <input type="hidden" id="userno" name="userno" value="@Info.UserNo" />
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">原密码:</label>
+                    <div class="layui-input-inline">
+                        <input type="password" class="layui-input" id="oldpsword" name="oldpsword">
+                    </div>
+                </div> 
+                <div class="layui-form-item">
+                    <label class="layui-form-label">新密码:</label>
+                    <div class="layui-input-inline">
+                        <input type="password" class="layui-input" id="newpsword" name="newpsword">
+                    </div>
+                </div> 
+                <div class="layui-form-item">
+                    <label class="layui-form-label">重复密码:</label>
+                    <div class="layui-input-inline">
+                        <input type="password" class="layui-input" id="newpsword2" name="newpsword2">
+                    </div>
+                </div> 
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="onSave()">保存</button>
+                        <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="onCancel()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

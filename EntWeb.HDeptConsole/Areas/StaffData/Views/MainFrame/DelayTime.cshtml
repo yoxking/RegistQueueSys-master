@@ -1,0 +1,46 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml"; 
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+
+        jQuery(document).ready(function () {
+        });
+
+        function onSubmit() {
+
+            var temp = $("#delayTime").val();
+
+            if (temp > 0) {
+                parent.onCallBackData(temp);
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            } 
+        }
+
+        function onCancel() {
+            parent.onCallBackData(0);
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        }
+    </script>
+}
+
+<br /> 
+<div class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">延迟时间:</label>
+        <div class="layui-input-inline">
+            <input type="text" id="delayTime" name="delayTime" required lay-verify="required" value="30" placeholder="30" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">分钟</div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="onSubmit()">保存</button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="onCancel()">取消</button>
+        </div>
+    </div>
+</div> 

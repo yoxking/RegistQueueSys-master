@@ -1,0 +1,140 @@
+﻿@using EntFrm.Framework.Web;
+
+@{
+    Layout = null;
+    ViewExpress viewExpress=(ViewExpress)ViewBag.ViewExpress;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@viewExpress.ViewTitle</title>    
+    <!-- BEGIN STYLES -->
+    <link rel="stylesheet" href="~/content/layui/css/layui.css" type="text/css" /> 
+    <link rel="stylesheet" href="~/content/css/style.default.css" type="text/css" /> 
+    <!--[if IE 9]>
+        <link rel="stylesheet" media="screen" href="~/content/css/style.ie9.css"/>
+    <![endif]-->
+    <!--[if IE 8]>
+        <link rel="stylesheet" media="screen" href="~/content/css/style.ie8.css"/>
+    <![endif]-->
+    @RenderSection("PageSpecificStyleSheetIncludes", required: false)
+    <!-- END STYLES -->
+</head>
+
+<body class="withvernav">
+    <div class="bodywrapper">
+        <div class="topheader">
+            <div class="left">
+                <h1 class="logo">@viewExpress.ViewTitle</h1>
+                <span class="slogan">@viewExpress.VSubtitle</span>
+                <br clear="all" />
+
+            </div><!--left-->
+
+            <div class="right">
+                <input type="button" id="refresh" value="立即刷新" style="margin:5px 120px 2px 10px;padding:5px 15px;" onclick="doRefreshPage()" />
+            </div>
+            <div class="right"> 
+                <div class="userinfo">                                    
+                    <img src="/content/images/thumbs/avatar.png" alt="" />
+                    <span>@viewExpress.UserName</span>
+                </div><!--userinfo-->
+
+                <div class="userinfodrop">
+                    <div class="userdata">
+                        <h4>@viewExpress.UserName</h4>
+                        <span class="email">@viewExpress.UserEmail</span>
+                        <ul>
+                            <li><a href="javascript:void(0)" onclick="doOpenLayer('基本信息','/Common/Profile/Index')">基本信息</a></li>
+                            <li><a href="javascript:void(0)" onclick="doOpenLayer('密码修改','/Common/Profile/Psword')">密码修改</a></li>
+                            <li><a href="javascript:void(0)" onclick="doOpenLayer('参数设置','/Common/Setting/Index')">参数设置</a></li>
+                            <li><a href="javascript:void(0)" onclick="doOpenLayer('关于系统','/Home/About')">关于系统</a></li>
+                            <li><a href="javascript:void(0)" onclick="onQuitSystem()">退出</a></li>
+                        </ul>
+                    </div><!--userdata-->
+                </div><!--userinfodrop-->
+            </div><!--right-->
+        </div><!--topheader-->
+
+
+        <div class="header">
+            <ul class="headermenu">
+                <li @if (viewExpress.ViewTag.Equals("StaffMFrame")||viewExpress.ViewTag.Equals("ServMFrame")) { <text> class="current" </text> }><a href="/StaffData/MainFrame/Index"><span class="icon icon-flatscreen"></span>分诊控制台</a></li>
+                <li @if (viewExpress.ViewTag.Equals("StaffRota")||viewExpress.ViewTag.Equals("ServRota")) { <text> class="current" </text> }><a href="/StaffData/StaffRota/Index"><span class="icon icon-chart"></span>排班管理</a></li>
+                <li @if (viewExpress.ViewTag.Equals("RegisteView")) { <text> class="current" </text> }><a href="/Common/RegistData/Index"><span class="icon icon-pencil"></span>预约管理</a></li>
+                <li @if (viewExpress.ViewTag.Equals("MessageView")) { <text> class="current" </text> }><a href="/Common/Message/Index"><span class="icon icon-message"></span>查看消息</a></li>
+                @*<li><a href="/Common/Statistic/Index"><span class="icon icon-chart"></span>统计报表</a></li>*@
+            </ul>
+
+            <div class="headerwidget">
+                <div class="earnings">
+                    <div class="one_half">
+                        <h4>今日挂号</h4>
+                        <h2>@viewExpress.RegisteNum</h2>
+                    </div><!--one_half-->
+                    <div class="one_half last alignright">
+                        <h4>等待人数</h4>
+                        <h2>@viewExpress.WaitingNum</h2>
+                    </div><!--one_half last-->
+                </div><!--earnings-->
+            </div><!--headerwidget-->
+
+        </div><!--header-->
+
+       @RenderBody()
+
+    </div><!--bodywrapper-->
+
+    <!-- BEGIN JAVASCRIPTS -->
+    <script type="text/javascript" src="~/content/js/jquery-1.7.min.js"></script>
+    <script type="text/javascript" src="~/content/js/jquery-ui-1.8.16.custom.min.js"></script>
+    <script type="text/javascript" src="~/content/layui/layui.all.js"></script> 
+    <script type="text/javascript" src="~/content/js/general.js"></script> 
+    <script type="text/javascript">
+
+        var layer1;
+
+        jQuery(document).ready(function () {
+
+            layui.use('layer', function () { //独立版的layer无需执行这一句
+                layer1 = layui.layer; //独立版的layer无需执行这一句
+            });
+        });
+
+        function doOpenLayer(wtitle,url) {
+
+            layer1.open({
+                type: 2,
+                title: wtitle,
+                shadeClose: true,
+                shade: false,
+                maxmin: false, //开启最大化最小化按钮
+                area: ['730px', '450px'],
+                content: [url, 'no'] 
+            });
+        }
+
+        function onQuitSystem() {
+            //询问框
+
+            layer.confirm('您确定要退出系统吗？', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                window.location.href = "/System/Auth/Logout";                
+            }, function () {                
+            });
+        }
+
+        function doRefreshPage() {
+            window.location.reload();
+        }
+    </script>
+
+    @RenderSection("PageSpecificJavascriptIncludes", required: false)
+    <!-- END JAVASCRIPTS --> 
+
+</body>
+</html>

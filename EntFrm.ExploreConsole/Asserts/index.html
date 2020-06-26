@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title></title>
+	<link href="styles/font-awesome.min.css" rel="stylesheet" />
+	<link href="styles/app.css" rel="stylesheet" />
+	<script src="scripts/jquery-2.2.3.js"></script> 
+</head>
+<body>
+	<div class="demo-app"> 
+		<content>
+			<div class="app-sys-command-container">
+				<ul class="sys-commands">
+					<!--Use <n-ui-command> attribute to control form's system commands. -->
+					<li n-ui-command="minimize">
+						<i class="fa fa-window-minimize"></i>
+					</li>
+					<!--Use <n-ui-command> attribute to control form's system commands. -->
+					<li n-ui-command="maximize">
+						<i class="fa fa-window-maximize"></i>
+					</li>
+					<!--Use <n-ui-command> attribute to control form's system commands. -->
+					<li n-ui-command="close">
+						<i class="fa fa-close"></i>
+					</li>
+				</ul>
+			</div>
+            <iframe src="welcome.html" id="frame" scrolling="no" frameborder="0" style="margin:30px 0 0 0;padding:0;width:100%;height:700px;" onload="setIframeHeight(this)"> </iframe>	
+		</content>
+	</div>
+
+	<script>
+
+		$(function () {
+
+			$(window).on("hoststatechange", function (e) {
+				//console.log(e.detail);
+				//$("#label-form-state").text(e.detail.stateName);
+
+			});
+
+			$(window).on("hostactivestate", function (e) {
+				//console.log(e.detail);
+				//$("#label-activated-state").text(e.detail.stateName);
+
+				//if (e.detail) {
+				//	if (e.detail.state === 1) {
+				//		$("html").addClass("app-active");
+				//	}
+				//	else {
+				//		$("html").removeClass("app-active");
+				//	}
+				//}
+			});
+
+			$(window).on("hostsizechange", function (e) {
+                setIframeHeight(document.getElementById('frame'));
+			});
+
+        });
+
+        function setIframeHeight(iframe) {
+            if (iframe) {
+                var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+                if (iframeWin.document.body) {
+                    iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+                }
+            }
+        }
+
+        function loadHomeUrl(url) {
+            $("#frame").attr('src', url); 
+        }
+
+	</script>
+</body>
+</html>

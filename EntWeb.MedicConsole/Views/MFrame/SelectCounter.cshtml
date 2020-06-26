@@ -1,0 +1,80 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Business.Model.Collections;
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+    ViewBag.Title = "窗口选择";
+
+    string counterNo = ViewBag.CounterNo;
+    CounterInfoCollections counterList = ViewBag.CounterList;
+}
+
+@section PageStyleSheet{
+    <style type="text/css">
+    </style>
+}
+
+@section PageJavascript{
+    <script type="text/javascript">
+
+        var layer2;
+        $(document).ready(function () {
+            layui.use('layer', function () {
+                layer2 = layui.layer;
+            });
+        });
+
+        function saveCounter() {
+             
+            var counterNo = $("#counterNo").val(); 
+
+            $.post(
+                "/MFrame/UpdateCounter",
+                { a: Math.random(), sCounterNo: counterNo },
+                function (data) {
+                    if (data === "SUCCESS") {
+                        layer2.msg('修改成功!');
+                    }
+                    else {
+                        layer2.msg('修改失败!');
+                    }
+                }
+            );
+        }
+    </script>
+}
+
+
+<div class="page-main">
+    <div class="row row-cards">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">窗口</label>
+                                <select name="counterNo" id="counterNo" class="form-control custom-select">
+                                    @if (counterList != null && counterList.Count > 0)
+                                    {
+                                        foreach (CounterInfo counter in counterList)
+                                        {
+                                            <option value="@counter.sCounterNo" @if(counterNo.Equals(counter.sCounterNo)) { <text>selected</text> } >@counter.sCounterName</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option value="99999999">无</option>
+                                    } 
+                                </select>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-primary" onclick="saveCounter()">保存</button>
+                    <button class="btn btn-primary" onclick="closeLayer()">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

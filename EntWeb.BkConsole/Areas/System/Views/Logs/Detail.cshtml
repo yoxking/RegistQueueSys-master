@@ -1,0 +1,86 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Detail";
+
+    LogsInfo info = (LogsInfo)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+    $(document).ready(function () {
+    });
+    </script>
+}
+
+<form class="form-horizontal">
+    <div class=" wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active"> 
+                     
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">日志标题：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" readonly name="sLogTitle" id="sLogTitle" value="@info.sLogTitle" placeholder="日志标题">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">日志等级：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" readonly name="sGradeNo" id="sGradeNo" value="@info.sGradeNo" placeholder="日志等级">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">IP地址：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" readonly name="sIpAddress" id="sIpAddress" value="@info.sIpAddress" placeholder="IP地址">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">时间：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" readonly name="dModDate" id="dModDate" value="@info.dModDate.ToString()" placeholder="时间">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">日志内容：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" readonly name="sLContent" id="sLContent" value="@info.sLContent" placeholder="日志内容">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed" style="margin:0;">
+                        <div class="form-group m20">
+                            <div class="col-sm-2 col-sm-offset-2">
+                                <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

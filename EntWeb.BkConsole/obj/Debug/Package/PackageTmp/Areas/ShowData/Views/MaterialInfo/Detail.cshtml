@@ -1,0 +1,91 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    DsMaterialInfo info = (DsMaterialInfo)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script>
+}
+
+<form class="form-horizontal">
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">素材编号：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="MatNo" id="MatNo" readonly value="@info.sMatNo" placeholder="编号" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">素材名称：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="MatName" id="MatName" value="@info.sMatName" placeholder="素材名称" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">素材类型：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="MClassNo" id="MClassNo" value=" @PageHelper.getMaterialClassNameByNo(info.sMClassNo)" placeholder="素材类型" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">上传素材：</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" name="FilePath" id="FilePath" placeholder="上传素材" value="@info.sFilePath" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">是否模板：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="IsTemplet" id="IsTemplet" value="@(info.iIsTemplet==1?"是":"否")" placeholder="是否模板" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">备注：</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="Comments" id="Comments" rows="5">@info.sComments</textarea>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                        <div class="form-group m20"> 
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

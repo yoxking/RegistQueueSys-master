@@ -1,0 +1,129 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Business.Model.Collections;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "业务选择";
+
+    ServiceInfoCollections infoList = (ServiceInfoCollections)ViewBag.StackHolder["infoList"];
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+
+        var dialog = top.dialog.get(window);
+        $(document).ready(function () {
+
+            $("#selectAll").click(function () {
+                var ischecked = this.checked;
+                $("input:checkbox[name='infosId']").each(function () {
+                    if ($(this).attr("disabled") != "disabled") {
+                        this.checked = ischecked;
+                    }
+                });
+            });
+        });
+
+        function onSelect() {
+            var Ids = '';
+            var Names = '';
+            var temp = '';
+            $("input:checkbox[name='infosId']").each(function () {
+                if (this.checked) {
+                    temp = this.value.split(';');
+                    Ids += temp[0] + ";";
+                    Names += temp[1] + ";";
+                }
+            });
+
+            if (Ids == "") {
+                dig.alertError("提示", "请至少选择一条记录！");
+            } else {
+                Ids = Ids.substring(0, Ids.length - 1);
+                Names = Names.substring(0, Names.length - 1);
+
+                dialog.close(Ids + "|" + Names);
+                dialog.remove();
+            }
+        }
+
+        function onCancel() {
+            dialog.close('error').remove();
+        }
+</script>
+
+}
+
+
+<div class="wrapper-content" style="padding-top:0px;background-color:#ffffff;">
+    <div class="panel-body">
+        @using (Html.BeginForm("Search", "SelectPlayers", FormMethod.Post))
+        {
+            <table cellspacing="0" style="width:100%;padding:10px; 0">
+                <tr> 
+                    <td style="padding:5px 10px 5px 0;">
+                        @Html.TextBox("Keyword", null, new { @class = "input-sm form-control", @placeholder = "请输入查询关键词" })
+                    </td>
+                    <td style="padding:5px 10px 5px 0;">
+                        <button type="submit" class="btn btn-sm btn-primary"> 搜索</button>
+                    </td>
+                </tr>
+            </table>
+        }
+        <!-- search end -->
+        <div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+            <table id="example" class="table table-striped table-bordered table-hover dataTables-example dataTable" cellspacing="0" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th class="tn" style="padding: 10px 5px !important;width:50px !important;">
+                            <input id="selectAll" name="selectAll" type="checkbox" value="">
+                        </th>
+                        <th>业务名称</th>
+                        <th>业务别名</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (null == infoList || infoList.Count < 1)
+                    {
+                        <tr>
+                            <td colspan="3">暂无信息</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (ServiceInfo m in infoList)
+                        {
+                            <tr>
+                                <td class="tn">
+                                    <input type="checkbox" name="infosId" value="@m.sServiceNo;@m.sServiceName" />
+                                </td>
+                                <td>
+                                    @m.sServiceName
+                                </td>
+                                <td>
+                                    @m.sServiceAlias
+                                </td> 
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <!-- page -->
+            <div class="bottom">
+                @Html.Partial("_Paging")
+            </div>
+            <!-- page -->
+        </div>
+
+        <div>
+            <button class="btn btn-primary" id="btn-save" onclick="onSelect()" type="button">确定选择</button>
+            <button class="btn btn-warning" onclick="onCancel()" type="button">取消返回</button>
+        </div>
+    </div>
+</div>
+

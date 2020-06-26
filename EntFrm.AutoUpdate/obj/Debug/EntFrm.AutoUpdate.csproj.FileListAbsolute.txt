@@ -1,0 +1,11 @@
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\EntFrm.AutoUpdate\bin\Debug\EntFrm.AutoUpdate.exe.config
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\EntFrm.AutoUpdate\bin\Debug\EntFrm.AutoUpdate.exe
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\EntFrm.AutoUpdate\bin\Debug\EntFrm.AutoUpdate.pdb
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\EntFrm.AutoUpdate\obj\Debug\EntFrm.AutoUpdate.csprojAssemblyReference.cache
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\EntFrm.AutoUpdate\obj\Debug\EntFrm.AutoUpdate.Properties.Resources.resources
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\EntFrm.AutoUpdate\obj\Debug\EntFrm.AutoUpdate.csproj.GenerateResource.cache
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\EntFrm.AutoUpdate\obj\Debug\EntFrm.AutoUpdate.csproj.CoreCompileInputs.cache
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\EntFrm.AutoUpdate\obj\Debug\EntFrm.AutoUpdate.csproj.CopyComplete
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\EntFrm.AutoUpdate\obj\Debug\EntFrm.AutoUpdate.exe
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\EntFrm.AutoUpdate\obj\Debug\EntFrm.AutoUpdate.pdb
+F:\Project_Storage\医院分诊排队系统\QueueSysWebSolution\EntFrm.AutoUpdate\obj\Debug\EntFrm.AutoUpdate.MainFrame.resources

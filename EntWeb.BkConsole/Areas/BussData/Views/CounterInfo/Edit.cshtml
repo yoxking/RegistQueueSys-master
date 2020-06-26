@@ -1,0 +1,177 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Business.Model.Collections;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    CounterInfo info = (CounterInfo)ViewBag.StackHolder;
+
+    VoiceInfoCollections ttsList = (VoiceInfoCollections)ViewBag.TtsList;
+    LEDDisplayCollections LedList = (LEDDisplayCollections)ViewBag.LedList;
+    CallerInfoCollections CallerList = (CallerInfoCollections)ViewBag.CallerList;
+}
+
+@section PageSpecificStyleSheetIncludes{ 
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{ 
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script> 
+}
+
+@using (Ajax.BeginForm("Save", null, new AjaxOptions()
+{
+    HttpMethod = "Post",
+    OnBegin = "SubAjax.Loading",
+    OnComplete = "SubAjax.Complate",
+    OnFailure = "SubAjax.Failure",
+    OnSuccess = "SubAjax.Success"
+},
+            new { @class = "form-horizontal dig-from", @role = "form" }))
+
+{
+     
+        <div class="wrapper-content">
+            <div class="panel-body" style="padding-top:0px;">
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">编号：</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" name="CounterNo" id="CounterNo" readonly value="@info.sCounterNo" placeholder="编号" />
+                            </div>
+                        </div>
+
+                        <div class="clearfix f-hafl">
+                            <div class="col-hafl">
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">窗口名称：</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" name="CounterName" id="CounterName" value="@info.sCounterName" placeholder="窗口名称" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">语音样式：</label>
+                                    <div class="col-lg-8">
+                                        <select id="TtsStylesNo" name="TtsStylesNo" class="form-control">
+                                            @if (ttsList != null && ttsList.Count > 0)
+                                            {
+                                                foreach (VoiceInfo tts in ttsList)
+                                                {
+                                                    <option value="@tts.sTtsNo" @if (info.sVoiceStyleNos == tts.sTtsNo) { <text> selected</text>}>@tts.sTtsName</option>
+                                                }
+                                            }
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">LED窗口屏：</label>
+                                    <div class="col-lg-8">
+                                        <select id="LedDisplayNo" name="LedDisplayNo" class="form-control">
+                                            @if (LedList != null && LedList.Count > 0)
+                                            {
+                                                foreach (LEDDisplay led in LedList)
+                                                {
+                                                    <option value="@led.sDisplayNo" @if (info.sLedDisplayNo == led.sDisplayNo) { <text> selected</text>}>@led.sDisplayName</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">呼叫器：</label>
+                                    <div class="col-lg-8">
+                                        <select id="CallerNo" name="CallerNo" class="form-control">
+                                            @if (CallerList != null && CallerList.Count > 0)
+                                            {
+                                                foreach (CallerInfo Caller in CallerList)
+                                                {
+                                                    <option value="@Caller.sCallerNo" @if (info.sCallerNo == Caller.sCallerNo) { <text> selected</text>}>@Caller.sCallerName</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-hafl">                                
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">窗口别名：</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" name="CounterAlias" id="CounterAlias" placeholder="窗口别名" value="@info.sCounterAlias" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">自动登录：</label>
+                                    <div class="col-lg-8">
+                                        <select id="IsAutoLogon" class="form-control" name="IsAutoLogon">
+                                            <option value="0">否</option>
+                                            <option value="1">是</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">LED屏地址：</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" name="LedAddress" id="LedAddress" value="@info.iLedAddress" placeholder="LED屏地址" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">呼叫器地址：</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" name="CallerAddress" id="CallerAddress" value="@info.iCallerAddress" placeholder="呼叫器地址" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">业务组：</label>
+                            <div class="col-lg-8" >
+                                <input type="text" class="form-control" name="Bussiness" id="Bussiness" value=""  />
+                            </div> 
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">备注：</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" id="Comments" name="Comments" rows="5">@info.sComments</textarea>
+                            </div>
+                        </div>
+
+                        <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                            <div class="form-group m20">
+                                <button class="btn btn-primary btn-save" type="submit"><i class="fa fa-check"></i> <span>保存</span></button>
+                                <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+}
+

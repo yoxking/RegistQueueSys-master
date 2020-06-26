@@ -1,0 +1,57 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test</title>
+    <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+
+        var ws;
+        $(document).ready(function () {
+            initWS();
+        });
+        function initWS() {
+            ws = new WebSocket("ws://192.168.1.101:9818/IQueueService");
+                ws.onopen = function () {
+                    console.log("Openened connection to websocket");
+
+                };
+                ws.onclose = function () {
+                    console.log("Close connection to websocket");
+                    // 断线重连
+                    initWS();
+                }
+
+                ws.onmessage = function (result) {
+                    $("#servicelist").html(result.data);
+                }
+        }
+        function scan1() {
+            var cmd = '{"cmmdName":"getCallingListByCounterId","cmmdType":"IQueueService","cmmdArgs":["170858507526","304138813506"]}';
+
+            ws && ws.send(cmd);
+        }
+        function scan2() {
+            var cmd = '{"cmmdName":"getWaitingListByCounterId","cmmdType":"IQueueService","cmmdArgs":["170858507526","304138813506"]}';
+
+            ws && ws.send(cmd);
+        } 
+    </script>
+</head>
+<body>
+    <div>
+        <div><button id="t" onclick="scan1()">刷新列表1</button><button id="t" onclick="scan2()">刷新列表2</button></div>
+        <h3>正在等候人员列表：</h3>
+        <div id="callinglist" style="width:600px;">
+        </div>
+        <div id="waitinglist" style="width:600px;">
+        </div>
+    </div>
+</body>
+</html>

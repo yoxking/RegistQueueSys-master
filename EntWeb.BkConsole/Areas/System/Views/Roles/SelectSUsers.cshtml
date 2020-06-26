@@ -1,0 +1,117 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Business.Model.Collections;
+@using EntWeb.BkConsole;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "选择管理员";
+
+    SUsersInfoCollections infoList = (SUsersInfoCollections)ViewBag.InfoList;
+    string suersList = ViewBag.SUsersList;
+    string roleNo = ViewBag.RoleNo;
+    string roleName = ViewBag.RoleName;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#selectAll").click(function () {
+                var ischecked = this.checked;
+                $("input:checkbox[name='infosId']").each(function () {
+                    if ($(this).attr("disabled") !== "disabled") {
+                        this.checked = ischecked;
+                    }
+                });
+            });
+        });
+         
+
+        function save() {
+            var roleNo = document.getElementById("RoleNo").value;
+            var result = "";
+            $("input:checkbox[name='infosId']").each(function () {
+                if (this.checked) {
+                    result += this.value + ";";
+                }
+            });
+
+            if (result === "") {
+                dig.alertError("提示", "请选择记录！");
+            } else {
+                result = result.substring(0, result.length - 1);
+
+                $.post('/System/Roles/AllotSUsers?roleNo=' + roleNo + '&suserIds='+result, function (result) {
+                    if (result.Status === 'Success') {
+                        dig.alertError('提示', '操作成功!');
+                    } else {
+                        dig.alertError('提示', resul.Message);
+                    }
+                }, 'json');
+            }
+        }
+
+    </script>
+}
+
+<!-- table star -->
+<div class="row col-lg-12">
+    <div class="wrapper wrapper-content animated fadeInUp">
+        <div class="ibox">
+            <div class="ibox-title">
+                <input type="hidden" id="RoleNo" name="RoleName" value="@roleNo" />
+                <h3>当前角色：@roleName</h3>
+                <div class="ibox-tools rboor">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <table id="example" class="table table-striped table-bordered table-hover dataTables-example dataTable" cellspacing="0" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th class="tn" style="padding: 10px 5px !important;width:50px !important;"><input id="selectAll" name="selectAll" type="checkbox" value=""></th>
+                                <th>管理员名称</th>
+                                <th>备注</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (null == infoList || infoList.Count < 1)
+                            {
+                                <tr>
+                                    <td colspan="3">暂无信息</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (SUsersInfo m in infoList)
+                                {
+                                    <tr>
+                                        <td class="tn">
+                                            <input type="checkbox" name="infosId" value="@m.sSuNo"  @if(suersList.Contains(m.sSuNo)) { <text>checked</text>} />                                        </td>
+                                        <td>
+                                            @m.sTrueName
+                                        </td>
+                                        <td>
+                                            @m.sComments
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align:center">
+                    <button class="btn btn-primary btn-save" type="button" onclick="save()"><i class="fa fa-check"></i> <span>保存</span></button>
+                    <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 取消</button>
+                </div>                   
+            </div>
+        </div>
+    </div>
+</div>
+

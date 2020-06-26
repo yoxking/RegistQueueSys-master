@@ -1,0 +1,173 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Business.Model.Collections;
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+    ViewBag.Title = "配药";
+
+    string rflowNo = ViewBag.RFlow;
+    string counterNo= ViewBag.CounterNo;
+    string totalAmount = ViewBag.TotalAmount;
+    CounterInfoCollections counterList = ViewBag.CounterList;
+}
+
+@section PageStyleSheet{
+    <style type="text/css">
+    </style>
+}
+
+@section PageJavascript{ 
+    <script type="text/javascript">
+
+        var table;
+        var layer;
+
+        $(document).ready(function () {
+
+            layui.use('layer', function () { //独立版的layer无需执行这一句
+                layer = layui.layer; //独立版的layer无需执行这一句
+            });
+
+            layui.use('table', function () {
+                table = layui.table;
+
+                //展示已知数据
+                table.render({
+                    elem: '#mytable1',
+                    id: 'idTable1',
+                    cols: [[ //标题栏
+                        {
+                            checkbox: true,
+                            LAY_CHECKED: false
+                        } //默认全选
+                        , {
+                            field: 'RecipeName',
+                            title: '药名',
+                            width: 150
+                        }, {
+                            field: 'RecipeSpec',
+                            title: '规格',
+                            width: 100
+                        }, {
+                            field: 'Standard',
+                            title: '单位',
+                            width: 80
+                        }, {
+                            field: 'Price',
+                            title: '单价',
+                            width: 80
+                        }, {
+                            field: 'Amount',
+                            title: '金额',
+                            width: 80
+                        }, {
+                            field: 'Frequency',
+                            title: '频次',
+                            width: 120
+                        }, {
+                            field: 'SQuantity',
+                            title: '付数',
+                            width: 60
+                        }, {
+                            field: 'TQuantity',
+                            title: '数次',
+                            width: 60
+                        }, {
+                            field: 'Direction',
+                            title: '用法',
+                            width: 200
+                        }, {
+                            field: 'RecipeNo',
+                            title: '编号',
+                            width: 150,
+                            sort: true
+                        }]],
+                    skin: 'row', //表格风格
+                    even: true,
+                    page: true, //是否显示分页
+                    limits: [10, 20, 50],
+                    limit: 10, //每页默认显示的数量
+                    height: 380,
+                    url: '/Recipe/getDataList_Recipe',
+                    request: {
+                        pageName: 'pageIndex', //页码的参数名称，默认：page
+                        limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                    },
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: '@rflowNo'
+                    },
+                    done: function (res, curr, count) {
+                    }
+                });
+
+            });
+        });
+
+        function checkRecipe() {
+
+            var rflowNo = $("#rflowNo").val();
+            var counterNo = $("#counterNo").val();;
+
+            $.post(
+                "/Recipe/CheckRecipe",
+                { a: Math.random(), sRFlowNo: rflowNo, sCounterNo: counterNo },
+                function (data) {
+                    if (data === "SUCCESS") { 
+
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    }
+                    else {
+                        layer.msg('修改失败!');
+                    }
+                }
+            );
+        }
+    </script>
+}
+
+
+<div class="page-main">
+    <div class="row row-cards">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="hidden" id="rflowNo" name="rflowNo" value="@rflowNo" />
+                            <!--表格-->
+                            <table class="layui-hide" id="mytable1" lay-filter="datatable"></table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <div class="row">
+                        <div class="form-group col-sm-4 col-md-4">
+                            <select name="counterNo" id="counterNo" class="form-control custom-select">
+                                @if (counterList != null && counterList.Count > 0)
+                                {
+                                    foreach (CounterInfo counter in counterList)
+                                    {
+                                        <option value="@counter.sCounterNo" @if(counterNo.Equals(counter.sCounterNo)) { <text>selected</text> }  >@counter.sCounterName</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="99999999">无</option>
+                                }
+                            </select> 
+                        </div>
+                        <div class="form-group col-sm-2 col-md-2">
+                            <label class="form-label" style="color:red;">
+                                总金额:@totalAmount 元
+                            </label> 
+                        </div>
+                        <div class="form-group col-sm-6 col-md-6">
+                            <button class="btn btn-primary" onclick="checkRecipe()">配药完成</button>
+                            <button class="btn btn-primary" onclick="closeLayer()">关闭</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+</div>

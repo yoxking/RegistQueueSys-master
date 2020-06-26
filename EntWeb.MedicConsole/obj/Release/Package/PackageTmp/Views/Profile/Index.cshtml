@@ -1,0 +1,49 @@
+﻿@using EntFrm.Framework.Web;
+
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+    ViewBag.Title = "基本信息";
+
+    string stafferName = ViewBag.StafferName;
+    string organizNo = ViewBag.OrganizNo;
+}
+
+@section PageStyleSheet{
+    <style type="text/css">
+    </style>
+}
+
+@section PageJavascript{
+    <script type="text/javascript">
+        
+    </script>
+}
+
+
+<div class="page-main"> 
+        <div class="row row-cards">
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">姓名</label>
+                                    <input type="text" class="form-control" disabled="" placeholder="用户名" value="@stafferName">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">部门</label>
+                                    <input type="text" class="form-control" disabled="" placeholder="部门" value="@organizNo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <button class="btn btn-primary" onclick="closeLayer()">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+</div>

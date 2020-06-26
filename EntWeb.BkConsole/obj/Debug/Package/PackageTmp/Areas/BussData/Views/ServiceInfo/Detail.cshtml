@@ -1,0 +1,130 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Detail";
+
+    ServiceInfo info = (ServiceInfo)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+    $(document).ready(function () {
+    });
+    </script>
+}
+
+<form class="form-horizontal">
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">编号：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="ServiceNo" id="ServiceNo" value="@info.sServiceNo" placeholder="编号" readonly />
+                        </div>
+                    </div>
+
+                    <div class="clearfix f-hafl">
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">业务名称：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="ServiceName" id="ServiceName" value="@info.sServiceName" placeholder="业务名称" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">类型：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <input class="form-control" name="ServiceType" id="ServiceType" value="@info.sServiceType" placeholder="类型"  />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">起始号：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <input class="form-control" name="StartNum" id="StartNum" value="@info.iStartNum" placeholder="起始号"  />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">最大号：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <input class="form-control" name="AlarmNum" id="AlarmNum" value="@info.iAlarmNum" placeholder="最大号"  />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:3px; padding-right:5px;">业务别名：</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" name="ServiceAlias" id="ServiceAlias" value="@info.sServiceAlias" placeholder="业务别名"  />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:3px; padding-right:5px;">上级编号：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="ParentNo" id="ParentNo" value="@PageHelper.getServiceInfoNameByNo(info.sParentNo)" placeholder="上级编号" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:3px; padding-right:5px;">结束号：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <input class="form-control" name="EndNum" id="EndNum" value="@info.iEndNum" placeholder="结束号"  />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:3px; padding-right:5px;">票号长度：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="DigitLength" id="DigitLength" value="@info.iDigitLength" placeholder="票号长度"  />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">票号样式：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="TicketStyleNo" id="TicketStyleNo" value="@PageHelper.getTicketStyleNameByNo(info.sTicketStyleNo)" placeholder="样式"  />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">备注：</label>
+                        <div class="col-lg-8">
+                            <textarea class="form-control" name="Comments" id="Comments" rows="5"  >@info.sComments</textarea>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                        <div class="form-group m20">
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

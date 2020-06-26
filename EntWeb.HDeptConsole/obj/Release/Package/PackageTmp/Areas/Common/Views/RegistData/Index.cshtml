@@ -1,0 +1,346 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<ItemData> itemList = (List<ItemData>)ViewBag.ItemList;
+    string workingMode = ViewBag.WorkingMode.ToString();
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+    </style>
+}
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+
+        var table;
+        var layer;
+
+        jQuery(document).ready(function () {
+
+            layui.use(['layer', 'laydate'], function () { //独立版的layer无需执行这一句
+                layer = layui.layer; //独立版的layer无需执行这一句
+                var laydate = layui.laydate;
+
+                //执行一个laydate实例
+                laydate.render({
+                    elem: '#registDate' //指定元素 
+                }); 
+            });
+
+            layui.use('table', function () {
+                table = layui.table;
+
+                //展示已知数据
+                table.render({
+                    elem: '#mytable1',
+                    id: 'idTable1',
+                    cols: [[ //标题栏
+                        {
+                            checkbox: true,
+                            LAY_CHECKED: false
+                        } //默认全选
+                        , {
+                            field: 'StafferName',
+                            title: '预约医生',
+                            width: 150
+                        }, {
+                            field: 'ServiceName',
+                            title: '预约业务',
+                            width: 150
+                        }, {
+                            field: 'RUserName',
+                            title: '病人姓名',
+                            templet: '#ruserTpl',
+                            width: 150
+                        }, {
+                            field: 'RUserTel',
+                            title: '电话',
+                            width: 150
+                        }, {
+                            field: 'RegistTime',
+                            title: '预约日期',
+                            width: 200,
+                            templet: function (d) {
+                                if (d !== null) {
+
+                                    var val = d.RegistTime;
+                                    var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
+                                    var year = date.getFullYear();
+                                    var month = date.getMonth() + 1;
+                                    var day = date.getDate();
+                                    var hour = date.getHours().toString();
+                                    var minutes = date.getMinutes().toString();
+                                    var seconds = date.getSeconds().toString();
+
+                                    return year + "-" + month + "-"  + day + " " + hour + ":" + minutes + ":" + seconds ;
+                                }
+                                return "";
+                            }
+                        }, {
+                            field: 'DataFrom',
+                            title: '来源',
+                            width: 150
+                        }, {
+                            field: 'RegistState',
+                            title: '操作',
+                            templet: '#updateTpl',
+                            width: 150
+                        }, {
+                            field: 'RegistNo',
+                            title: '编号',
+                            width: 150
+                        }]],
+                    skin: 'row', //表格风格
+                    even: true,
+                    page: true, //是否显示分页
+                    limits: [10, 20, 50],
+                    limit: 10, //每页默认显示的数量
+                    height: 400,
+                    url: '/Common/RegistData/getDataList_Regist',
+                    request: {
+                        pageName: 'pageIndex', //页码的参数名称，默认：page
+                        limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                    },
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: ''
+                    },
+                    done: function (res, curr, count) {
+                    }
+                });
+
+            });
+        });
+
+        function onRefresh_TableData(itemNo) {
+
+            jQuery("#itemId").val(itemNo);
+
+            var sWhere = "";
+            if (itemNo != '99999999') {
+                sWhere = " ( ServiceNo='" + itemNo + "' Or StafferNo='" + itemNo + "')";
+            }
+
+            if (table !== null) {
+                table.reload('idTable1', {
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: sWhere
+                    }
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            }
+        }
+
+        function onAddRegist() {
+            layer.open({
+                type: 2,
+                title: '预约信息',
+                shadeClose: true,
+                shade: false,
+                maxmin: false, //开启最大化最小化按钮
+                area: ['660px', '450px'],
+                content: ['/Common/RegistData/AddRegist', 'no'],
+                end: function () {
+                    onRefresh();
+                }
+            });
+        }
+
+        function onEditRegist(registId) {
+            layer.open({
+                type: 2,
+                title: '预约信息',
+                shadeClose: true,
+                shade: false,
+                maxmin: false, //开启最大化最小化按钮
+                area: ['660px', '450px'],
+                content: ['/Common/RegistData/EditRegist?registNo=' + registId, 'no'],
+                end: function () {
+                    onRefresh();
+                }
+            });
+        }
+
+        function onDelRegist() {
+
+            var checkStatus = table.checkStatus('idTable1'), data = checkStatus.data;
+
+            if (data.length > 0) {
+
+
+                layer.confirm('您确定要取消预约所选记录吗？', {
+                    btn: ['确定', '取消'] //按钮
+                }, function () {
+                    var idlist = "";
+                    jQuery.each(data, function (i, item) {
+
+                        idlist += item.RegistNo + ";";
+                    });
+
+                    if (idlist !== null && idlist.length > 0) {
+                        idlist = idlist.substring(0, idlist.length - 1);
+                    }
+
+                    jQuery.post(
+                        "/Common/RegistData/DelRegist",
+                        { a: Math.random(), ids: idlist },
+                        function (data) {
+                            if (data === "SUCCESS") {
+                                layer.msg("取消成功!");
+                                onRefresh();
+                            }
+                            else {
+                                layer.msg('取消失败!');
+                            }
+                        }
+                    );
+                }, function () {
+                });
+            } else {
+                layer.msg("至少选择一条记录!");
+            }
+        }
+
+        function onRefresh() {
+            onRefresh_TableData("99999999");
+        }
+
+        function onOpenLayer(id) {
+
+            if (id !== "") {
+                layer.open({
+                    type: 2,
+                    title: '病人详细',
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['660px', '420px'],
+                    content: ['/Common/RUserInfo/Detail?id=' + id, 'no'],
+                    end: function () {
+                        //onRefresh();
+                    }
+                });
+            }
+        }
+
+        function onRegisterQuery() { 
+
+            var itemNo =jQuery("#itemId").val();
+            var dataFrom = jQuery("#dataFrom").val();
+            var registDate = jQuery("#registDate").val();
+            var keyword = jQuery("#keyword").val(); 
+
+            var sWhere = " 1=1 ";
+            if (itemNo != '99999999') {
+                sWhere = " And ( ServiceNo='" + itemNo + "' Or StafferNo='" + itemNo + "')";
+            }
+
+            if (dataFrom !== '0') {
+                sWhere += " And  DataFrom='" + dataFrom+"' ";
+            }
+
+            if (keyword !== null &&registDate !=='') {
+                sWhere += " And RegistDate Between '" + registDate + " 00:00:00' And '" + registDate + " 23:59:59' ";
+            }
+
+            if (keyword !== null && keyword.length > 0) {
+                sWhere += " And ( CnName Like '%" + keyword + "%' Or EnName Like '%" + keyword + "%' Or Telphone Like '%" + keyword + "%' ) ";
+            }
+
+            table.reload('idTable1', {
+                where: { //设定异步数据接口的额外参数，任意设
+                    condition: sWhere
+                }
+                , page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        }
+
+    </script>
+    <script type="text/html" id="ruserTpl">
+        <button type="button" onclick="onOpenLayer('{{d.RUserNo}}')" class="stdbtn">{{d.RUserName}}</button>  
+    </script>
+    <script type="text/html" id="updateTpl">
+        <button type="button" onclick="onEditRegist('{{d.RegistNo}}')"  class="stdbtn">编辑信息</button> 
+    </script>
+}
+
+
+<div class="vernav2 iconmenu">
+    <input type="hidden" id="itemId" name="itemId" value="99999999" />
+    <ul>
+        <li>
+            @if (workingMode.Equals("STAFF"))
+            {
+                <a href="#formsub" class="editor">医生列表</a>
+            }
+            else
+            {
+                <a href="#formsub" class="editor">业务列表</a>
+            }
+            <span class="arrow"></span>
+            <ul id="formsub">
+                @if (itemList != null && itemList.Count > 0)
+                {
+                    foreach (ItemData item in itemList)
+                    {
+                        <li><a href="javascript:void(0)" onclick="onRefresh_TableData(@item.ItemName)">@item.ItemValue</a></li>
+                    }
+                }
+                else
+                {
+                    <li><a href="javascript:void(0)">暂无数据</a></li>
+                }
+            </ul>
+        </li>
+    </ul>
+    <a class="togglemenu"></a>
+    <br /><br />
+</div><!--leftmenu-->
+
+<div class="centercontent">
+
+    <div class="pageheader">
+
+        <ul class="hornav">
+            <li class="current"><a href="#activities1">预约列表</a></li>
+        </ul>
+    </div><!--pageheader-->
+
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div id="activities1" class="subcontent">
+
+            <div class="msghead">
+                <ul class="msghead_menu">
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onAddRegist()">新增预约</a></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onDelRegist()">取消预约</a></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onRefresh()">刷新</a></li>
+                    <li style="margin-left:50px;"><span style="padding:10px 2px;">检索：</span></li>
+                    <li style="margin-right:10px;">
+                        <select id="dataFrom" name="dataFrom" style="padding:6px 2px;">
+                            <option value="0">所有预约</option>
+                            <option value="预约挂号">预约挂号</option> 
+                        </select>
+                    </li>
+                    <li style="margin-right:10px;"><input type="text" style="padding:6px 2px;" id="registDate" name="registDate" /></li>
+                    <li style="margin-right:10px;"><input type="text" name="keyword" id="keyword" placeholder="请输入姓名、电话" style="padding:6px 2px;" /></li>
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onRegisterQuery()">查找</a></li>
+                </ul>
+                <span class="clearall"></span>
+            </div><!--msghead-->
+
+            <div class="table-container">
+                <table class="layui-hide" id="mytable1" lay-filter="datatable"></table>
+            </div>
+
+        </div><!-- #updates -->
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div><!-- centercontent -->

@@ -1,0 +1,189 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Chart.cshtml";
+    ViewBag.Title = "历史统计图表";
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+}
+
+<!-- table star -->
+<div class="row col-md-12">
+    <div class="wrapper wrapper-content">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>历史统计图表</h5>
+                <div class="ibox-tools rboor">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="ibox-content">
+                <p style="text-align:right;"><a class="btn btn-primary btn-xs p310"><i class="im-plus"></i> 立即刷新</a></p>
+                <!-- search end -->
+                <div class="divider"></div>
+                <br />
+                <div id="example_wrapper" class="dt-bootstrap no-footer">
+                    <div class="row col-md-5" id="main1" style="height:400px;"></div>
+                    <div class="row col-md-5" id="main2" style="height:400px;"></div>
+                    <div style="clear:both;"></div>
+                    <div><h3 style="text-align:center;">2020年7月-就诊患者人数曲线图</h3></div>
+                    <div class="row col-md-12" id="main3" style="height:400px;"></div>
+                    <div style="clear:both;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart1 = echarts.init(document.getElementById('main1'));
+    var myChart2 = echarts.init(document.getElementById('main2'));
+    var myChart3 = echarts.init(document.getElementById('main3'));
+
+    var data1 = [
+        {
+        name: '内科',
+        value: 70
+    }, {
+        name: '外科',
+        value: 68
+    }, {
+        name: '检验科',
+        value: 48
+    }, {
+        name: '骨科',
+        value: 40
+    }, {
+        name: '眼科',
+        value: 32
+    }, {
+        name: '检查科',
+        value: 27
+    }, {
+        name: '妇产科',
+        value: 18
+        }];
+
+
+    var data2 = [
+        {
+        name: '李元',
+        value: 70
+    }, {
+        name: '张明',
+        value: 68
+    }, {
+        name: '王晓兵',
+        value: 48
+    }, {
+        name: '李新',
+        value: 40
+    }, {
+        name: '王小明',
+        value: 32
+    }, {
+        name: '单三明',
+        value: 27
+    }, {
+        name: '李三',
+        value: 18
+    }];
+
+    option1 = {
+        title: {
+            text: '科室就诊人数统计',
+            subtext: '2020年7月-科室就诊人数统计',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+            type: 'scroll',
+            orient: 'vertical',
+            right: 10,
+            top: 20,
+            bottom: 20,
+            data: data1
+        },
+        series: [
+            {
+                name: '科室',
+                type: 'pie',
+                radius: '40%',
+                center: ['40%', '50%'],
+                data: data1,
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+    option2 = {
+        title: {
+            text: '医生就诊人数统计',
+            subtext: '2020年7月-医生就诊人数统计',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+            type: 'scroll',
+            orient: 'vertical',
+            right: 10,
+            top: 20,
+            bottom: 20,
+            data: data2
+        },
+        series: [
+            {
+                name: '姓名',
+                type: 'pie',
+                radius: '40%',
+                center: ['40%', '50%'],
+                data: data2,
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+    option3 = {
+        xAxis: {
+            type: 'category',
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [820, 932, 901, 934, 1290, 1330, 800],
+            type: 'line'
+        }]
+    };
+
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart1.setOption(option1);
+    myChart2.setOption(option2);
+    myChart3.setOption(option3);
+</script>
+

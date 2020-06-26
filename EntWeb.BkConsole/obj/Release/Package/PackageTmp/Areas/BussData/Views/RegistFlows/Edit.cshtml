@@ -1,0 +1,148 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    RegistFlows info = (RegistFlows)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script>
+
+    <!--layui引入-->
+    <script src="~/Content/laydate/laydate.js"></script>
+
+    <!--latui时间选择器-->
+    <script>
+        laydate.render({
+            elem: '#StartDate'
+            , type: 'datetime'
+        });
+    </script>
+    <script>
+        laydate.render({
+            elem: '#EnditDate'
+            , type: 'datetime'
+        });
+    </script>
+    <script>
+        laydate.render({
+            elem: '#RegistDate'
+            , type: 'datetime'
+        });
+    </script>
+}
+
+@using (Ajax.BeginForm("Save", null, new AjaxOptions()
+{
+    HttpMethod = "Post",
+    OnBegin = "SubAjax.Loading",
+    OnComplete = "SubAjax.Complate",
+    OnFailure = "SubAjax.Failure",
+    OnSuccess = "SubAjax.Success"
+},
+                                                new { @class = "form-horizontal dig-from", @role = "form" }))
+
+{
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">编号：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="RFlowNo" id="RFlowNo" readonly value="@info.sRFlowNo" placeholder="编号" />
+                        </div>
+                    </div>
+
+                    <div class="clearfix f-hafl">
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">病人：</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" name="RUserNo" id="RUserNo" value="@info.sRUserNo" placeholder="病人编号" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">预约服务：</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" name="ServiceNo" id="ServiceNo" value="@info.sServiceNo" placeholder="预约服务" />
+                                </div>
+                            </div> 
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">开始时间：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="StartDate" id="StartDate" value="@info.dStartDate.ToString("yyyy-MM-dd hh:mm:ss")" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">预约医生：</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" name="StafferNo" id="StafferNo" value="@info.sStafferNo" placeholder="预约医生" />
+                                </div>
+                            </div> 
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">预约方式：</label>
+                                <div class="col-lg-8">
+                                    <input class="form-control" name="DataFrom" id="DataFrom" value="@info.sDataFrom" placeholder="预约方式" />
+                                </div>
+                            </div> 
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">结束时间：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="EnditDate" id="EnditDate" value="@info.dEnditDate.ToString("yyyy-MM-dd hh:mm:ss")" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">备注：</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="Comments" rows="5" id="Comments">@info.sComments</textarea>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                        <div class="form-group m20">
+                            <button class="btn btn-primary btn-save" type="submit"><i class="fa fa-check"></i> <span>保存</span></button>
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i>返回</button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

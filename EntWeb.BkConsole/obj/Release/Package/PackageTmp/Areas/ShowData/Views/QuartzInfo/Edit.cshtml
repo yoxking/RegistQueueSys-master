@@ -1,0 +1,177 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Framework.Utility;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    DsQuartzInfo info = (DsQuartzInfo)ViewBag.StackHolder;
+    List<ItemObject> plylist = (List<ItemObject>)ViewBag.PlayerList;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <link rel="stylesheet" href="~/Content/layui/css/layui.css">
+    <link rel="stylesheet" href="~/Content/layui/css/public.css">
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <!--layui引入-->
+    <script src="~/Content/layui/layui.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            layui.use('laydate', function () {
+                var laydate = layui.laydate;
+
+                //执行一个laydate实例
+                laydate.render({
+                    elem: '#StartDate' //指定元素
+                    , type: 'date'
+                });
+
+                laydate.render({
+                    elem: '#EnditDate'
+                    , type: 'date'
+                });
+
+                laydate.render({
+                    elem: '#StartTime'
+                    , type: 'time'
+                });
+
+                laydate.render({
+                    elem: '#EnditTime'
+                    , type: 'time'
+                });
+
+                laydate.render({
+                    elem: '#DSchedule'
+                    , type: 'datetime'
+                });
+            });
+
+            layui.use(['form', 'layer'], function () {
+                layui.form.render();
+            });
+        });
+
+        function onSelectPlayers() {
+            top.dialog({
+                url: '/ShowData/SelectPlayers/List',
+                title: '选择设备',
+                width: 650,
+                height: 400,
+                data: '', // 给 iframe 的数据
+                onclose: function () {
+                    if (this.returnValue != 'error') {
+                        $('#PlayerCodes').val(this.returnValue.split('|')[1]);
+                        $('#PlayerNames').val(this.returnValue.split('|')[2]);
+                    }
+                },
+                oniframeload: function () {
+                }
+            }).showModal();
+        }
+    </script>
+}
+
+@using (Ajax.BeginForm("Save", null, new AjaxOptions()
+{
+    HttpMethod = "Post",
+    OnBegin = "SubAjax.Loading",
+    OnComplete = "SubAjax.Complate",
+    OnFailure = "SubAjax.Failure",
+    OnSuccess = "SubAjax.Success"
+},
+            new { @class = "form-horizontal layui-form layui-row", @role = "form" }))
+{
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">调度编号：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="QuartzNo" id="QuartzNo" readonly value="@info.sQuartzNo" placeholder="调度编号" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">调度名称：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="QuartzName" id="QuartzName" value='@info.sQuartzName' placeholder="调度名称" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">星期：</label>
+                        <div class="col-lg-8">
+                            <select class="form-control" name="WeekDay" id="WeekDay">
+                                <option value="1" @if (info.iWeekDay == 1) { <text> selected</text> }>星期一</option>
+                                <option value="2" @if (info.iWeekDay == 2) { <text> selected</text> }>星期二</option>
+                                <option value="3" @if (info.iWeekDay == 3) { <text> selected</text> }>星期三</option>
+                                <option value="4" @if (info.iWeekDay == 4) { <text> selected</text> }>星期四</option>
+                                <option value="5" @if (info.iWeekDay == 5) { <text> selected</text> }>星期五</option>
+                                <option value="6" @if (info.iWeekDay == 6) { <text> selected</text> }>星期六</option>
+                                <option value="0" @if (info.iWeekDay == 0) { <text> selected</text> }>星期日</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">调度时间：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="CornExp" id="CornExp" value='@info.sCornExp' placeholder="22:00" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">调度任务：</label>
+                        <div class="col-lg-8">
+                            <select class="form-control" name="JobTask" id="JobTask">
+                                <option value="Shutdown" @if (info.sJobTask.Equals("Shutdown")) { <text> selected</text> }>定时关机</option>
+                                <option value="Reboot" @if (info.sJobTask.Equals("Reboot")) { <text> selected</text> }>定时重启</option>
+                                <option value="PowerOnOff" @if (info.sJobTask.Equals("PowerOnOff")) { <text> selected</text> }>定时开关机</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-lg-3 control-label">设备列表：</label>
+                        <div class="col-lg-8">
+                            <input type="hidden" id="PlayerCodes" name="PlayerCodes" />
+                            <textarea id="PlayerNames" class="form-control" readonly rows="3" onclick="onSelectPlayers()"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">备注：</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="Comments" id="Comments" rows="5">@info.sComments</textarea>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                        <div class="form-group m20">
+                            <button class="btn btn-primary btn-save" type="submit"><i class="fa fa-check"></i> <span>保存</span></button>
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

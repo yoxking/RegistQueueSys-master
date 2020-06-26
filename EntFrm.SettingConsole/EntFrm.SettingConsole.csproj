@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1BF4FA67-7344-4E99-A3DB-5928A8077695}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EntFrm.SettingConsole</RootNamespace>
+    <AssemblyName>EntFrm.SettingConsole</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\EntFrm.MainService\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DotNetSpeech, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\EntFrm.MainService\bin\Debug\DotNetSpeech.dll</HintPath>
+    </Reference>
+    <Reference Include="EntFrm.Business.BLL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EntFrm.MainService\bin\Debug\EntFrm.Business.BLL.dll</HintPath>
+    </Reference>
+    <Reference Include="EntFrm.Business.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EntFrm.MainService\bin\Debug\EntFrm.Business.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="EntFrm.Framework.Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EntFrm.MainService\bin\Debug\EntFrm.Framework.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EntFrm.MainService\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CounterGroupDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CounterGroupDialog.Designer.cs">
+      <DependentUpon>CounterGroupDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCounterBusiness.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCounterBusiness.Designer.cs">
+      <DependentUpon>frmCounterBusiness.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmEvaluatorBusiness.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEvaluatorBusiness.Designer.cs">
+      <DependentUpon>frmEvaluatorBusiness.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLedDispBusiness.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLedDispBusiness.Designer.cs">
+      <DependentUpon>frmLedDispBusiness.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLedMatrixBusiness.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLedMatrixBusiness.Designer.cs">
+      <DependentUpon>frmLedMatrixBusiness.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMainFrame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMainFrame.Designer.cs">
+      <DependentUpon>frmMainFrame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPhCallerBusiness.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPhCallerBusiness.Designer.cs">
+      <DependentUpon>frmPhCallerBusiness.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmServiceBusiness.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmServiceBusiness.Designer.cs">
+      <DependentUpon>frmServiceBusiness.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmStafflistBusiness.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStafflistBusiness.Designer.cs">
+      <DependentUpon>frmStafflistBusiness.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSysettingBusiness.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSysettingBusiness.Designer.cs">
+      <DependentUpon>frmSysettingBusiness.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTicketStyleBusiness.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTicketStyleBusiness.Designer.cs">
+      <DependentUpon>frmTicketStyleBusiness.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTicketUIBusiness.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTicketUIBusiness.Designer.cs">
+      <DependentUpon>frmTicketUIBusiness.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmWorkflowBusiness.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWorkflowBusiness.Designer.cs">
+      <DependentUpon>frmWorkflowBusiness.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmWorkttsBusiness.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWorkttsBusiness.Designer.cs">
+      <DependentUpon>frmWorkttsBusiness.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IMyPublicUtils\Eq2008DataStruct.cs" />
+    <Compile Include="IMyPublicUtils\Eq2008LedModel.cs" />
+    <Compile Include="IMyPublicUtils\IPublicConsts.cs" />
+    <Compile Include="IMyPublicUtils\IPublicHelper.cs" />
+    <Compile Include="IMyPublicUtils\IUserContext.cs" />
+    <Compile Include="IMyPublicUtils\ZyhxLederModel.cs" />
+    <Compile Include="IPublicModels\CounterGroup.cs" />
+    <Compile Include="IPublicModels\ServiceGroup.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceGroupDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServiceGroupDialog.Designer.cs">
+      <DependentUpon>ServiceGroupDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceSelectDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServiceSelectDialog.Designer.cs">
+      <DependentUpon>ServiceSelectDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ServiceTLimitDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServiceTLimitDialog.Designer.cs">
+      <DependentUpon>ServiceTLimitDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Speechs\CustomSpeech.cs" />
+    <EmbeddedResource Include="CounterGroupDialog.resx">
+      <DependentUpon>CounterGroupDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCounterBusiness.resx">
+      <DependentUpon>frmCounterBusiness.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmEvaluatorBusiness.resx">
+      <DependentUpon>frmEvaluatorBusiness.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLedDispBusiness.resx">
+      <DependentUpon>frmLedDispBusiness.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLedMatrixBusiness.resx">
+      <DependentUpon>frmLedMatrixBusiness.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMainFrame.resx">
+      <DependentUpon>frmMainFrame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPhCallerBusiness.resx">
+      <DependentUpon>frmPhCallerBusiness.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmServiceBusiness.resx">
+      <DependentUpon>frmServiceBusiness.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStafflistBusiness.resx">
+      <DependentUpon>frmStafflistBusiness.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSysettingBusiness.resx">
+      <DependentUpon>frmSysettingBusiness.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTicketStyleBusiness.resx">
+      <DependentUpon>frmTicketStyleBusiness.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTicketUIBusiness.resx">
+      <DependentUpon>frmTicketUIBusiness.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWorkflowBusiness.resx">
+      <DependentUpon>frmWorkflowBusiness.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWorkttsBusiness.resx">
+      <DependentUpon>frmWorkttsBusiness.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="ServiceGroupDialog.resx">
+      <DependentUpon>ServiceGroupDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ServiceSelectDialog.resx">
+      <DependentUpon>ServiceSelectDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ServiceTLimitDialog.resx">
+      <DependentUpon>ServiceTLimitDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\1.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

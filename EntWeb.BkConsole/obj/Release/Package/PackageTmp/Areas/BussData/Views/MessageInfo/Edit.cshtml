@@ -1,0 +1,193 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    MessageInfo info = (MessageInfo)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+<link rel="stylesheet" href="~/Content/layui/css/layui.css">
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <!--layui引入-->
+<script src="~/Content/layui/layui.js"></script> 
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+
+            //常规用法
+            laydate.render({
+                elem: '#SendDate'
+            });
+
+            //常规用法
+            laydate.render({
+                elem: '#ReceiveDate'
+            });
+        });  
+
+        layui.use('layedit', function () {
+            var layedit = layui.layedit;
+            layedit.set({
+                uploadImage: {
+                    url: '/Common/UploadPhoto' //接口url
+                    , type: 'post' //默认post
+                }
+            });
+            layedit.build('MContent'); //建立编辑器
+        });
+
+        layui.use('upload', function () {
+            var upload = layui.upload;
+
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#attFile' //绑定元素
+                , url: '/Common/UploadAttach' //上传接口 
+                , accept: 'file' //普通文件
+                , done: function (res) {
+                    //上传完毕回调
+                    if (res.code == 0) {
+
+                        $("#AttachFile").val(res.data.src);
+                        $("#txtAttachFile").html(res.data.src);
+                    }
+                    else {
+                        dig.alertError('提示', res.msg);
+                    }
+                }
+                , error: function (res) {
+                    //请求异常回调
+                    dig.alertError('提示', res.message);
+                }
+            });
+        });
+    </script> 
+
+}
+
+@using (Ajax.BeginForm("Save", null, new AjaxOptions()
+{
+    HttpMethod = "Post",
+    OnBegin = "SubAjax.Loading",
+    OnComplete = "SubAjax.Complate",
+    OnFailure = "SubAjax.Failure",
+    OnSuccess = "SubAjax.Success"
+},
+new { @class = "form-horizontal dig-from", @role = "form" }))
+
+{
+    
+        <div class="wrapper-content">
+            <div class="panel-body" style="padding-top:0px;">
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">编号：</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" name="MessNo" id="MessNo" readonly value="@info.sMessNo" placeholder="编号" />
+                            </div>
+                        </div>
+                        <div class="clearfix f-hafl">
+                            <div class="col-hafl">
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">类型：</label>
+                                    <div class="col-lg-8">
+                                        <select class="form-control" name="MType" id="MType">
+                                            <option value="0">公共消息</option>
+                                            <option value="1">私人消息</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label">发送时间：</label>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" name="SendDate" id="SendDate" value="@info.dSendDate.ToString("yyyy-MM-dd")" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-hafl">
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">接收者：</label>
+                                    <div class="col-lg-8">
+                                        <input class="form-control" name="MReceiver" id="MReceiver" value="@info.sMReceiver" placeholder="接收者" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">接收时间：</label>
+                                    <div class="col-lg-8">
+                                        <input  type="text" class="form-control"name="ReceiveDate" id="ReceiveDate" value="@info.dReceiveDate.ToString("yyyy-MM-dd")" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">消息标题：</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" name="MTitle" id="MTitle" value="@info.sMTitle" placeholder="消息标题" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">内容：</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" name="MContent" id="MContent" rows="10">@info.sMContent</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">附件：</label>
+                            <div class="col-lg-8">
+                                <input type="hidden" name="AttachFile" id="AttachFile" value="@info.sAttachFile" />
+                                <button type="button" class="layui-btn" id="attFile">
+                                    <i class="layui-icon">&#xe67c;</i>上传附件
+                                </button>
+                                <span id="txtAttachFile">@info.sAttachFile</span>  
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">备注：</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" id="Comments" name="Comments" rows="3">@info.sComments</textarea>
+                            </div>
+                        </div>
+
+                            <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                                    <div class="form-group m20">
+                                            <button class="btn btn-primary btn-save" type="submit"><i class="fa fa-check"></i> <span>保存</span></button>
+                                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i>返回</button>
+                                    </div>
+                                </div>
+                          
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+}
+

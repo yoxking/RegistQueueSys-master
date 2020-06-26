@@ -1,0 +1,177 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Business.Model.Collections;
+
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+
+    List<ItemData> StaffList = (List<ItemData>)ViewBag.StaffList;
+    List<ItemData> WTimeList = (List<ItemData>)ViewBag.WTimeList;
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+
+        var layer3;
+        jQuery(document).ready(function () {
+
+            layui.use('layer', function () {
+                layer3 = layui.layer;
+            });
+        });
+
+        function isTelAvailable(tel) {
+            var myreg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
+            if (!myreg.test(tel)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function isAgeAvailable(age) {
+            var myreg = /^[0-9]{1,2}$/;
+            if (!myreg.test(age)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        function isIdnoAvailable(idno) {
+            var myreg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+            if (!myreg.test(idno)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function onSubmit() {
+            var StafferNo = $("#StafferNo").val();
+            var worktime = $("input[name='workTime']:checked").val();
+            var rusername = $("#ruserName").val();
+            var rusersex = $("input[name='ruserSex']:checked").val();
+            var idno = $("#idNo").val();
+            var Age = $("#age").val();
+            var tel = $("#telphone").val();
+        
+            //if (!isIdnoAvailable(idno)) {
+            //    layer3.msg("身份证号码错误！");
+            //    return;
+            //}
+
+            if (rusername=='') {
+                layer3.msg("姓名输入错误！");
+                return;
+            }
+
+            if (!isAgeAvailable(Age)) {
+                layer3.msg("年龄输入错误！");
+                return;
+            }
+
+            //if (!isTelAvailable(tel)) {
+            //    layer3.msg("手机号码错误！");
+            //    return;
+            //}
+
+            if (StafferNo > 0) {
+                $.post(
+                    "/StaffData/MainFrame/doUpdateRUser",
+                    { a: Math.random(), StafferNo: StafferNo, workTime: worktime, ruserName: rusername, ruserSex: rusersex, idNo: idno, age: Age,telphone: tel },
+                    function (data) {
+                        if (data.Code === "200") {
+
+                            //layer3.msg(data.Message);
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.msg(data.Message);
+                            parent.layer.close(index);
+                        }
+                        else {
+                            layer3.msg('保存失败!');
+                        }
+                    }
+                );
+            }
+            else {
+                layer3.msg('请正确选择医生!');
+            }
+        }
+
+        function onCancel() {
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        }
+    </script>
+}
+
+<br />
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md8">
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">医生:</label>
+                    <div class="layui-input-inline">
+                        <select id="StafferNo" name="StafferNo" lay-verify="required">
+                            <option value="-1">---请选择---</option>
+                            @if (StaffList != null && StaffList.Count > 0)
+                            {
+                                foreach (ItemData item in StaffList)
+                                {
+                                    <option value="@item.ItemName">@item.ItemValue</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div> 
+                <div class="layui-form-item">
+                    <label class="layui-form-label">时间:</label>
+                    <div class="layui-input-block"> 
+                        @if (WTimeList != null && WTimeList.Count > 0)
+                        {
+                            foreach (ItemData item in WTimeList)
+                            {
+                                <input type="radio" name="workTime" value="@item.ItemName" title="@item.ItemValue" @if(item.ItemName.Equals("1")) {<text>checked</text> } > 
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">姓名:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="ruserName" name="ruserName" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                    </div>
+                    <label class="layui-form-label">性别:</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="ruserSex" value="1" title="男">
+                        <input type="radio" name="ruserSex" value="0" title="女" checked>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">身份证号:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="idNo" name="idNo" required lay-verify="required" placeholder="请输入身份证号" autocomplete="off" class="layui-input">
+                    </div>
+                    <label class="layui-form-label">年龄:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="age" name="age" required lay-verify="required" placeholder="请输入年龄" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item"> 
+                    <label class="layui-form-label">电话:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="telphone" name="telphone" required lay-verify="required" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="onSubmit()">保存</button>
+                        <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="onCancel()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 

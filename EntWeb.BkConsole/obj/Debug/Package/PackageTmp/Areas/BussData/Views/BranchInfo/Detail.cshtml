@@ -1,0 +1,104 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Detail";
+
+    BranchInfo info = (BranchInfo)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+    $(document).ready(function () {
+    });
+    </script>
+}
+
+<form class="form-horizontal">
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">科室类型：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="v" id="BranchType" value="@PublicHelper.GetBranchType(info.iBranchType)" placeholder="科室名称" /> 
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">科室编号：</label>
+                        <div class="col-lg-8"> 
+                            <input type="text" class="form-control" name="sBranchNo" id="sBranchNo" value="@info.sBranchNo" placeholder="科室编号" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">科室名称：</label>
+                        <div class="col-lg-8"> 
+                            <input type="text" class="form-control" name="sBranchName" id="sBranchName" value="@info.sBranchName" placeholder="科室名称" />
+                        </div>
+                    </div>
+
+                    <div class="clearfix f-hafl">
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">科室负责人：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="sContacts" id="sContacts" value="@info.sContacts" placeholder="负责人" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">电话：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="sTelphone" id="sTelphone" value="@info.sTelphone" placeholder="电话" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">科室简介：</label>
+                        <div class="col-lg-8">
+                            <textarea class="form-control" name="sSummary" id="sSummary" rows="10" >@info.sSummary</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">备注：</label>
+                        <div class="col-lg-8">
+                            <textarea class="form-control" name="sComments" id="sComments" rows="3" >@info.sComments</textarea>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                        <div class="form-group m20"> 
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

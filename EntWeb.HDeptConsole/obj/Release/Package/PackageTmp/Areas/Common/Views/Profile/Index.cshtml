@@ -1,0 +1,94 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+
+    SUsersInfo Info = (SUsersInfo)ViewBag.Info;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+    </style>
+}
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+
+        var layer2;
+        jQuery(document).ready(function () {
+            layui.use('layer', function () {
+                layer2 = layui.layer;
+            });
+        });
+
+        function onSave() {
+
+            var userno = $("#userno").val();
+            var truename = $("#trueName").val();
+            var telphone = $("#telphone").val();
+            var email = $("#email").val();
+            var comments = $("#comments").val();
+
+            $.post(
+                "/Common/Profile/SaveProfile",
+                { a: Math.random(), sUserNo: userno, sTrueName: truename, sTelphone: telphone, sEMail:email,sComments: comments },
+                function (data) {
+                    if (data == "SUCCESS") {
+                        layer2.msg('基本信息保存成功!');
+                    }
+                    else {
+                        layer2.msg('基本信息保存失败!');
+                    }
+                }
+            );
+        }
+
+        function onCancel() {
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        }
+    </script>
+}
+
+<br />
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md8">
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">账号:</label>
+                    <div class="layui-form-mid layui-word-aux">@Info.sLoginID</div>
+                    <input type="hidden" id="userno" name="userno" value="@Info.sSuNo" />
+                </div> 
+                <div class="layui-form-item">
+                    <label class="layui-form-label">姓名:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="trueName" name="trueName" value="@Info.sTrueName" >
+                    </div>
+                </div> 
+                <div class="layui-form-item">
+                    <label class="layui-form-label">电话:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="telphone" name="telphone" value="@Info.sTelphone">
+                    </div>
+                    <label class="layui-form-label">EMail:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="email" name="email" value="@Info.sEMail">
+                    </div>
+                </div>  
+                <div class="layui-form-item">
+                    <label class="layui-form-label">备注:</label>
+                    <div class="layui-input-block">
+                        <textarea name="comments" id="comments" placeholder="请输入备注" class="layui-textarea" >@Info.sComments</textarea>
+                    </div>
+                </div> 
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="onSave()">保存</button>
+                        <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="onCancel()">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

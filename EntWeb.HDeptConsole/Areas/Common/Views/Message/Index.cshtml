@@ -1,0 +1,192 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<ItemData> itemList = (List<ItemData>)ViewBag.ItemList;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+    </style>
+}
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+
+        var table;
+        var layer;
+
+        jQuery(document).ready(function () {
+
+            layui.use('layer', function () { //独立版的layer无需执行这一句
+                layer = layui.layer; //独立版的layer无需执行这一句
+            });
+
+            layui.use('table', function () {
+                table = layui.table;
+
+                //展示已知数据
+                table.render({
+                    elem: '#mytable1',
+                    id: 'idTable1',
+                    cols: [[ //标题栏
+                        {
+                            checkbox: true,
+                            LAY_CHECKED: false
+                        } //默认全选
+                        , {
+                            field: 'Sender',
+                            title: '医生姓名',
+                            width: 150
+                        }, {
+                            field: 'MsgType',
+                            title: '消息类型',
+                            width: 150,
+                            sort: true
+                        }, {
+                            field: 'MTitle',
+                            title: '标题',
+                            width: 150,
+                            templet: '#titleTpl'
+                        }, {
+                            field: 'SendTime',
+                            title: '发送时间',
+                            width: 150,
+                            templet: function (d) {
+                                if (d != null) {
+
+                                    var val = d.SendTime;
+                                    var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10)); 
+                                    var hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                                    var minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(); 
+                                    return hour + ":" + minute;
+                                }
+                                return "";
+                            }
+                        }, {
+                            field: 'ReadState',
+                            title: '阅读状态',
+                            width: 150,
+                            style: "color:red;"
+                        }, {
+                            field: 'MsgNo',
+                            title: '编号',
+                            width: 150,
+                            sort: true
+                        } ]],
+                    skin: 'row', //表格风格
+                    even: true,
+                    page: true, //是否显示分页
+                    limits: [10, 20, 50],
+                    limit: 10, //每页默认显示的数量
+                    height: 400,
+                    url: '/Common/Message/getDataList_Message',
+                    request: {
+                        pageName: 'pageIndex', //页码的参数名称，默认：page
+                        limitName: 'pageSize' //每页数据量的参数名，默认：limit
+                    },
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: ''
+                    },
+                    done: function (res, curr, count) {
+                    }
+                });
+
+            });
+        });
+
+        function onRefresh_TableData(StafferNo) {
+
+            if (table != null) {
+                table.reload('idTable1', {
+                    where: { //设定异步数据接口的额外参数，任意设
+                        condition: StafferNo
+                    }
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            }
+        }
+
+        function onRefresh() {
+
+            onRefresh_TableData('99999999');
+        }
+
+        function onOpenLayer(id) {
+
+            layer.open({
+                type: 2,
+                title: '消息详细',
+                shadeClose: true,
+                shade: false,
+                maxmin: false, //开启最大化最小化按钮
+                area: ['660px', '420px'],
+                content: ['/Common/Message/Detail?id=' + id, 'no'],
+                end: function () {
+                    onRefresh();
+                }
+            });
+        }
+    </script>
+    <script type="text/html" id="titleTpl">
+        <button type="button" onclick="onOpenLayer('{{d.MsgNo}}')" class="stdbtn">{{d.MTitle}}</button>   
+    </script>
+}
+
+
+<div class="vernav2 iconmenu">
+    <ul>
+        <li>
+            <a href="#formsub" class="editor">医生列表</a>
+            <span class="arrow"></span>
+            <ul id="formsub">
+                @if (itemList != null && itemList.Count > 0)
+                {
+                    foreach (ItemData item in itemList)
+                    {
+                        <li><a href="javascript:void(0)" onclick="onRefresh_TableData(@item.ItemName)">@item.ItemValue</a></li>
+                    }
+                }
+                else
+                {
+                    <li><a href="javascript:void(0)">暂无医生</a></li>
+                }
+            </ul>
+        </li>
+    </ul>
+    <a class="togglemenu"></a>
+    <br /><br />
+</div><!--leftmenu-->
+
+<div class="centercontent">
+
+    <div class="pageheader">
+
+        <ul class="hornav">
+            <li class="current"><a href="#activities1">消息列表</a></li>
+        </ul>
+    </div><!--pageheader-->
+
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div id="activities1" class="subcontent">
+
+            <div class="msghead">
+                <ul class="msghead_menu"> 
+                    <li style="margin-right:10px;"><a href="javascript:void(0)" onclick="onRefresh()">刷新</a></li>
+                </ul>
+                <span class="clearall"></span>
+            </div><!--msghead-->
+             
+            <div class="table-container">
+                <table class="layui-hide" id="mytable1" lay-filter="datatable"></table>
+            </div>
+
+        </div><!-- #updates -->
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div><!-- centercontent -->

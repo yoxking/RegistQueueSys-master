@@ -1,0 +1,109 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Detail";
+
+    VoiceInfo info = (VoiceInfo)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+    $(document).ready(function () {
+    });
+    </script>
+}
+
+<form class="form-horizontal">
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">编号：</label>
+                        <div class="col-lg-8"> 
+                            <input type="text" class="form-control" name="TtsNo" id="TtsNo" readonly value="@info.sTtsNo" placeholder="编号" />
+                        </div>
+                    </div>
+                    <div class="clearfix f-hafl">
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">名称：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="TtsName" id="TtsName"  value="@info.sTtsName" placeholder="样式名称" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">音量：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="Volume" id="Volume" value="@info.iVolume"  placeholder="音量大小" />
+                                </div>
+                            </div>
+                          </div>
+
+                            <div class="col-hafl">
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">语音：</label>
+                                    <div class="col-lg-8" style="text-align:left;">
+                                        <input class="form-control" name="Voice" id="Voice" value="@info.sVoice"  placeholder="语音" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">速度：</label>
+                                    <div class="col-lg-8" style="text-align:left;">
+                                        <input class="form-control" name="Rate" id="Rate" value="@info.iRate"  placeholder="速度" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">语音格式(叫号)：</label>
+                        <div class="col-lg-8">
+                            <textarea class="form-control" name="TtsFormat" id="TtsFormat" placeholder="语音格式" rows="2" >@info.sFormatCalling</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">语音格式(等候)：</label>
+                        <div class="col-lg-8">
+                            <textarea class="form-control" name="FormatWaiting" id="FormatWaiting" rows="2">@info.sFormatWaiting</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">备注：</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="Comments" id="Comments" rows="3" >@info.sComments</textarea>
+                        </div>
+                    </div>
+                 
+                    <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                        <div class="form-group m20">
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</form>
+

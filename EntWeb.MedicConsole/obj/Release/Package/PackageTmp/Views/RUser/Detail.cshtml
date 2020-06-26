@@ -1,0 +1,59 @@
+﻿@using EntFrm.Business.Model;
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+    ViewBag.Title = "基本信息";
+
+    RUsersInfo info=ViewBag.RUserInfo;
+}
+
+@section PageStyleSheet{
+    <style type="text/css">
+    </style>
+}
+
+@section PageJavascript{
+    <script type="text/javascript">
+
+    </script>
+}
+
+
+<div class="page-main">
+    <div class="row row-cards">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">姓名</label>
+                                <input type="text" class="form-control" disabled="" placeholder="姓名" value="@info.sCnName">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">身份证号</label>
+                                <input type="text" class="form-control" disabled="" placeholder="身份证号" value="@info.sIdCardNo">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">年龄</label>
+                                <input type="text" class="form-control" disabled="" placeholder="年龄" value="@info.iAge">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">电话</label>
+                                <input type="text" class="form-control" disabled="" placeholder="电话" value="@info.sTelphone">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-primary" onclick="closeLayer()">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

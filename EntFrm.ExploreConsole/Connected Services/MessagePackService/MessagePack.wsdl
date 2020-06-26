@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://webservice.mat.aadata.cn/" name="MessagePack" targetNamespace="http://webservice.mat.aadata.cn/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://webservice.mat.aadata.cn/" xmlns:tns="http://impl.webservice.mat.aadata.cn/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://webservice.mat.aadata.cn/">
+      <xsd:element name="getMessage" type="ns1:getMessage" />
+      <xsd:complexType name="getMessage">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="action" type="xsd:string" />
+          <xsd:element minOccurs="0" name="condition" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="getMessageResponse" type="ns1:getMessageResponse" />
+      <xsd:complexType name="getMessageResponse">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="return" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="getJsonMessage" type="ns1:getJsonMessage" />
+      <xsd:complexType name="getJsonMessage">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="action" type="xsd:string" />
+          <xsd:element minOccurs="0" name="condition" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="getJsonMessageResponse" type="ns1:getJsonMessageResponse" />
+      <xsd:complexType name="getJsonMessageResponse">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="return" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="sendMessage" type="ns1:sendMessage" />
+      <xsd:complexType name="sendMessage">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="arg0" type="xsd:string" />
+          <xsd:element minOccurs="0" name="arg1" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="sendMessageResponse" type="ns1:sendMessageResponse" />
+      <xsd:complexType name="sendMessageResponse">
+        <xsd:sequence />
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getJsonMessage">
+    <wsdl:part name="parameters" element="ns1:getJsonMessage" />
+  </wsdl:message>
+  <wsdl:message name="getMessage">
+    <wsdl:part name="parameters" element="ns1:getMessage" />
+  </wsdl:message>
+  <wsdl:message name="getMessageResponse">
+    <wsdl:part name="parameters" element="ns1:getMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="getJsonMessageResponse">
+    <wsdl:part name="parameters" element="ns1:getJsonMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="sendMessageResponse">
+    <wsdl:part name="parameters" element="ns1:sendMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="sendMessage">
+    <wsdl:part name="parameters" element="ns1:sendMessage" />
+  </wsdl:message>
+  <wsdl:portType name="MessagePack">
+    <wsdl:operation name="getMessage">
+      <wsdl:input name="getMessage" message="ns1:getMessage" />
+      <wsdl:output name="getMessageResponse" message="ns1:getMessageResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getJsonMessage">
+      <wsdl:input name="getJsonMessage" message="ns1:getJsonMessage" />
+      <wsdl:output name="getJsonMessageResponse" message="ns1:getJsonMessageResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="sendMessage">
+      <wsdl:input name="sendMessage" message="ns1:sendMessage" />
+      <wsdl:output name="sendMessageResponse" message="ns1:sendMessageResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,105 @@
+﻿@{
+    Layout = null;
+     
+    string appName = (string)ViewBag.StackHolder["AppName"]; 
+    string copyRight = (string)ViewBag.StackHolder["CopyRight"];
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@appName-分诊排队管理系统-后台登录</title>
+    <link href="/Content/themes/css/admin-login.css" rel="stylesheet" />
+    <link href="/Content/themes/css/icons.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div id="somedialog" class="dialog dialog--close">
+        <div class="dialog__overlay"></div>
+        <div class="dialog__content">
+            <div class="closeMsg small-btn-close">×</div>
+            <div class="morph-shape">
+                <svg width="100%" height="100%" viewBox="0 0 560 280" preserveAspectRatio="none">
+                    <rect x="3" y="3" fill="none" width="556" height="276"></rect>
+                </svg>
+            </div>
+            <div class="dialog-inner">
+                <h2></h2>
+                <div><button class="closeMsg btn-close">关闭</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="container">
+            <!-- BEGIN LOGIN FORM -->
+            <form class="login-form" id="login_form" method="post">
+                <h1><img src="/Content/themes/images/logo.png" width="260" alt=""></h1>
+                <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户名" name="username" id="username" />
+                <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="密码" name="password" id="password" />                 
+                <button type="submit" id="login-button"><i class="fa im-checkmark"></i></button>
+            </form>
+            <div class="ids"><i class="im-spinner icon-spin"></i></div>
+        </div>
+    </div>
+    <div class="login_foot">
+        Copyright © @copyRight
+    </div>
+    <script type="text/javascript" src="/Content/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/Content/js/loginIndex/supersized.3.2.7.min.js"></script>
+    <script type="text/javascript" src="/Content/js/loginIndex/supersized-init.js"></script>
+    <script src="~/Content/js/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" src="/Content/js/IsIe.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //检测IE
+            if (isIe6() || isIe7() || isIe8()) {
+                location.href = "/ieupdate.html";
+            }
+            $(".closeMsg").click(function () {
+                $("#somedialog").removeClass("dialog--open");
+                $("form").fadeIn();
+                $(".wrapper").removeClass("form-login");
+            });
+
+            $("#login_form").submit(function () {
+                var username = $(this).find('#username').val();
+                var password = $(this).find('#password').val(); 
+                b = true;
+
+                if (username.trim() + "" == "") {
+                    b = false;
+                }
+                if (password.trim() + "" == "") {
+                    b = false;
+                }
+
+                if (b) {
+                    $.post(
+                        "/System/Auth/AjaxLogin",
+                        { a: Math.random(), username: username, password: password },
+                        function (data) {
+                            if (data == "SUCCESS") {
+                                window.location = "/PubData/MainPage/Index";
+                            }
+                            else if (data == "VCODE_ERROR") {
+                                alert("验证码错误！");
+                            }
+                            else {
+                                alert("账号或密码错误!");
+                            }
+                        }
+                    );
+                }
+                else {
+                    alert("账号和密码不能为空！");
+                }
+                 
+                return false;
+            });
+        });
+    </script>
+
+</body>
+</html>

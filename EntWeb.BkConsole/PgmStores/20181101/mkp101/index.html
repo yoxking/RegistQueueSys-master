@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .clearit {
+            clear: both;
+        }
+
+        .bsemi-circle {
+            border-radius: 0px 0px 80px 80px;
+        }
+
+        #container {
+            margin: 0;
+            padding: 0;
+            background-color: ghostwhite;
+        }
+
+        #header {
+            margin: 0;
+            padding: 0;
+        }
+
+            #header #hlogo {
+                padding: 10px 20px 0px;
+                float: left;
+                width: 36%;
+            }
+
+                #header #hlogo img {
+                    height: 50px;
+                }
+
+            #header #htitle {
+                padding: 10px 50px;
+                float: left;
+                text-align: center;
+                font-size: 30px;
+                color: #fdfdfd;
+                background-color: #1756CA;
+            }
+        #contentwrap {
+            margin: 0;
+            padding: 0;
+            background-color: #1756CA;
+        }
+
+        #mcontent1 {
+            margin: 0;
+            padding: 10px 10px;
+            background-color: #1756CA;
+            float: right;
+            width: 52%;
+        }
+
+            #mcontent1 .wrapper {
+                margin: 0;
+                padding: 10px 13px;
+                background-color: ghostwhite;
+                text-align: center;
+            }
+
+                #mcontent1 .wrapper .title1 {
+                    margin: 0;
+                    padding: 10px;
+                    font-size: 22px;
+                    color: darkorange;
+                    background-color: #DDF0ED;
+                }
+
+                #mcontent1 .wrapper .content1 {
+                    margin: 0;
+                    padding: 10px;
+                    font-size: 48px;
+                    color: #fdfdfd;
+                    background-color: #1756CA;
+                }
+
+                #mcontent1 .wrapper .title2 {
+                    margin: 0;
+                    padding: 10px;
+                    font-size: 22px;
+                    color: darkorange;
+                    background-color: #DDF0ED;
+                }
+
+                #mcontent1 .wrapper .content2 {
+                    margin: 0;
+                    padding: 10px;
+                    font-size: 48px;
+                    color: #fdfdfd;
+                    background-color: #1756CA;
+                }
+
+                #mcontent1 .wrapper .title3 {
+                    margin: 0;
+                    padding: 10px;
+                    font-size: 22px;
+                    color: darkorange;
+                    background-color: #DDF0ED;
+                }
+
+                #mcontent1 .wrapper .content3 {
+                    margin: 0;
+                    padding: 10px;
+                    font-size: 48px;
+                    color: #fdfdfd;
+                    background-color: #1756CA;
+                }
+        #mcontent2 {
+            margin: 0;
+            padding: 10px 10px;
+            background-color: #1756CA;
+            float: right;
+            width: 43%;
+        }
+
+            #mcontent2 .wrapper {
+                margin: 0;
+                padding: 10px 13px;
+                background-color: ghostwhite;
+                text-align: left;
+            }
+
+                #mcontent2 .wrapper .title1 {
+                    margin: 0;
+                    padding: 10px;
+                    font-size: 22px;
+                    color: darkorange;
+                    background-color: #DDF0ED;
+                }
+
+                #mcontent2 .wrapper .content1 {
+                    margin: 0;
+                    padding: 10px 10px;
+                    height: 370px;
+                    background-color: ghostwhite;
+                }
+            #mcontent2 img {
+                width: 160px;
+                height: 200px;
+            }
+
+            #mcontent2 table {
+                width: 100%;
+            }
+
+                #mcontent2 table tr td {
+                    padding: 5px 5px;
+                    font-size: 22px;
+                    text-align: center;
+                }
+    </style>
+    <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+ 
+        let url = "http://[ServerIp]:8089";
+        let branchNo = "[BranchNo]";
+        let counterList = "[CounterList]";
+        let counterNo="[CounterNo]"; 
+         
+        $(document).ready(function () {
+  
+            setInterval("couterName()", 10000);
+            setInterval("callingList()", 3000);
+            setInterval("waitingList()", 4000);
+            setInterval("nonArrivals()", 7000); 
+            setInterval("staffInfo()", 11000); 
+        }); 
+		
+        function couterName() {
+            $.getJSON(url + "/iadapter/getCounterNameByCounterId?branchNo=" + branchNo+ "&counterNo=" + counterNo, function (json) {
+                if (json.code == "200" && json.data != "") { 
+                    $("#htitle").html(json.data);
+                }
+            });   
+        }
+        function callingList() { 
+            $.getJSON(url + "/iadapter/getCallingListByCounterId?branchNo=" + branchNo + "&counterNos=" + counterList, function (json) {
+                if (json.code == "200"&&json.data!="") {
+                    $("#callingit").html(json.data);
+                }
+            }); 
+        }
+        function waitingList() { 
+            $.getJSON(url + "/iadapter/getWaitingListByCounterIds?branchNo=" + branchNo + "&counterNos=" + counterList+"&num=2" , function (json) {
+                if (json.code == "200"&&json.data!="") {
+                    $("#waitingit").html(json.data);
+                }
+            }); 
+        }
+        function nonArrivals() {
+            $.getJSON(url + "/iadapter/getNonarrivalsByCounterIds?branchNo=" + branchNo + "&counterNos=" + counterList, function (json) {
+                if (json.code == "200" && json.data != "") { 
+                    $("#nonarrivals").html(json.data);
+                }
+            }); 
+        }
+        function staffInfo() {
+            $.getJSON(url + "/iadapter/getStaffInfoByCounterId?branchNo=" + branchNo + "&counterNo=" + counterNo, function (json) {
+                if (json.code == "200" && json.data != "") { 
+                    $("#staffinfo").html(json.data);
+                }
+            }); 
+        }
+    </script>
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <div id="hlogo">
+                <img src="logo1.gif" />
+            </div>
+            <div id="htitle" class="bsemi-circle">彩超一</div>
+            <div class="clearit"></div>
+        </div>
+        <div id="contentwrap">
+            <div id="mcontent1">
+                <div class="wrapper">
+                    <div class="title1">正在检查</div>
+                    <div class="content1" id="callingit">&nbsp;A001 张三</div>
+                    <div class="title2">等候患者</div>
+                    <div class="content2" id="waitingit">&nbsp;A001 张三<br />&nbsp;A001 张三<br /></div>
+                    <div class="title3">过号患者</div>
+                    <div class="content3">
+                        <marquee style="width:100%;" direction="left" scrollAmount="3" id="nonarrivals"> &nbsp;</marquee>
+                    </div>
+                </div> 
+            </div>
+            <div id="mcontent2">
+                <div class="wrapper" id="staffinfo">
+                    <div class="title1">医师:张医生</div>
+                    <div class="content1">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <img src="nopic.jpg" alt="staff photo" />
+                                    <span>副主任医师</span>
+                                </td>
+                                <td valign="top">
+                                    <p align="left">擅长：新生儿呼吸衰竭、早产儿重症抢救，儿童危重症抢救，儿童神经系统疾病的诊疗。 </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="clearit"></div>
+        </div>
+    </div>
+</body>
+</html>

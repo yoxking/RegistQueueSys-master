@@ -1,0 +1,26 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+
+    MessageInfo message = (MessageInfo)ViewBag.Message;
+}
+
+<br />
+<div class="layui-container">
+    @if(message!=null){
+       <h3>@message.sMTitle</h3>
+        <hr />
+        <p>
+            <span style="font-size:12px;">发送时间: @message.dSendDate.ToString("HH:mm")</span>
+        </p>
+        <br />
+        <p>
+            @message.sMContent
+        </p>
+    }
+    else{
+      <p>无数据</p>
+    }
+</div>
+

@@ -1,0 +1,97 @@
+﻿@using EntFrm.Framework.Utility;
+@using EntFrm.Framework.Web.Controls;
+
+@{
+    Layout = null;
+
+    string branchNo = ViewBag.BranchNo;
+    List<ItemObject> itemList = (List<ItemObject>)ViewBag.ItemList;
+    PagerHelper pager = (PagerHelper)ViewBag.Pager;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>青海省第五人民医院</title>
+    <link rel="stylesheet" href="~/Content/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="~/Content/rticket.css" media="all">
+    <style type="text/css">
+        #contextbox {
+            height: 500px;
+        }
+
+        .layui-btn-group2 {
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper" id="tmapp" v-cloak>
+        <p class="layui-elem-quote">
+            青海省第五人民医院<span class="fr">
+                <i class="layui-icon layui-icon-username f36"></i> &nbsp;
+            </span>
+        </p>
+        <div class="layui-btn-group"> 
+            <a href="/IRTicket/Index" class="layui-btn">首页</a>
+            <a href="/IRTicket/BranchList" class="layui-btn">一级科室</a>
+            <a href="#" class="layui-btn ">二级科室</a> 
+        </div>
+        <div id="contextbox">
+            <div class="layui-row">
+                @if(itemList != null && itemList.Count > 0)
+                {
+                    foreach (ItemObject item in itemList)
+                    {
+                        <div class="layui-col-md3">
+                            <div class="layui-card">
+                                <a href="javascript:void(0)" onclick="RCardConfirmDialog('@item.Value')">
+                                    @item.Name
+                                </a>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="layui-btn-group2">
+            <a href="javascript:void(0)" onclick="prev()" class="layui-btn">上一页</a>
+            <a href="javascript:void(0)" onclick="next()" class="layui-btn ">下一页</a>
+            <input type="hidden" name="pageIndex" id="pageIndex" value="@pager.PageIndex" />
+            <input type="hidden" name="pageCount" id="pageCount" value="@pager.PageCount" />
+        </div>
+        <div class="rb"><a href="/IRTicket/Index" class="layui-btn">退出</a></div>
+    </div>
+    <script src="~/Content/js/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        function prev() {
+
+            var pindex = $("#pageIndex").val();
+            var pcount = $("#pageCount").val();
+
+            pindex--;
+            if (pindex < 1) {
+                pindex = 1;
+            }
+
+            window.location.href = "/IRTicket/ServiceList?branchno=@branchNo&pageindex=" + pindex +"&pagesize=10";
+        }
+
+        function next() {
+
+            var pindex = $("#pageIndex").val();
+            var pcount = $("#pageCount").val();
+
+            pindex++;
+            if (pindex > pcount) {
+                pindex = pcount;
+            }
+
+            window.location.href = "/IRTicket/ServiceList?branchno=@branchNo&pageindex=" + pindex+"&pagesize=10";
+        }
+    </script>
+</body>
+</html>

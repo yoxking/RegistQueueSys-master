@@ -1,0 +1,134 @@
+﻿@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string appUrl = (string)ViewBag.StackHolder["AppUrl"];
+    string appName = (string)ViewBag.StackHolder["AppName"];
+    string sqlServer = (string)ViewBag.StackHolder["SqlServer"];
+    string appDesc = (string)ViewBag.StackHolder["AppDesc"];
+    string serverIp = (string)ViewBag.StackHolder["ServerIp"];
+    string wtcpPort = (string)ViewBag.StackHolder["WTcpPort"];
+    string maskFlag = (string)ViewBag.StackHolder["MaskFlag"];
+    string copyRight = (string)ViewBag.StackHolder["CopyRight"];
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        });
+
+        function onSubmit() {
+
+            var appName = $('#appName').val();
+            var appUrl = $('#appUrl').val();
+            var sqlServer = $('#sqlServer').val();
+            var appDesc = $('#appDesc').val();
+            var serverIp = $('#serverIp').val();
+            var wtcpPort = $('#wtcpPort').val();
+            var maskFlag = $('#maskFlag').val();
+            var copyRight = $('#copyRight').val();
+              
+            $.post(
+                "/System/Setting/AjaxSave",
+                { a: Math.random(), appName: appName, appUrl: appUrl, sqlServer: sqlServer, appDesc: appDesc, serverIp: serverIp, wtcpPort: wtcpPort, maskFlag: maskFlag, copyRight:copyRight },
+                function (data) {
+                    if (data === "SUCCESS") {
+                        dig.alertSuccess('提示', '保存成功!');
+                    } 
+                    else {
+                        dig.alertSuccess('提示', '保存失败!');
+                    }
+                }
+            );
+
+        }
+    </script>
+}
+
+<form class="form-horizontal dig-from"  >
+    <div class="wrapper-content">
+        <div class="panel-body">
+            <div class="panel-title">
+                <h3>系统配置</h3>
+                <div class="divider"></div>
+            </div>
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">&nbsp;</label>
+                        <div class="col-md-8">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">系统名称：</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="appName" id="appName" value="@appName" placeholder="系统名称" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">后台管理地址：</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="appUrl" value="@appUrl" id="appUrl" placeholder="网站地址" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">数据库配置：</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" name="sqlServer" rows="3" id="sqlServer" placeholder="数据库配置">@sqlServer</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">中心服务IP地址：</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="serverIp" value="@serverIp" id="serverIp" placeholder="中心服务IP地址" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">中心服务端口：</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="wtcpPort" value="@wtcpPort" id="wtcpPort" placeholder="中心服务端口" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">信息脱敏功能：</label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="maskFlag" id="maskFlag">
+                                <option value="0" @if (maskFlag.Equals("0")) { <text> selected</text> }>禁用信息脱敏</option>
+                                <option value="1" @if (maskFlag.Equals("1")) { <text> selected</text> }>启用信息脱敏</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">版权信息：</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="copyRight" value="@copyRight" id="copyRight" placeholder="百纳云纪科技" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">系统备注：</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" name="appDesc" rows="5" id="appDesc" placeholder="系统备注">@appDesc</textarea>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed">
+                        <div class="form-group m20">
+                            <div class="col-md-8 col-md-offset-2">
+                                <a href="javascript:void(0)" class="btn btn-primary btn-save" onclick="onSubmit();"><i class="fa fa-check"></i> <span>保存</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

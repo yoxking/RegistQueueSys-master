@@ -1,0 +1,56 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+
+    List<ItemData> InfoList = (List<ItemData>)ViewBag.InfoList;
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+
+        jQuery(document).ready(function () {
+        });
+
+        function onSubmit() {
+
+            var temp = $("#priorityType").val();
+
+            if (temp > 0) {
+                parent.onCallBackData(temp);
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            } 
+        }
+
+        function onCancel() {
+            parent.onCallBackData(0);
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        }
+    </script>
+}
+
+<br />
+<div class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">优先类型：</label>
+        <div class="layui-input-inline">
+            <select name="priorityType" id="priorityType" lay-verify="required">
+                <option value="-1">---请选择---</option>
+                @if (InfoList != null && InfoList.Count > 0)
+                {
+                    foreach (ItemData item in InfoList)
+                    {
+                        <option value="@item.ItemName">@item.ItemValue</option>
+                    }
+                }                
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="onSubmit()">保存</button>
+            <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="onCancel()">取消</button>
+        </div>
+    </div>
+</div> 

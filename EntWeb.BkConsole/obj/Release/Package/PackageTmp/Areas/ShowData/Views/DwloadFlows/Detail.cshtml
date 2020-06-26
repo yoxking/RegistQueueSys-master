@@ -1,0 +1,96 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    DsDwloadFlows info = (DsDwloadFlows)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script>
+}
+
+<form class="form-horizontal">
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">编号：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="DFlowNo" id="DFlowNo" value="@info.sDFlowNo" placeholder="编号" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">节目：</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" name="ProgmNo" id="ProgmNo" placeholder="比特率" value="@PageHelper.getProgramInfoNameByNo(info.sProgmNo)" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">设备：</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" name="PlayerNo" id="PlayerNo" placeholder="设备" value="@PageHelper.getPlayerInfoNameByNo(info.sPlayerNo) " />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">下发时间：</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" name="DSchedule" id="DSchedule" placeholder="下发时间" value="@info.dDSchedule" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">下发次数：</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" name="DloadHits" id="DloadHits" placeholder="下载次数" value="@info.iISucCount" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">下载状态：</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" name="DloadHits" id="DloadHits" placeholder="下载状态" value="@info.sDloadStatus" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">备注：</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="Comments" id="Comments" rows="5">@info.sComments</textarea>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                        <div class="form-group m20">
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,76 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Blank.cshtml";
+
+    RUsersInfo Info = (RUsersInfo)ViewBag.RUserInfo;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+    </style>
+}
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+
+        var layer2;
+        jQuery(document).ready(function () {
+            layui.use('layer', function () {
+                layer2 = layui.layer;
+            });
+        }); 
+
+        function onCancel() {
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        }
+    </script>
+}
+
+<br />
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md8">
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">编号:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="trueName" name="trueName" value="@Info.sRUserNo">
+                    </div> 
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">姓名:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="trueName" name="trueName" value="@Info.sCnName">
+                    </div>
+                    <label class="layui-form-label">性别:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="email" name="email" value="@(Info.iSex==1?"男":"女")">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">年龄:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="email" name="email" value="@Info.iAge">
+                    </div>
+                    <label class="layui-form-label">电话:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="telphone" name="telphone" value="@Info.sTelphone">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">身份证:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="email" name="email" value="@Info.sIdCardNo">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn layui-btn-sm layui-btn-primary" onclick="onCancel()">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

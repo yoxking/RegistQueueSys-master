@@ -1,0 +1,139 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    LEDDisplay info = (LEDDisplay)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script>
+}
+
+@using (Ajax.BeginForm("Save", null, new AjaxOptions()
+{
+    HttpMethod = "Post",
+    OnBegin = "SubAjax.Loading",
+    OnComplete = "SubAjax.Complate",
+    OnFailure = "SubAjax.Failure",
+    OnSuccess = "SubAjax.Success"
+},
+  new { @class = "form-horizontal dig-from", @role = "form" }))
+{
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+                 
+                    <div class="form-group">
+                         <label class="col-lg-3 control-label">编号：</label>
+                         <div class="col-lg-8"> 
+                             <input type="text" class="form-control" name="DisplayNo" id="DisplayNo" readonly value="@info.sDisplayNo" placeholder="编号" />
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">窗口屏名称：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="DisplayName" id="DisplayName" value="@info.sDisplayName" placeholder="窗口屏名称" />
+                        </div>
+                    </div>
+
+                    <div class="clearfix f-hafl">
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">IP地址：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="IpAddress" id="IpAddress" value="@info.sIpAddress" placeholder="IP地址" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">比特率：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="Baudrate" id="Baudrate" value="@info.iBaudrate" placeholder="比特率" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">LED模型：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <select name="LedModel" id="LedModel" class="form-control" datatype="*" nullmsg="LED模型">
+                                        <option value="Hzhx13" @(info.sLedModel == "Hzhx13" ? "selected" : "")>Hzhx13</option>
+                                        <option value="Eq2013" @(info.sLedModel == "Eq2013" ? "selected" : "")>Eq2013</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">地址：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <input type="text" class="form-control" name="PhyAddr" id="PhyAddr" value="@info.iPhyAddr" placeholder="窗口屏地址" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">端口：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="LocalPort" id="LocalPort" value="@info.sLocalPort" placeholder="端口" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">串口：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <select name="SerialPort" id="SerialPort" class="form-control" datatype="*" nullmsg="请选择串口">
+                                        <option value="COM1" @(info.sSerialPort == "COM1" ? "selected" : "")>COM1</option>
+                                        <option value="COM2" @(info.sSerialPort == "COM2" ? "selected" : "")>COM2</option>
+                                        <option value="COM3" @(info.sSerialPort == "COM3" ? "selected" : "")>COM3</option>
+                                        <option value="COM4" @(info.sSerialPort == "COM4" ? "selected" : "")>COM4</option>
+                                        <option value="COM5" @(info.sSerialPort == "COM5" ? "selected" : "")>COM5</option>
+                                        <option value="COM6" @(info.sSerialPort == "COM6" ? "selected" : "")>COM6</option>
+                                        <option value="COM7" @(info.sSerialPort == "COM7" ? "selected" : "")>COM7</option>
+                                        <option value="COM8" @(info.sSerialPort == "COM8" ? "selected" : "")>COM8</option>
+                                        <option value="COM9" @(info.sSerialPort == "COM9" ? "selected" : "")>COM9</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" >备注：</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="Comments" id="Comments" rows="3" placeholder="备注">@info.sComments</textarea>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                        <div class="form-group m20">
+                            <button class="btn btn-primary btn-save" type="submit"><i class="fa fa-check"></i> <span>保存</span></button>
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

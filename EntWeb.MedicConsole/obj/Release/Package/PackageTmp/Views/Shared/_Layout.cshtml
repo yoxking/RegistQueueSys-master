@@ -1,0 +1,197 @@
+﻿<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#4188c9">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    @*<meta http-equiv="refresh" content="60">*@
+    <link rel="icon" href="/Assets/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="/Assets/favicon.ico" />
+    <title>医院取药叫号系统-@ViewBag.Title</title>
+    <script src="/Assets/js/require.min.js"></script>
+    <script>
+        requirejs.config({
+            baseUrl: '/'
+        });
+    </script>
+    <!-- Dashboard Core -->
+    <link href="/Assets/css/dashboard.css" rel="stylesheet" />
+    <link href="/Assets/layui/css/layui.css" rel="stylesheet" />
+    @RenderSection("PageStyleSheet", required: false) 
+    <script src="/Assets/js/vendors/jquery-3.2.1.min.js"></script>
+    <script src="/Assets/js/dashboard.js"></script>
+    <script src="/Assets/layui/layui.js"></script>
+    @RenderSection("PageJavascript", required: false)
+    
+    <script type="text/javascript"> 
+
+
+        function onRefresh() { 
+        }
+
+        function closeLayer() {
+            layer.closeAll();
+        }
+
+        function openLayer(title, url) {
+            layer.open({
+                type: 2,
+                title: title,
+                shadeClose: true,
+                shade: false,
+                maxmin: false, //开启最大化最小化按钮
+                area: ['660px', '420px'],
+                content: [url, 'no'],
+                end: function () { }
+            });
+        }
+
+        function openLayer2(title, url) {
+            layer.open({
+                type: 2,
+                title: title,
+                shadeClose: true,
+                shade: false,
+                maxmin: false, //开启最大化最小化按钮
+                area: ['660px', '500px'],
+                content: [url, 'no'],
+                end: function () { }
+            });
+        }
+
+        function ruserDetail(id) {
+
+            if (id !== "") {
+                layer.open({
+                    type: 2,
+                    title: '病人详细',
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['660px', '500px'],
+                    content: ['/RUser/Detail?id=' + id, 'no'],
+                    end: function () {
+                        window.location.reload();
+                    }
+                });
+            }
+        }
+
+        function recipeDetail(id) {
+
+            if (id !== "") {
+                layer.open({
+                    type: 2,
+                    title: '处方详细',
+                    shadeClose: true,
+                    shade: false,
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['980px', '600px'],
+                    content: ['/Recipe/Detail?id=' + id, 'no'],
+                    end: function () {
+                        window.location.reload();
+                    }
+                });
+            }
+        }
+
+    </script>
+    <script type="text/html" id="ruserTpl">
+        <a href="javacript:void(0);" onclick="ruserDetail('{{d.RUserNo}}')" class="layui-table-link">{{d.RUserName}}</a>
+    </script>
+    <script type="text/html" id="recipeTpl">
+        <a href="javacript:void(0);" onclick="recipeDetail('{{d.RFlowNo}}')" class="layui-table-link">{{d.RegistNo}}</a>
+    </script>
+</head>
+<body>
+    <div class="page">
+        <div class="page-main">
+            <div class="header py-4" style="background-color:#2D89EF;">
+                <div class="container">
+                    <div class="d-flex">
+                        <a class="header-brand" href="/MFrame/Index" style="color:white;"> 
+                            @ViewBag.WebName-取药叫号
+                        </a>
+                        <div class="d-flex order-lg-2 ml-auto">
+                            <div class="dropdown">
+                                <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
+                                    <span class="avatar" style="background-image: url(/Content/images/1.jpg)"></span>
+                                    <span class="ml-2 d-none d-lg-block">
+                                        <span style="color:white;">@ViewBag.LoginId</span>
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                    <a class="dropdown-item" href="javascript:void" onclick="openLayer('基本信息','/Profile/Index')">
+                                        <i class="dropdown-icon fe fe-user"></i> 基本信息
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:void" onclick="openLayer('密码修改','/Profile/Psword')">
+                                        <i class="dropdown-icon fe fe-settings"></i> 密码修改
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:void" onclick="openLayer('配置信息','/Profile/Setting')">
+                                        <i class="dropdown-icon fe fe-settings"></i> 配置信息
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="javascript:void" onclick="openLayer('关于','/Home/About')">
+                                        <i class="dropdown-icon fe fe-help-circle"></i> 关于
+                                    </a>
+                                    <a class="dropdown-item" href="/Home/Logout">
+                                        <i class="dropdown-icon fe fe-log-out"></i> 退出
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="header-toggler d-lg-none ml-3 ml-lg-0" data-toggle="collapse" data-target="#headerMenuCollapse">
+                            <span class="header-toggler-icon"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg order-lg-first">
+                            <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
+                                <li class="nav-item">
+                                    <div class="nav-link">
+                                        药房：@ViewBag.BranchName
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <div class="nav-link">
+                                        工作模式：@ViewBag.WorkMode
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <div class="nav-link">
+                                        当前窗口：@ViewBag.CounterName
+                                    </div> 
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="my-3 my-md-5"> 
+                   @RenderBody()                 
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
+                        Copyright © 2018  All rights reserved.
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html> 

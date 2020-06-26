@@ -1,0 +1,117 @@
+﻿@using EntFrm.Business.Model;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Detail";
+
+    LEDDisplay info = (LEDDisplay)ViewBag.StackHolder;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <script type="text/javascript">
+    $(document).ready(function () {
+    });
+    </script>
+}
+
+<form class="form-horizontal">
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">编号：</label>
+                        <div class="col-lg-8">
+                            <input type="hidden" name="DisplayNo" id="DisplayNo" value="@info.sDisplayNo" />
+                            <input type="text" class="form-control" name="TtsNo" id="TtsNo" value="@info.sDisplayNo" placeholder="编号" readonly />
+                        </div>
+                    </div>
+
+                    <div class="clearfix f-hafl">
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">窗口屏名称：</label>
+                                <div class="col-lg-8">                                    
+                                    <input type="text" class="form-control" name="DisplayName" id="DisplayName" value="@info.sDisplayName" placeholder="窗口屏名称" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">LED模型：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <input class="form-control" name="LedModel" id="LedModel" value="@info.sLedModel" placeholder="LED模型" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">地址：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <input class="form-control" name="PhyAddr" id="PhyAddr" value="@info.iPhyAddr" placeholder="地址" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">串口：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <input class="form-control" name="SerialPort" id="SerialPort" value="@info.sSerialPort" placeholder="串口"  />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">比特率：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="Baudrate" id="Baudrate" value="@info.iBaudrate" placeholder="比特率" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">IP地址：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="IpAddress" id="IpAddress" value="@info.sIpAddress" placeholder="IP地址" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">端口：</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="LocalPort" id="LocalPort" value="@info.sLocalPort" placeholder="端口"  />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">备注：</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="Comments" id="Comments" rows="3" placeholder="备注" >@info.sComments</textarea>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                        <div class="form-group m20">
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

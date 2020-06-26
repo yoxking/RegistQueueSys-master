@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4507534F-9825-4BFD-BD76-847601519CD3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EntFrm.Business.Model</RootNamespace>
+    <AssemblyName>EntFrm.Business.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\EntDebug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BranchInfo.cs" />
+    <Compile Include="CallerInfo.cs" />
+    <Compile Include="Collections\BranchInfoCollections.cs" />
+    <Compile Include="Collections\CallerInfoCollections.cs" />
+    <Compile Include="Collections\ContentClassCollections.cs" />
+    <Compile Include="Collections\ContentInfoCollections.cs" />
+    <Compile Include="Collections\CounterInfoCollections.cs" />
+    <Compile Include="Collections\DsDwloadFlowsCollections.cs" />
+    <Compile Include="Collections\DsHrtbeatFlowsCollections.cs" />
+    <Compile Include="Collections\DsMaterialClassCollections.cs" />
+    <Compile Include="Collections\DsMaterialInfoCollections.cs" />
+    <Compile Include="Collections\DsPlayerClassCollections.cs" />
+    <Compile Include="Collections\DsPlayerInfoCollections.cs" />
+    <Compile Include="Collections\DsProgramClassCollections.cs" />
+    <Compile Include="Collections\DsProgramInfoCollections.cs" />
+    <Compile Include="Collections\DsPublishFlowsCollections.cs" />
+    <Compile Include="Collections\DsQuartzInfoCollections.cs" />
+    <Compile Include="Collections\DsResultFlowsCollections.cs" />
+    <Compile Include="Collections\DsVersionInfoCollections.cs" />
+    <Compile Include="Collections\EvaluateFlowsCollections.cs" />
+    <Compile Include="Collections\EvaluatorInfoCollections.cs" />
+    <Compile Include="Collections\LEDDisplayCollections.cs" />
+    <Compile Include="Collections\LEDMatrixCollections.cs" />
+    <Compile Include="Collections\LogsInfoCollections.cs" />
+    <Compile Include="Collections\MessageInfoCollections.cs" />
+    <Compile Include="Collections\OperateFlowsCollections.cs" />
+    <Compile Include="Collections\OperateHistoryCollections.cs" />
+    <Compile Include="Collections\OrganizInfoCollections.cs" />
+    <Compile Include="Collections\PermitInfoCollections.cs" />
+    <Compile Include="Collections\ProcessFlowsCollections.cs" />
+    <Compile Include="Collections\ProcessHistoryCollections.cs" />
+    <Compile Include="Collections\RecipeDetailsCollections.cs" />
+    <Compile Include="Collections\RecipeFlowsCollections.cs" />
+    <Compile Include="Collections\RecipeHistoryCollections.cs" />
+    <Compile Include="Collections\RegistFlowsCollections.cs" />
+    <Compile Include="Collections\RegistHistoryCollections.cs" />
+    <Compile Include="Collections\RoleInfoCollections.cs" />
+    <Compile Include="Collections\RolePermitCollections.cs" />
+    <Compile Include="Collections\RUsersInfoCollections.cs" />
+    <Compile Include="Collections\ServiceInfoCollections.cs" />
+    <Compile Include="Collections\ServiceRotaCollections.cs" />
+    <Compile Include="Collections\StafferInfoCollections.cs" />
+    <Compile Include="Collections\StafferRotaCollections.cs" />
+    <Compile Include="Collections\SUsersInfoCollections.cs" />
+    <Compile Include="Collections\SWorkFlowsCollections.cs" />
+    <Compile Include="Collections\SysParamsCollections.cs" />
+    <Compile Include="Collections\TicketFlowsCollections.cs" />
+    <Compile Include="Collections\TicketStyleCollections.cs" />
+    <Compile Include="Collections\UserRoleCollections.cs" />
+    <Compile Include="Collections\ViewOperatFlowsCollections.cs" />
+    <Compile Include="Collections\ViewRecipeFlowsCollections.cs" />
+    <Compile Include="Collections\ViewRegistFlowsCollections.cs" />
+    <Compile Include="Collections\ViewServiceRotaCollections.cs" />
+    <Compile Include="Collections\ViewStafferRotaCollections.cs" />
+    <Compile Include="Collections\ViewTicketFlowsCollections.cs" />
+    <Compile Include="Collections\VoiceInfoCollections.cs" />
+    <Compile Include="Collections\WaitAreaCollections.cs" />
+    <Compile Include="ContentClass.cs" />
+    <Compile Include="ContentInfo.cs" />
+    <Compile Include="CounterInfo.cs" />
+    <Compile Include="DsDwloadFlows.cs" />
+    <Compile Include="DsHrtbeatFlows.cs" />
+    <Compile Include="DsMaterialClass.cs" />
+    <Compile Include="DsMaterialInfo.cs" />
+    <Compile Include="DsPlayerClass.cs" />
+    <Compile Include="DsPlayerInfo.cs" />
+    <Compile Include="DsProgramClass.cs" />
+    <Compile Include="DsProgramInfo.cs" />
+    <Compile Include="DsPublishFlows.cs" />
+    <Compile Include="DsQuartzInfo.cs" />
+    <Compile Include="DsResultFlows.cs" />
+    <Compile Include="DsVersionInfo.cs" />
+    <Compile Include="EvaluateFlows.cs" />
+    <Compile Include="EvaluatorInfo.cs" />
+    <Compile Include="LEDDisplay.cs" />
+    <Compile Include="LEDMatrix.cs" />
+    <Compile Include="LogsInfo.cs" />
+    <Compile Include="MessageInfo.cs" />
+    <Compile Include="OperateFlows.cs" />
+    <Compile Include="OperateHistory.cs" />
+    <Compile Include="OrganizInfo.cs" />
+    <Compile Include="PermitInfo.cs" />
+    <Compile Include="ProcessFlows.cs" />
+    <Compile Include="ProcessHistory.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecipeDetails.cs" />
+    <Compile Include="RecipeFlows.cs" />
+    <Compile Include="RecipeHistory.cs" />
+    <Compile Include="RegistFlows.cs" />
+    <Compile Include="RegistHistory.cs" />
+    <Compile Include="RoleInfo.cs" />
+    <Compile Include="RolePermit.cs" />
+    <Compile Include="RUsersInfo.cs" />
+    <Compile Include="ServiceInfo.cs" />
+    <Compile Include="ServiceRota.cs" />
+    <Compile Include="StafferInfo.cs" />
+    <Compile Include="StafferRota.cs" />
+    <Compile Include="SUsersInfo.cs" />
+    <Compile Include="SWorkFlows.cs" />
+    <Compile Include="SysParams.cs" />
+    <Compile Include="TicketFlows.cs" />
+    <Compile Include="TicketStyle.cs" />
+    <Compile Include="UserRole.cs" />
+    <Compile Include="ViewOperatFlows.cs" />
+    <Compile Include="ViewRecipeFlows.cs" />
+    <Compile Include="ViewRegistFlows.cs" />
+    <Compile Include="ViewServiceRota.cs" />
+    <Compile Include="ViewStafferRota.cs" />
+    <Compile Include="ViewTicketFlows.cs" />
+    <Compile Include="VoiceInfo.cs" />
+    <Compile Include="WaitArea.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

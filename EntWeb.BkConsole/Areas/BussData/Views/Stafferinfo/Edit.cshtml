@@ -1,0 +1,200 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Business.Model.Collections;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    StafferInfo info = (StafferInfo)ViewBag.StackHolder;
+    OrganizInfoCollections organizList = (OrganizInfoCollections)ViewBag.OrganizList;
+    BranchInfoCollections branchList = (BranchInfoCollections)ViewBag.BranchList;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <link rel="stylesheet" href="~/Content/layui/css/layui.css">
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <!--layui引入-->
+    <script src="~/Content/layui/layui.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+        }); 
+
+        layui.use('upload', function () {
+            var upload = layui.upload;
+
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#headphoto' //绑定元素
+                , url: '/Handle/UploadPhoto' //上传接口
+                , type: 'post' //默认post
+                , done: function (res) {
+                    //上传完毕回调
+                    if (res.code === 0) {
+                        
+                        $("#HeadPhoto").val(res.data.src);
+                        $("#headPhotoFile").html(res.data.src);
+                    }
+                    else
+                    {
+                        dig.alertError('提示', res.msg);
+                    }
+                }
+                , error: function (res) {
+                    //请求异常回调
+                    dig.alertError('提示', res.message);
+                }
+            });
+        });
+    </script>
+}
+
+@using (Ajax.BeginForm("Save", null, new AjaxOptions()
+{
+    HttpMethod = "Post",
+    OnBegin = "SubAjax.Loading",
+    OnComplete = "SubAjax.Complate",
+    OnFailure = "SubAjax.Failure",
+    OnSuccess = "SubAjax.Success"
+},
+new { @class = "form-horizontal dig-from", @role = "form" }))
+{
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                    <div class="clearfix f-hafl">
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">医生姓名：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="StafferName" id="StafferName" value="@info.sStafferName" placeholder="医生名称" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">部门名称：</label>
+                                <div class="col-lg-8">
+                                    <select id="OrganizNo" class="form-control" name="OrganizNo">
+                                        @if (organizList != null && organizList.Count > 0)
+                                        {
+                                            foreach (OrganizInfo m in organizList)
+                                            {
+                                                <option value="@m.sOrganizNo" @if (m.sOrganizNo == info.sOrganizNo) { <text> selected </text> }>@m.sOrganizName</option>}
+                                        }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">星级：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <select name="StarLevel" id="StarLevel" class="form-control" datatype="*" nullmsg="请选择星级">
+                                        <option value="一星" @(info.sStarLevel == "一星" ? "selected" : "")>一星</option>
+                                        <option value="二星" @(info.sStarLevel == "二星" ? "selected" : "")>二星</option>
+                                        <option value="三星" @(info.sStarLevel == "三星" ? "selected" : "")>三星</option>
+                                        <option value="四星" @(info.sStarLevel == "四星" ? "selected" : "")>四星</option>
+                                        <option value="五星" @(info.sStarLevel == "五星" ? "selected" : "")>五星</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">职称：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <input type="text" class="form-control" name="Ranks" id="Ranks" value="@info.sRanks" placeholder="职称" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">医生工号：</label>
+                                <div class="col-lg-8">
+                                    <input type="hidden" name="StafferNo" id="StafferNo" value="@info.sStafferNo" />
+                                    <input type="text" class="form-control" name="LoginId" id="sLoginId" value="@info.sLoginId" placeholder="医生工号" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">工作科室：</label>
+                                <div class="col-lg-8">
+                                    @*<input type="text" class="form-control" name="BranchNo" id="BranchNo" readonly value="@PageHelper.getBranchInfoNameByNo(info.sBranchNo)" placeholder="工作诊室" />*@
+                                    <select id="BranchNo" class="form-control" name="BranchNo">
+                                        @if (branchList != null && branchList.Count > 0)
+                                        {
+                                            foreach (BranchInfo m in branchList)
+                                            {
+                                                <option value="@m.sBranchNo" @if (m.sBranchNo == info.sBranchNo) { <text> selected </text> }>@m.sBranchName</option>}
+                                            }
+                                         }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">密码：</label>
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control" name="Password" id="Password" value="@info.sPassword" placeholder="密码" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">职务：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <input type="text" class="form-control" name="Posts" id="Posts" value="@info.sPosts" placeholder="职务" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div> 
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">头像图片：</label>
+                        <div class="col-lg-8"> 
+                            <input type="hidden" name="HeadPhoto" id="HeadPhoto" value="@info.sHeadPhoto"  /> 
+                            <button type="button" class="layui-btn" id="headphoto">
+                                <i class="layui-icon">&#xe67c;</i>上传图片
+                            </button>
+                            <div id="headPhotoFile">@info.sHeadPhoto</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">简介：</label>
+                        <div class="col-lg-8">
+                            <textarea class="form-control" name="Summary" id="Summary" rows="8" placeholder="简介">@info.sSummary</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">备注：</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="Comments" id="Comments"  rows="3"placeholder="备注">@info.sComments</textarea>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                        <div class="form-group m20">
+                                <button class="btn btn-primary btn-save" type="submit"><i class="fa fa-check"></i> <span>保存</span></button>
+                                <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

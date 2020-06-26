@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{11F18FA6-73AB-4ECB-8F4C-E74A47B7D77C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EntFrm.Business.IDAL</RootNamespace>
+    <AssemblyName>EntFrm.Business.IDAL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\EntDebug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntFrm.Business.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EntDebug\EntFrm.Business.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="EntFrm.Framework.Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EntDebug\EntFrm.Framework.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IBranchInfo.cs" />
+    <Compile Include="ICallerInfo.cs" />
+    <Compile Include="IContentClass.cs" />
+    <Compile Include="IContentInfo.cs" />
+    <Compile Include="ICounterInfo.cs" />
+    <Compile Include="IDsDwloadFlows.cs" />
+    <Compile Include="IDsHrtbeatFlows.cs" />
+    <Compile Include="IDsMaterialClass.cs" />
+    <Compile Include="IDsMaterialInfo.cs" />
+    <Compile Include="IDsPlayerClass.cs" />
+    <Compile Include="IDsPlayerInfo.cs" />
+    <Compile Include="IDsProgramClass.cs" />
+    <Compile Include="IDsProgramInfo.cs" />
+    <Compile Include="IDsPublishFlows.cs" />
+    <Compile Include="IDsQuartzInfo.cs" />
+    <Compile Include="IDsResultFlows.cs" />
+    <Compile Include="IDsVersionInfo.cs" />
+    <Compile Include="IEvaluateFlows.cs" />
+    <Compile Include="IEvaluatorInfo.cs" />
+    <Compile Include="ILEDDisplay.cs" />
+    <Compile Include="ILEDMatrix.cs" />
+    <Compile Include="ILogsInfo.cs" />
+    <Compile Include="IMessageInfo.cs" />
+    <Compile Include="IOperateFlows.cs" />
+    <Compile Include="IOperateHistory.cs" />
+    <Compile Include="IOrganizInfo.cs" />
+    <Compile Include="IPermitInfo.cs" />
+    <Compile Include="IProcessFlows.cs" />
+    <Compile Include="IProcessHistory.cs" />
+    <Compile Include="IRecipeDetails.cs" />
+    <Compile Include="IRecipeFlows.cs" />
+    <Compile Include="IRecipeHistory.cs" />
+    <Compile Include="IRegistFlows.cs" />
+    <Compile Include="IRegistHistory.cs" />
+    <Compile Include="IRoleInfo.cs" />
+    <Compile Include="IRolePermit.cs" />
+    <Compile Include="IRUsersInfo.cs" />
+    <Compile Include="IServiceInfo.cs" />
+    <Compile Include="IServiceRota.cs" />
+    <Compile Include="IStafferInfo.cs" />
+    <Compile Include="IStafferRota.cs" />
+    <Compile Include="ISUsersInfo.cs" />
+    <Compile Include="ISWorkFlows.cs" />
+    <Compile Include="ISysParams.cs" />
+    <Compile Include="ITicketFlows.cs" />
+    <Compile Include="ITicketStyle.cs" />
+    <Compile Include="IUserRole.cs" />
+    <Compile Include="IViewOperatFlows.cs" />
+    <Compile Include="IViewRecipeFlows.cs" />
+    <Compile Include="IViewRegistFlows.cs" />
+    <Compile Include="IViewServiceRota.cs" />
+    <Compile Include="IViewStafferRota.cs" />
+    <Compile Include="IViewTicketFlows.cs" />
+    <Compile Include="IVoiceInfo.cs" />
+    <Compile Include="IWaitArea.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

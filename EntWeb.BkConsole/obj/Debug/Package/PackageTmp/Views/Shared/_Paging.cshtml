@@ -1,0 +1,56 @@
+﻿@using EntFrm.Framework.Web.Controls;
+
+@{
+    PagerHelper pager = (PagerHelper)ViewBag.StackHolder["pager"];
+}
+
+<form method="post" action="List" id="pageForm">
+    <ul class="pagination">
+        <li>
+            <a href="javascript:firstPage();">
+                <i class="fa fa-angle-double-left"></i>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:previousPage();">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        </li>
+        @if (pager.pageNumbers == null)
+        {
+            <li>
+                <a href="javascript:goPage(1);">
+                    1
+                </a>
+            </li>
+        }
+        else
+        {
+            foreach (var m in pager.pageNumbers)
+            {
+                <li>
+                    <a href="javascript:goPage(@m);">
+                        @m.ToString()
+                    </a>
+                </li>
+            }
+        }
+        <li>
+            <a href="javascript:nextPage();">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:lastPage();">
+                <i class="fa fa-angle-double-right"></i>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;">
+                第 @pager.PageIndex 页/共 @pager.PageCount 页
+            </a>
+        </li>
+    </ul>
+    <input type="hidden" name="pageIndex" id="pageIndex" value="@pager.PageIndex" />
+    <input type="hidden" name="pageCount" id="pageCount" value="@pager.PageCount" />
+</form>

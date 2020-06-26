@@ -1,0 +1,21 @@
+[version]
+    signature="$CHICAGO$"
+    AdvancedINF=2.0
+[Add.Code]
+    comRD800.dll=comRD800.dll
+    dcrf32.dll=dcrf32.dll
+    WltRS.dll=WltRS.dll
+[comRD800.dll]
+    file-win32-x86=thiscab
+    clsid={638B238E-EB84-4933-B3C8-854B86140668}
+    FileVersion=2,0,0,4
+    RegisterServer=yes
+    DestDir=11
+[dcrf32.dll]
+    file-win32-x86=thiscab
+    RegisterServer=no
+    DestDir=11
+[WltRS.dll]
+    file-win32-x86=thiscab
+    RegisterServer=no
+    DestDir=11

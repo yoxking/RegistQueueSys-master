@@ -1,0 +1,202 @@
+﻿@using EntFrm.Business.Model;
+@using EntFrm.Framework.Utility;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
+
+    StafferRota info = (StafferRota)ViewBag.StackHolder;
+    List<ItemObject> itemList = (List<ItemObject>)ViewBag.ItemList;
+}
+
+@section PageSpecificStyleSheetIncludes{
+    <style type="text/css">
+        body {
+            background-color: white;
+        }
+
+        .changeicon {
+            float: right;
+            margin-right: -15px;
+            position: absolute;
+            right: -7px;
+            top: 0px;
+            border: none;
+            background-color: #18a689;
+            color: #FFFFFF;
+            line-height: 33px;
+            height: 33px;
+        }
+    </style>
+}
+
+@section PageSpecificJavascriptIncludes{
+    <!--layui引入-->
+    <script src="~/Content/laydate/laydate.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script> 
+}
+
+@using (Ajax.BeginForm("Save", null, new AjaxOptions()
+{
+    HttpMethod = "Post",
+    OnBegin = "SubAjax.Loading",
+    OnComplete = "SubAjax.Complate",
+    OnFailure = "SubAjax.Failure",
+    OnSuccess = "SubAjax.Success"
+},
+                                                            new { @class = "form-horizontal dig-from", @role = "form" }))
+{
+    <div class="wrapper-content">
+        <div class="panel-body" style="padding-top:0px;">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">编号：</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" name="RotaNo" id="RotaNo" readonly value="@info.sRotaNo" placeholder="编号" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                             <label class="col-lg-3 control-label">医生：</label>
+                             <div class="col-lg-8"> 
+                                 <select class="form-control" name="StafferNo" id="StafferNo">
+                                     @if(itemList!=null&& itemList.Count > 0)
+                                     {
+                                         foreach(ItemObject item in itemList)
+                                         {
+                                             <option value="@item.Name" @if(item.Name.Equals(info.sStafferNo)) {<text>selected</text> }>@item.Value</option>
+                                         }
+                                     }
+                                     else
+                                     {
+                                         <option value="00000000">暂无</option>
+                                     }
+                                 </select>
+                             </div>
+                        </div>
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" >类型：</label>
+                        <div class="col-lg-8"> 
+                            <select class="form-control" name="RotaType" id="RotaType" >
+                                <option value="1" @if(info.iRotaType==1) {<text>selected</text> }>正常排班</option>
+                                <option value="2" @if(info.iRotaType == 2) {<text>selected</text> }>暂时排班</option>
+                            </select>
+                        </div>
+                    </div> 
+
+                    <div class="clearfix f-hafl">
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">周一：</label>
+                                <div class="col-lg-8">
+                                    <select name="WeekDay1" id="WeekDay1" class="form-control" datatype="*" nullmsg="名称">
+                                        <option value="0" @(info.iWeekDay1.ToString() == "0" ? "selected" : "")>休息</option>
+                                        <option value="1" @(info.iWeekDay1.ToString() == "1" ? "selected" : "")>全天</option>
+                                        <option value="2" @(info.iWeekDay1.ToString() == "2" ? "selected" : "")>上午</option>
+                                        <option value="3" @(info.iWeekDay1.ToString() == "3" ? "selected" : "")>下午</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">周三：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <select name="WeekDay3" id="WeekDay3" class="form-control" datatype="*" nullmsg="名称">
+                                        <option value="0" @(info.iWeekDay3.ToString() == "0" ? "selected" : "")>休息</option>
+                                        <option value="1" @(info.iWeekDay3.ToString() == "1" ? "selected" : "")>全天</option>
+                                        <option value="2" @(info.iWeekDay3.ToString() == "2" ? "selected" : "")>上午</option>
+                                        <option value="3" @(info.iWeekDay3.ToString() == "3" ? "selected" : "")>下午</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">周五：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <select name="WeekDay5" id="WeekDay5" class="form-control" datatype="*" nullmsg="名称">
+                                        <option value="0" @(info.iWeekDay5.ToString() == "0" ? "selected" : "")>休息</option>
+                                        <option value="1" @(info.iWeekDay5.ToString() == "1" ? "selected" : "")>全天</option>
+                                        <option value="2" @(info.iWeekDay5.ToString() == "2" ? "selected" : "")>上午</option>
+                                        <option value="3" @(info.iWeekDay5.ToString() == "3" ? "selected" : "")>下午</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">周日：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <select name="WeekDay7" id="WeekDay7" class="form-control" datatype="*" nullmsg="名称">
+                                        <option value="0" @(info.iWeekDay7.ToString() == "0" ? "selected" : "")>休息</option>
+                                        <option value="1" @(info.iWeekDay7.ToString() == "1" ? "selected" : "")>全天</option>
+                                        <option value="2" @(info.iWeekDay7.ToString() == "2" ? "selected" : "")>上午</option>
+                                        <option value="3" @(info.iWeekDay7.ToString() == "3" ? "selected" : "")>下午</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <div class="col-hafl">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">周二：</label>
+                                <div class="col-lg-8">
+                                    <select name="WeekDay2" id="WeekDay2" class="form-control" datatype="*" nullmsg="名称">
+                                        <option value="0" @(info.iWeekDay2.ToString() == "0" ? "selected" : "")>休息</option>
+                                        <option value="1" @(info.iWeekDay2.ToString() == "1" ? "selected" : "")>全天</option>
+                                        <option value="2" @(info.iWeekDay2.ToString() == "2" ? "selected" : "")>上午</option>
+                                        <option value="3" @(info.iWeekDay2.ToString() == "3" ? "selected" : "")>下午</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">周四：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <select name="WeekDay4" id="WeekDay4" class="form-control" datatype="*" nullmsg="名称">
+                                        <option value="0" @(info.iWeekDay4.ToString() == "0" ? "selected" : "")>休息</option>
+                                        <option value="1" @(info.iWeekDay4.ToString() == "1" ? "selected" : "")>全天</option>
+                                        <option value="2" @(info.iWeekDay4.ToString() == "2" ? "selected" : "")>上午</option>
+                                        <option value="3" @(info.iWeekDay4.ToString() == "3" ? "selected" : "")>下午</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">周六：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <select name="WeekDay6" id="WeekDay6" class="form-control" datatype="*" nullmsg="名称">
+                                        <option value="0" @(info.iWeekDay6.ToString() == "0" ? "selected" : "")>休息</option>
+                                        <option value="1" @(info.iWeekDay6.ToString() == "1" ? "selected" : "")>全天</option>
+                                        <option value="2" @(info.iWeekDay6.ToString() == "2" ? "selected" : "")>上午</option>
+                                        <option value="3" @(info.iWeekDay6.ToString() == "3" ? "selected" : "")>下午</option>
+                                    </select>
+                                </div>
+                            </div> 
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" style="width:29% !important; padding-left:5px; padding-right:5px;">挂号费：</label>
+                                <div class="col-lg-8" style="text-align:left;">
+                                    <input type="text" class="form-control" name="RegisteFees" id="RegisteFees" value="@info.dRegisteFees" placeholder="10.0" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">备注：</label>
+                        <div class="col-lg-8">
+                            <textarea type="text" class="form-control" name="Comments" id="Comments" rows="5">@info.sComments</textarea>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed" style="display: table;margin-left: auto;margin-right: auto;">
+                        <div class="form-group m20">
+                            <button class="btn btn-primary btn-save" type="submit"><i class="fa fa-check"></i> <span>保存</span></button>
+                            <button class="btn btn-warning" id="btn-dig-close" type="button"><i class="im-undo2"></i> 返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
