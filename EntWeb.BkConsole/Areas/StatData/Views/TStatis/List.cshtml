@@ -7,13 +7,14 @@
     <style type="text/css">
         .cardbox {
             margin: 10px;
-            border: 1px solid #f3f3f3;
+            border: 1px solid #4ea397;
             padding: 20px;
-            background-color: #FFFFCC;
+            background-color: #22c3aa;
             text-align: center;
+            color: white;
         }
         .cardbox h2{
-            color:green;
+            color:white;
             font-weight:bolder;
         }
     </style>
@@ -75,7 +76,7 @@
 </div>
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
-    var myChart3 = echarts.init(document.getElementById('main3'));
+    var myChart3 = echarts.init(document.getElementById('main3'), 'wonderland');
      
     option3 = {
         tooltip: {

@@ -1,0 +1,300 @@
+// css初始化
+* {
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    // 背景：url no-repeat top center
+    background: url(../images/bg.jpg) no-repeat top center;
+    // 不带单位
+    line-height: 1.5;
+}
+li {
+    list-style: none;
+}
+/* 声明字体*/
+@font-face {
+    font-family: electronicFont;
+    src: url(../font/DS-DIGIT.TTF);
+  }
+// 页面头部分
+header {
+    height: 1.25rem;
+    background: url(../images/head_bg.png) no-repeat;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    h1 {
+        color: #fff;
+        font-size: .475rem;
+        text-align: center;
+        line-height: 1rem;
+    }
+    .showTime {
+        position: absolute;
+        right: .375rem;
+        line-height: .9375rem;
+        top:0;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: .25rem;
+    }
+}
+// 主体部分
+.mainbox {
+    display: flex;
+    min-width: 1024px;
+    max-width: 1920px;
+    margin: 0 auto;
+    // 上10px 右10px
+    padding: .125rem .125rem 0;
+    .column {
+    // 分成三等份
+        flex: 3;
+    }
+    // 第二个盒子占 5等份
+    // 不能在column里面写，权重不够。
+    .column:nth-child(2){
+        flex: 5;
+    // 注意中间列 column 有个 左右 10px 下 15px 的外边距
+        margin: 0 .125rem .1875rem;
+    // 超出部分隐藏
+        overflow: hidden;
+    }
+}
+// panel 公共样式
+.panel {
+    position: relative;
+    height:3.875rem ;
+    // padding为  上为 0  左右 15px  下为 40px
+    padding: 0 .1875rem .5rem;
+    border:1px solid rgba(25, 186, 139, 0.17);
+    margin-bottom: .1875rem;
+    // 背景：url rgba => 加了背景颜色
+    background: url(../images/line\(1\).png) rgba(255, 255, 255, 0.03);
+    //直角边框 => 有两个伪元素：before after
+    // 左上角直角边框
+    &::before {
+        // content => 占位？ 显示?
+        content:"";
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 10px;
+        height: 10px;
+        border-top: 2px solid #02a6b5;
+        border-left: 2px solid #02a6b5;
+    }
+    // 右上角直角边框
+    &::after {
+        content:"";
+        position: absolute;
+        top:0;
+        right: 0;
+        width: 10px;
+        height: 10px;
+        border-top: 2px solid #02a6b5;
+        border-right: 2px solid #02a6b5;
+    }
+    // 底部直角边框
+    .panel_footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    // 左下角直角边框
+        &::before {
+            content:"";
+            position: absolute;
+            bottom:0;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            border-bottom: 2px solid #02a6b5;
+            border-left: 2px solid #02a6b5;
+        }
+        // 右下角直角边框
+        &::after {
+            content:"";
+            position: absolute;
+            bottom:0;
+            right: 0;
+            width: 10px;
+            height: 10px;
+            border-bottom: 2px solid #02a6b5;
+            border-right: 2px solid #02a6b5;
+        }
+    }
+    h2 {
+        height: .6rem;
+        color: #fff;
+        line-height: .6rem;
+        text-align: center;
+        font-size: .25rem;
+        font-weight: 400;
+        a {
+            text-decoration: none;
+            color:#fff;
+            font-size:.2rem;
+            padding: 0 .125rem
+        }
+    }
+    .chart {
+        height: 3rem;
+    }
+}
+// no 数字模块
+.no {
+    background-color: rgba(101, 132, 226, 0.1);
+    padding: .1875rem;
+    .no_hd {
+        position: relative;
+        border:1px solid rgba(25, 186, 139, 0.17);
+        ul {
+            display: flex;
+            li {
+                position: relative;
+                flex: 1;
+                line-height: 1rem;
+                font-size: .875rem;
+                color: #ffeb7b;
+                text-align: center;
+                font-family: "electronicFont";
+            // 中间小竖线
+            &::after {
+                content: "";
+                position: absolute;
+                top:25%;
+                height: 50%;
+                right: 0;
+                width: .0125rem;
+                background: rgba(255, 255, 255, 0.3) ;
+            }
+          }
+        }
+        // 左上角和右下角的直角边框
+        &::before {
+            position: absolute;
+            top:0;
+            left: 0;
+            content: "";
+            width: 30px;
+            height: 10px;
+            border-top:2px solid #02a6b5;
+            border-left: 2px solid #02a6b5;
+        }
+        &::after {
+            position: absolute;
+            bottom:0;
+            right: 0;
+            content: "";
+            width: 30px;
+            height: 10px;
+            border-bottom:2px solid #02a6b5;
+            border-right: 2px solid #02a6b5;
+        }
+
+    }
+    .no_bd {
+        ul {
+            display: flex;
+            li {
+                flex:1;
+                text-align: center;
+                height: .5rem;
+                color: rgba(255, 255, 255, 0.7);
+                font-size: .225rem;
+                line-height: .5rem;
+                padding-top: .125rem
+         }
+      }
+    }
+}
+// map 模块
+.map {
+    position: relative;
+    height: 10.125rem;
+    // 地球
+    .map1 {
+        width: 6.475rem;
+        height: 6.475rem;
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        background: url(../images/map.png);
+        background-size: 100%;
+        opacity: .3;
+        // z-index: 2;
+    }
+    .map2 {
+        // map2 在map1 下面 默认会压住 map1
+        position: absolute;
+        width: 8.0375rem;
+        height: 8.0375rem;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        background: url(../images/lbx.png);
+        background-size: 100%;
+        // 调用旋转动画
+        animation: rotate1 15s linear infinite;
+        // 不透明度
+        opacity: .6;
+    }
+    .map3 {
+        position: absolute;
+        width: 7.075rem;
+        height: 7.075rem;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        background: url(../images/jt.png);
+        background-size: 100%;
+        animation: rotate2 10s linear infinite;
+        opacity: .6;
+    }
+    .chart {
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: 10.125rem;
+    }
+    // 旋转动画 animation
+    @keyframes rotate1 {
+        form {
+            transform: translate(-50%,-50%)
+            rotate(0deg)
+        }
+        to {
+            transform: translate(-50%,-50%)
+            // 顺时针旋转
+            rotate(360deg)
+        }
+    }
+    @keyframes rotate2 {
+        form {
+            transform: translate(-50%,-50%)
+            rotate(0deg)
+        }
+        to {
+            transform: translate(-50%,-50%)
+            // 逆时针旋转
+            rotate(-360deg)
+        }
+    }
+}
+
+/* 约束屏幕尺寸 */
+@media screen and (max-width: 1024px) {
+    html {
+      font-size: 42px !important;
+    }
+  }
+  @media screen and (min-width: 1920px) {
+    html {
+      font-size: 80px !important;
+    }
+  }

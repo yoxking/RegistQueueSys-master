@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECharts</title>
+    <link rel="stylesheet" href="./css/index.css">
+
+</head>
+
+<body>
+    <!-- 头部 -->
+    <header>
+        <h1>重庆第一人民医院-分诊数据展示大屏</h1>
+        <div class="showTime"></div>
+    </header>
+
+    <!-- 格式： 当前时间：2020年3月17-0时54分14秒 -->
+    <script>
+        var t = null;
+        t = setTimeout(time, 1000);//開始运行,自动运行
+        function time() {
+            clearTimeout(t);//清除定时器
+            dt = new Date();
+            var y = dt.getFullYear();
+            var mt = dt.getMonth() + 1;
+            var day = dt.getDate();
+            var h = dt.getHours();//获取时
+            var m = dt.getMinutes();//获取分
+            var s = dt.getSeconds();//获取秒
+            document.querySelector(".showTime").innerHTML = '当前时间：' + y + "年" + mt + "月" + day + "-" + h + "时" + m + "分" + s + "秒";
+            t = setTimeout(time, 1000); //设定定时器，循环运行     
+        };
+    </script>
+    <!-- 主体部分 -->
+    <section class="mainbox">
+        <!-- 左侧盒子 -->
+        <div class="column">
+            <div class="panel">
+                <!-- panel 顶部 -->
+                <div class="penel bar">
+                    <h2>柱形图-门诊科室</h2>
+                    <div class="chart">图表</div>
+                </div>
+                <!-- 底部直角边框 -->
+                <div class="panel_footer"></div>
+            </div>
+
+            <div class="panel line">
+                    <h2>折线图-就诊人员
+                        <a href="javascript:;" class="line_a">2020</a>
+                        <a href="javascript:;" class="line_a">2021</a>
+                    </h2>
+                    <div class="chart">图表</div>
+                <div class="panel_footer"></div>
+            </div>
+
+            <div class="panel">
+                <div class="penel pie">
+                    <h2>饼状图-年龄分布</h2>
+                    <div class="chart">图表</div>
+                </div>
+                <div class="panel_footer"></div>
+            </div>
+        </div>
+        <!-- 中间盒子 -->
+        <div class="column">
+            <!--（上面部分） no 模块 => 上下划分，no_hd & no_bd -->
+            <div class="no">
+                <div class="no_hd">
+                    <ul>
+                        <li>233</li>
+                        <li>28499</li>
+                    </ul>
+                </div>
+                <div class="no_bd">
+                    <ul>
+                        <li>今日挂号</li>
+                        <li>所有挂号</li>
+                    </ul>
+                </div>
+            </div>
+            <!--（下面部分） 地图模块 -->
+            <div class="map">
+                <!-- 背景 map1 map2 map3 -->
+                <div class="map1"></div>
+                <div class="map2"></div>
+                <div class="map3"></div>
+                <div class="chart"></div>
+            </div>
+        </div>
+        <!-- 右边盒子 -->
+        <div class="column">
+            <div class="panel">
+                <div class="penel bar2">
+                    <h2>柱形图-门诊医生</h2>
+                    <div class="chart">图表</div>
+                </div>
+                <div class="panel_footer"></div>
+            </div>
+
+            <div class="panel">
+                <div class="penel line1">
+                    <h2>折线图-就诊患者</h2>
+                    <div class="chart">图表</div>
+                </div>
+                <div class="panel_footer"></div>
+            </div>
+
+            <div class="panel">
+                <div class="penel pie1">
+                    <h2>饼形图-患者来源</h2>
+                    <div class="chart">图表</div>
+                </div>
+                <div class="panel_footer"></div>
+            </div>
+        </div>
+    </section>
+    <!-- 引入 flexible.js + echarts + index.js + jquery + china.js-->
+    <script src="./js/flexible.js"></script>
+    <script src="./js/jquery.js"></script>
+    <script src="./js/echarts.min.js"></script>
+    <script src="./js/china.js"></script>
+    <script src="./js/index.js?rd=3"></script>
+</body>
+
+</html>
