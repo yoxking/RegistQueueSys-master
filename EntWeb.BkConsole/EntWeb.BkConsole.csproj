@@ -521,8 +521,11 @@
     <Content Include="Content\bgimgs\bgMainWidth.png" />
     <Content Include="Content\bgimgs\btnHomePage.png" />
     <Content Include="Content\bgimgs\btnHomePageDown.png" />
+    <Content Include="Content\echarts\echarts.common.js" />
+    <Content Include="Content\echarts\echarts.common.min.js" />
+    <Content Include="Content\echarts\echarts.js" />
     <Content Include="Content\echarts\echarts.min.js" />
-    <Content Include="Content\echarts\theme\shine.js" />
+    <Content Include="Content\echarts\themes\wonderland.js" />
     <Content Include="Content\images\qhwy_bg.png" />
     <Content Include="Content\js\admin\bootstrap.min.js" />
     <Content Include="Content\js\admin\chosen.jquery.js" />
